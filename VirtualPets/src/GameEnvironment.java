@@ -7,10 +7,17 @@ public class GameEnvironment {
 	FoodType[] foodTypes;
 	int numberOfDays;
 	Scanner scanner;
-	String roundCommands = "Commands: 'select [pet name]', 'shop food', 'shop toys', 'status', 'help', 'end turn'";
-	String petCommands = "Commands: 'eat [food name]', 'play [toy name]', 'toilet', 'help', 'deselect'";
+	
+	String roundCommands = "Commands: 'select [pet name]', 'revive [pet name]', 'shop food', 'shop toys', 'events', 'inventory', 'pet status', 'com', 'end'";
+	String petCommands = "Commands: 'eat [food name]', 'play [toy name]', 'toilet', 'sleep', 'inventory', 'pet status', 'com', 'exit'";
+	String foodCommands = "Commands: 'buy [food name]', 'buy [food name] [amount]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
+	String toyCommands = "Commands: 'buy [toy name]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
+	
+	String petHeader;
 	String petFormat;
+	String toyHeader;
 	String toyFormat;
+	String foodHeader;
 	String foodFormat;
 	
 	/**
@@ -22,8 +29,8 @@ public class GameEnvironment {
 	 * @param foodTypes
 	 * @param numberOfDays
 	 */
-	public GameEnvironment(Player[] players, Species[] species, 
-			ToyType[] toyTypes, FoodType[] foodTypes, int numberOfDays, Scanner scanner) {
+	public GameEnvironment(Player[] players, Species[] species, ToyType[] toyTypes,
+			FoodType[] foodTypes, int numberOfDays, int longestSpecies, Scanner scanner) {
 		
 		this.players = players;
 		this.species = species;
@@ -31,24 +38,30 @@ public class GameEnvironment {
 		this.foodTypes = foodTypes;
 		this.numberOfDays = numberOfDays;
 		this.scanner = scanner;
-		int longestPet = 0;
+		
+		int longestToy = 7;
+		for (ToyType toyType: toyTypes)
+			if (toyType.getName().length() > longestToy)
+				longestToy = toyType.getName().length();
+		toyHeader = String.format("%-"+ Integer.toString(longestToy) +"s | Price     | Happiness Gain", "Toy");
+		toyFormat = "%-"+ Integer.toString(longestToy) +"s | $%-8.2f | %-5d";
+		
+		int longestFood = 8;
+		for (FoodType foodType: foodTypes)
+			if (foodType.getName().length() > longestFood)
+				longestFood = foodType.getName().length();
+		foodHeader = String.format("%-"+ Integer.toString(longestFood) +"s | Price     | Nutrition | Tastiness ", "Food");
+		foodFormat = "%-"+ Integer.toString(longestFood) +"s | $%-8.2f | %-9d | %-9d";
+		
+		int longestPet = 8;
 		for (Player player: players)
 			for (Pet pet: player.getPets())
 				if (pet.getName().length() > longestPet)
 					longestPet = pet.getName().length();
-		//petFormat = "%-"+ Integer.toString();
-		
-		int longestToy = 0;
-		for (ToyType toyType: toyTypes)
-			if (toyType.getName().length() > longestToy)
-				longestToy = toyType.getName().length();
-		toyFormat = "%-"+ Integer.toString(longestToy) +"s | $%-10.2f | %-10d";
-		
-		int longestFood = 0;
-		for (FoodType foodType: foodTypes)
-			if (foodType.getName().length() > longestFood)
-				longestFood = foodType.getName().length();
-		foodFormat = "%-"+ Integer.toString(longestFood) +"s | $%-10.2f | %-10d | %-10d";
+		petHeader = String.format("%-"+ Integer.toString(longestPet) +"s | %-"+ Integer.toString(longestSpecies) +"s | AP | Hunger | Energy | Happiness | Weight | Healthy "
+				+ "| Behaving | Alive | %-"+ Integer.toString(longestFood) +"s | %-"+ Integer.toString(longestToy) +"s", "Pet name", "Species", "Fav Food", "Fav Toy");
+		petFormat = "%-"+ Integer.toString(longestPet) +"s | %-"+ Integer.toString(longestSpecies) +"s | %-2d | %-6d | %-6d | %-9d "
+				+ "| %-6d | %-7b | %-8b | %-5b | %-"+ Integer.toString(longestFood) +"s | %-"+ Integer.toString(longestToy) +"s";
 	}
 	
 	/**
@@ -72,63 +85,54 @@ public class GameEnvironment {
 	private void round() {
 		int roundScore;
 		String input;
-		boolean turnDone = false;
-		boolean interacted = false;
+		Pet activePet;
 		
 		for (Player player: players) {
 			// Initialise this player's turn
 			roundScore = 0;
 			System.out.println(String.format("Player %s's turn.", player.getName()));
-			checkPetEvents(player.getPets());
-			showPlayerStatus(player);
+			String events = checkPetEvents(player.getPets());
+			System.out.println(events);
+			inventory(player);
+			petStatus(player);
 			System.out.println(roundCommands);
 			
-			turnDone = false;
 			do {
 				System.out.print("Enter a command: ");
 				input = scanner.next();
 				
-				if (input.length() >= 7 && input.substring(0, 7).equals("select ")) {
-					for (Pet pet: player.getPets()) {
-						if (pet.getName().equals(input.substring(7))) {
-							if (pet.getActionPoints() > 0) {
-								if (pet.isAlive()) {
-									interactWithPet(player, pet);
-									interacted = true;
-									System.out.println(roundCommands);
-								}
-								else
-									System.out.println(pet.getName() + " is dead and cannot be selected.");
-								break;
-							}
-							else
-								System.out.println(pet.getName() + " has no action points and cannot be selected.");
-							break;
-						}
-					}
-					if (!interacted)
+				if (input.length() >= 7 && Helpers.match(input.substring(0, 7), "select ")) {
+					activePet = checkIsPet(input.substring(7), player);
+					if (activePet == null)
 						System.out.println(String.format("No pet called '%s'.", input.substring(7)));
+					else if (activePet.getActionPoints() == 0)
+						System.out.println(activePet.getName() + " has no action points and cannot be selected.");
+					else if (!activePet.isAlive())
+						System.out.println(activePet.getName() + " is dead and cannot be selected.");
+					else
+						interactWithPet(player, activePet);
+						System.out.println(roundCommands);
 				}
 				
-				else if (input.equals("shop food"))
+				else if (Helpers.match(input, "shop food"))
 					foodShop(player);
 				
-				else if (input.equals("shop toys"))
+				else if (Helpers.match(input, "shop toys"))
 					toyShop(player);
 				
-				else if (input.equals("status"))
-					showPlayerStatus(player);
+				else if (Helpers.match(input, "pet status"))
+					petStatus(player);
 				
-				else if (input.equals("help"))
+				else if (Helpers.match(input, "help"))
 					System.out.println(roundCommands);
 				
-				else if (input.equals("end turn"))
-					turnDone = true;
+				else if (Helpers.match(input, "end turn"))
+					continue;
 				
 				else
 					System.out.println("Input was not a recognised command.");
 				
-			} while (!turnDone);
+			} while (!Helpers.match(input, "end turn"));
 			System.out.println();
 			
 			for (Pet pet: player.getPets()) {
@@ -143,14 +147,11 @@ public class GameEnvironment {
 	 * @param pets
 	 * The array of pets to be used
 	 */
-	private void checkPetEvents(Pet[] pets) {
+	private String checkPetEvents(Pet[] pets) {
 		boolean[] statusEffectsSet;
-		String events;
+		String events = "New events: ";
 		
-		System.out.print("New events: ");
-		events = "";
 		for (Pet pet: pets) {
-			pet.resetActionPoints();
 			statusEffectsSet = pet.genRandomEvents();
 			
 			if (statusEffectsSet[0]) 
@@ -160,20 +161,36 @@ public class GameEnvironment {
 			if (statusEffectsSet[2])
 				events += pet.getName() + " died, ";
 		}
-		if (events.length() == 0)
-			System.out.println("None.");
+		if (events.length() == 12)
+			events += "None";
 		else
-			System.out.println(events.substring(0, events.length()-2));
-		System.out.println();
+			events = events.substring(0, events.length()-2);
+		return events;
+	}
+	
+	/**
+	 * Check if toMatch corresponds to the name of the specified player's pets. Returns the pet if so.
+	 * @param toMatch
+	 * The string to check against the player's pet names
+	 * @param player
+	 * The player whose pet names will be checked against toMatch
+	 * @return
+	 * The pet matched. Null if no match was found
+	 */
+	private Pet checkIsPet(String toMatch, Player player) {
+		for (Pet pet: player.getPets())
+			if (pet.getName().equals(toMatch))
+				return pet;
+		return null;
 	}
 	
 	/**
 	 * @author Andrew Davidson (ada130)
-	 * Prints the player's status to the console.
+	 * Prints the player's inventory to the console.
 	 * @param player
-	 * The player to display status of
+	 * The player to display the inventory of
 	 */
-	private void showPlayerStatus(Player player) {
+	private void inventory(Player player) {
 		System.out.println(String.format("Money: $%.2f", player.getMoney()));
 		
 		String outString = "";
@@ -191,10 +208,19 @@ public class GameEnvironment {
 			System.out.println("Food: None");
 		else
 			System.out.println(String.format("Food: %s", outString.substring(0, outString.length()-2)));
-		
-		System.out.println("Pets:");
-		for (Pet pet: player.getPets())
-			System.out.println(pet + "\n");
+	}	
+	
+	/**
+	 * @author Andrew Davidson (ada130)
+	 * Prints the status of all of a player's pets to the console.
+	 * @param player
+	 * The player whose pets status will be displayed
+	 */
+	private void petStatus(Player player) {
+		System.out.println("Pets: (AP is action points, Fav is short for favourite)\n" + petHeader);
+		for (Pet pet: player.getPets()) {
+			System.out.println(pet.presentAs(petFormat));
+		}
 	}
 	
 	/**
@@ -324,9 +350,11 @@ public class GameEnvironment {
 		
 		// Section to show food types and their price, nutrition and tastiness.
 		System.out.println("These foods are for sale:");
-		System.out.println("Food            | Price       | Nutrition  | Tastiness ");
+		//System.out.println("Food            | Price       | Nutrition  | Tastiness ");
+		System.out.println(foodHeader);
 		for (FoodType foodType : foodTypes) {
-			System.out.println(String.format("%-15s | $%-10.2f | %-10d | %-10d", foodType.getName(), foodType.getPrice(), foodType.getNutrition(), foodType.getTastiness()));
+			//System.out.println(String.format("%-15s | $%-10.2f | %-10d | %-10d", foodType.getName(), foodType.getPrice(), foodType.getNutrition(), foodType.getTastiness()));
+			System.out.println(String.format(foodFormat, foodType.getName(), foodType.getPrice(), foodType.getNutrition(), foodType.getTastiness()));
 		}
 		
 		// Section for user input.
@@ -408,9 +436,11 @@ public class GameEnvironment {
 		
 		// Section to show toy types and their price and happiness gain.
 		System.out.println("These toys are for sale:");
-		System.out.println("Toy             | Price       | Happiness Gain");
+		//System.out.println("Toy             | Price       | Happiness Gain");
+		System.out.println(toyHeader);
 		for (ToyType toyType : toyTypes) {
-			System.out.println(String.format("%-15s | $%-10.2f | %-10d", toyType.getName(), toyType.getPrice(), toyType.getHappinessGain()));
+			//System.out.println(String.format("%-15s | $%-10.2f | %-10d", toyType.getName(), toyType.getPrice(), toyType.getHappinessGain()));
+			System.out.println(String.format(toyFormat, toyType.getName(), toyType.getPrice(), toyType.getHappinessGain()));
 		}
 		
 		// Section for user input.

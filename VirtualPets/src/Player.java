@@ -98,6 +98,13 @@ public class Player {
 		toys.add(toy);
 	}
 	
+	/**
+	 * The player feeds a pet a food. The food is consumed and removed from the player's inventory.
+	 * @param pet
+	 * The pet to be fed
+	 * @param foodType
+	 * The food to feed the pet
+	 */
 	public void feed(Pet pet, FoodType foodType) {
 		pet.eat(foodType);
 		food.put(foodType, food.get(foodType)-1);
@@ -105,6 +112,15 @@ public class Player {
 			food.remove(foodType);
 	}
 	
+	/**
+	 * The player plays with a pet using a toy. The toy is damaged and possibly broken by this.
+	 * @param pet
+	 * The pet to be played with
+	 * @param toyIndex
+	 * The toy to use for playing
+	 * @return
+	 * True if the toy does not break, false otherwise
+	 */
 	public boolean playWith(Pet pet, int toyIndex) {
 		pet.play(toys.get(toyIndex));
 		if (toys.get(toyIndex).getDurability() <= 0) {

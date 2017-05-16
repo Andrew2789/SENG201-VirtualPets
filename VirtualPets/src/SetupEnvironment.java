@@ -45,6 +45,8 @@ public class SetupEnvironment {
 	
 	/**
 	 * Main menu for the game.
+	 * @return
+	 * True if the menu should be opened again, false if the program should close
 	 */
 	public boolean menu() {
 		String command;
@@ -90,7 +92,7 @@ public class SetupEnvironment {
 		Species[] species = {
 				new Species("Cat", 20, 10, 15, 5, 40, 70),
 				new Species("Doggo", 40, 15, 25, 10, 30, 55),
-				new Species("Pupper", 25, 12, 18, 20, 15, 35)
+				new Species("Pupperrrrr", 25, 12, 18, 20, 15, 35)
 		};
 		
 		ToyType[] toyTypes = {
@@ -112,13 +114,20 @@ public class SetupEnvironment {
 		String petSpecies;
 		Pet[] playerPets;
 		int numberOfPets;
-		String speciesList = "Species:\n";
-		for (Species speciesInstance: species) {
-			speciesList += String.format("Species name: %s | Optimum weight: %d | Hunger gain per turn: %d | "
-					+ "Energy loss per turn: %d | Happiness loss per turn: %d | Toy damage: %d-%d\n", 
-					speciesInstance.getName(), speciesInstance.getOptimumWeight(), speciesInstance.getHungerGain(), speciesInstance.getEnergyLoss(),
-					speciesInstance.getHappinessLoss(), speciesInstance.getMinToyDamage(), speciesInstance.getMaxToyDamage());
-		}
+		Species chosenSpecies;
+		int favouriteToyIndex;
+		int favouriteFoodIndex;
+		
+		int longestSpecies = 7;
+		for (Species speciesType: species)
+			if (speciesType.getName().length() > longestSpecies)
+				longestSpecies = speciesType.getName().length();
+		
+		String speciesFormat = "%-" + longestSpecies +"s | %-14d | %-11d | %-11d | %-14d | %4d - %-4d\n";
+		String speciesList = String.format("Species: (gain/loss stats are per turn)\n%-"+ longestSpecies +"s | Optimum weight | Hunger gain | Energy loss | Happiness loss | Toy damage\n", "Species");
+		for (Species speciesType: species)
+			speciesList += String.format(speciesFormat, speciesType.getName(), speciesType.getOptimumWeight(), speciesType.getHungerGain(), 
+					speciesType.getEnergyLoss(), speciesType.getHappinessLoss(), speciesType.getMinToyDamage(), speciesType.getMaxToyDamage());
 		
 		System.out.println();
 		int numberOfPlayers = getInt("Enter the number of players (1-3): ");
@@ -161,33 +170,33 @@ public class SetupEnvironment {
 				
 				// Get pet species, check to make sure input is a valid species
 
-				int speciesIndex = 0;
-				do {
-					if (speciesIndex != 0) 
-						System.out.println("That is not a valid species.");
-					speciesIndex = 0;
-					System.out.print(String.format("Enter %s's species or enter 'help' to list all species: ", petName));
+				chosenSpecies = null;
+				while (chosenSpecies == null) {
+					System.out.print(String.format("Enter %s's species or enter 'species' to list all species: ", petName));
 					petSpecies = scanner.next();
-					if (Helpers.match(petSpecies, "help")) {
+					if (Helpers.match(petSpecies, "species")) {
 						System.out.print(speciesList);
-						speciesIndex = species.length;
 					}
 					else
-						for (; speciesIndex<species.length; speciesIndex++)
-							if (Helpers.match(species[speciesIndex].getName(), petSpecies))
+						for (Species speciesType: species)
+							if (Helpers.match(speciesType.getName(), petSpecies)) {
+								chosenSpecies = speciesType;
 								break;
-				} while (speciesIndex == species.length);
+							}
+						if (chosenSpecies == null)
+							System.out.println("That is not a valid species.");
+				}
 				
 				// Randomly assign a favourite toy and food to the pet
-				int favouriteToyIndex = ThreadLocalRandom.current().nextInt(0, toyTypes.length);
-				int favouriteFoodIndex = ThreadLocalRandom.current().nextInt(0, foodTypes.length);
+				favouriteToyIndex = ThreadLocalRandom.current().nextInt(0, toyTypes.length);
+				favouriteFoodIndex = ThreadLocalRandom.current().nextInt(0, foodTypes.length);
 				
-				playerPets[j] = new Pet(petName, species[speciesIndex], toyTypes[favouriteToyIndex], foodTypes[favouriteFoodIndex]);
+				playerPets[j] = new Pet(petName, chosenSpecies, toyTypes[favouriteToyIndex], foodTypes[favouriteFoodIndex]);
 			}
 			
 			players[i] = new Player(playerName, playerPets);
 		}
-		currentGameEnvironment = new GameEnvironment(players, species, toyTypes, foodTypes, numberOfDays, scanner);
+		currentGameEnvironment = new GameEnvironment(players, species, toyTypes, foodTypes, numberOfDays, longestSpecies, scanner);
 		System.out.println();
 	}
 	

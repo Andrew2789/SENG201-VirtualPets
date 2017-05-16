@@ -21,7 +21,7 @@ public class Pet {
 	private int energy = 100;
 	private int happiness = 100;
 	private int weight;
-	private int actionPoints = 0;
+	private int actionPoints = 2;
 	
 	private ToyType favouriteToy;
 	private FoodType favouriteFood;
@@ -160,16 +160,12 @@ public class Pet {
 	 * The type of the food to be eaten.
 	 */
 	
-	public void resetActionPoints() {
-		actionPoints = 2;
-	}
-	
 	public void eat(FoodType food) {
 		changeHappiness(food.getTastiness());
 		changeHunger(-food.getNutrition());
 		changeWeight(food.getWeight());
 		if (food == favouriteFood)
-			changeHappiness(10);
+			changeHappiness(food.getTastiness()/2);
 		actionPoints -= 1;
 	}
 	
@@ -241,6 +237,13 @@ public class Pet {
 				chance += ((double)Math.abs(weight-optWeight) - optWeight/2)/(optWeight/6)*100;
 			if (ThreadLocalRandom.current().nextInt(0, 100) < chance) {
 				alive = false;
+				behaving = false;
+				healthy = false;
+				hunger = 0;
+				energy = 0;
+				happiness = 0;
+				weight = 0;
+				actionPoints = 0;
 				statusEffectsSet[2] = true;
 			}
 			
@@ -280,44 +283,17 @@ public class Pet {
 	 * species energy loss stat
 	 */
 	public void turnDone() {
-		changeHunger(species.getHungerGain());
-		changeEnergy(-species.getEnergyLoss());
+		if (alive) {
+			changeHunger(species.getHungerGain());
+			changeEnergy(-species.getEnergyLoss());
+			actionPoints = 2;
+		}
 	}
 	
 	/**
 	 * Displays all of the pet's relevant statistics in a text format
 	 */
-	public String toString() {
-		if (alive) {
-			String healthyString;
-			if (healthy) 
-				healthyString = "is healthy";
-			else 
-				healthyString = "is sick";
-			
-			String behavingString;
-			if (behaving)
-				behavingString = "is behaving";
-			else
-				behavingString = "is misbehaving";
-			
-			String aliveString;
-			if (alive)
-				aliveString = "is alive";
-			else
-				aliveString = "is dead";
-			
-			return String.format("%s of species %s %s, %s, and %s.\n"
-					+ "Action Points: %d | Hunger: %d | Energy: %d | Happiness: %d | Weight: %d | Favourite food: %s | Favourite toy: %s", 
-					name, species.getName(), healthyString, behavingString, aliveString, actionPoints, hunger, energy, happiness, weight, favouriteFood.getName(), favouriteToy.getName());
-		}
-		else {
-			String revivableString;
-			if (hasBeenRevived)
-				revivableString = "cannot be revived again";
-			else
-				revivableString = "can be revived using a <add some revive item name>";
-			return String.format("%s of species %s is dead, and %s.", name, species.getName(), revivableString);
-		}
+	public String presentAs(String format) {
+		return String.format(format, name, species.getName(), actionPoints, hunger, energy, happiness, weight, healthy, behaving, alive, favouriteFood.getName(), favouriteToy.getName());
 	}
 }
