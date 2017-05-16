@@ -78,7 +78,7 @@ public class Player {
 	}
 	
 	/**
-	 * Adds one copy of the given food to the player’s inventory.
+	 * Adds one copy of the given food to the playerï¿½s inventory.
 	 * @param foodToAdd
 	 * A reference to the FoodType object you wish to add one of.
 	 */
@@ -90,7 +90,7 @@ public class Player {
 	}
 
 	/**
-	 * Adds the given toy to the player’s inventory.
+	 * Adds the given toy to the playerï¿½s inventory.
 	 * @param toyToAdd
 	 * A reference to the Toy object you want to add to the player's inventory.
 	 */

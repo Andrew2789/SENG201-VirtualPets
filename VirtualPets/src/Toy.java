@@ -11,10 +11,10 @@ public class Toy {
 	 * Initialises a new Toy object with properties based on the given values.
 	 * 
 	 * @param toyType
-	 * The type of the toy. Used to access generic statistics that all members of this toy’s type share, 
+	 * The type of the toy. Used to access generic statistics that all members of this toyï¿½s type share, 
 	 * e.g. the base amount of happiness a toy gains from playing with this toy.
 	 * @param durability
-	 * A number representation of the durability or ‘health’ of this specific toy. 
+	 * A number representation of the durability or ï¿½healthï¿½ of this specific toy. 
 	 * Used to determine how much more damage a toy can take before breaking. 
 	 */
 	public Toy(ToyType toyType) {

@@ -9,6 +9,11 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class SetupEnvironment {
 	private GameEnvironment currentGameEnvironment;
+	Scanner scanner;
+	
+	public SetupEnvironment(Scanner scanner) {
+		this.scanner = scanner;
+	}
 	
 	/**
 	 * Gets an integer from a scanner with a specified prompt. Prompts for input until valid input is entered.
@@ -20,7 +25,7 @@ public class SetupEnvironment {
 	 * @return
 	 * The integer from the scanner
 	 */
-	private int getInt(Scanner scanner, String prompt) {
+	private int getInt(String prompt) {
 		String input;
 		boolean valid;
 		do {
@@ -39,6 +44,41 @@ public class SetupEnvironment {
 	}
 	
 	/**
+	 * Main menu for the game.
+	 */
+	public boolean menu() {
+		String command;
+		
+		System.out.println("\n~~~~ Virtual Pets ~~~~\n");
+		System.out.println("Commands:\n"
+				+ "'new' - new game\n"
+				+ "'com' - list all possible commands\n"
+				+ "'help' - explain the game mechanics\n"
+				+ "'exit' - exit the game");
+		
+		while (true) {
+			System.out.print("Enter a command: ");
+			command = scanner.next();
+			
+			if (Helpers.match(command, "new")) {
+				newGame();
+				currentGameEnvironment.playGame();
+				return true;
+			}
+			else if (Helpers.match(command, "com"))
+				System.out.println("Commands: 'new', 'com', 'help', 'exit'.");
+			else if (Helpers.match(command, "help"))
+				System.out.println("Do stuff.");
+			else if (Helpers.match(command, "exit")) {
+				System.out.println("I see how it is.");
+				return false;
+			}
+			else
+				System.out.println("Command not recognised. Enter 'com' to list possible commands.");
+		}
+	}
+	
+	/**
 	 * Sets up the game environment. The user may add new species, toy types, or food types. Then, each player will be
 	 * named and given a number of pets (the user must specify each pet's name and species). A favourite food and toy 
 	 * are randomly assigned to each pet.
@@ -46,7 +86,7 @@ public class SetupEnvironment {
 	 * @return
 	 * The game environment that was set up
 	 */
-	public void setUpGame() {
+	private void newGame() {
 		Species[] species = {
 				new Species("Cat", 20, 10, 15, 5, 40, 70),
 				new Species("Doggo", 40, 15, 25, 10, 30, 55),
@@ -72,8 +112,6 @@ public class SetupEnvironment {
 		String petSpecies;
 		Pet[] playerPets;
 		int numberOfPets;
-		Scanner scanner = new Scanner(System.in);
-		scanner.useDelimiter("\r\n|\n");
 		String speciesList = "Species:\n";
 		for (Species speciesInstance: species) {
 			speciesList += String.format("Species name: %s | Optimum weight: %d | Hunger gain per turn: %d | "
@@ -82,14 +120,15 @@ public class SetupEnvironment {
 					speciesInstance.getHappinessLoss(), speciesInstance.getMinToyDamage(), speciesInstance.getMaxToyDamage());
 		}
 		
-		int numberOfPlayers = getInt(scanner, "Enter the number of players (1-3): ");
+		System.out.println();
+		int numberOfPlayers = getInt("Enter the number of players (1-3): ");
 		while (numberOfPlayers < 1 || numberOfPlayers > 3) {
-			numberOfPlayers = getInt(scanner, "Must have 1-3 players. Enter a valid number of players: ");
+			numberOfPlayers = getInt("Must have 1-3 players. Enter a valid number of players: ");
 		}
 
-		int numberOfDays = getInt(scanner, "Enter the number of days to play for: ");
+		int numberOfDays = getInt("Enter the number of days to play for: ");
 		while (numberOfDays < 1){
-			numberOfDays = getInt(scanner, "Cannot play for less than 1 day. Enter a valid number of days: ");
+			numberOfDays = getInt("Cannot play for less than 1 day. Enter a valid number of days: ");
 		}
 		
 		Player[] players = new Player[numberOfPlayers];
@@ -104,9 +143,9 @@ public class SetupEnvironment {
 			}
 			usedPlayerNames.add(playerName);
 
-			numberOfPets = getInt(scanner, String.format("Enter the number of pets for %s (1-3): ", playerName));
+			numberOfPets = getInt(String.format("Enter the number of pets for %s (1-3): ", playerName));
 			while (numberOfPets < 1 || numberOfPets > 3) {
-				numberOfPets = getInt(scanner, String.format("Cannot have that number of pets. Enter a valid number of pets for %s (1-3): ", playerName));
+				numberOfPets = getInt(String.format("Cannot have that number of pets. Enter a valid number of pets for %s (1-3): ", playerName));
 			}
 			
 			playerPets = new Pet[numberOfPets];
@@ -129,7 +168,7 @@ public class SetupEnvironment {
 					speciesIndex = 0;
 					System.out.print(String.format("Enter %s's species or enter 'help' to list all species: ", petName));
 					petSpecies = scanner.next();
-					if (petSpecies.equals("help")) {
+					if (Helpers.match(petSpecies, "help")) {
 						System.out.print(speciesList);
 						speciesIndex = species.length;
 					}
@@ -147,19 +186,17 @@ public class SetupEnvironment {
 			}
 			
 			players[i] = new Player(playerName, playerPets);
-			/*
-			for (Pet pet: playerPets) {
-				System.out.println(String.format("name: %s, species: %s, favtoy: %s, favfood: %s", pet.getName(), pet.getSpecies().getName(), pet.getFavouriteToy().getName(), pet.getFavouriteFood().getName()));
-			}
-			*/
 		}
 		currentGameEnvironment = new GameEnvironment(players, species, toyTypes, foodTypes, numberOfDays, scanner);
 		System.out.println();
 	}
 	
 	public static void main(String[] args) {
-		SetupEnvironment setupEnvironment = new SetupEnvironment();
-		setupEnvironment.setUpGame();
-		setupEnvironment.currentGameEnvironment.playGame();
+		Scanner scanner = new Scanner(System.in);
+		scanner.useDelimiter("\r\n|\n");
+		
+		SetupEnvironment setupEnvironment = new SetupEnvironment(scanner);
+		while (setupEnvironment.menu());
+		scanner.close();
 	}
 }
