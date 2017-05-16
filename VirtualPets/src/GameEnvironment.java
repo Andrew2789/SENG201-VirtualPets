@@ -9,6 +9,9 @@ public class GameEnvironment {
 	Scanner scanner;
 	String roundCommands = "Commands: 'select [pet name]', 'shop food', 'shop toys', 'status', 'help', 'end turn'";
 	String petCommands = "Commands: 'eat [food name]', 'play [toy name]', 'toilet', 'help', 'deselect'";
+	String petFormat;
+	String toyFormat;
+	String foodFormat;
 	
 	/**
 	 * @author Alex Tompkins (ato47)
@@ -28,6 +31,24 @@ public class GameEnvironment {
 		this.foodTypes = foodTypes;
 		this.numberOfDays = numberOfDays;
 		this.scanner = scanner;
+		int longestPet = 0;
+		for (Player player: players)
+			for (Pet pet: player.getPets())
+				if (pet.getName().length() > longestPet)
+					longestPet = pet.getName().length();
+		//petFormat = "%-"+ Integer.toString();
+		
+		int longestToy = 0;
+		for (ToyType toyType: toyTypes)
+			if (toyType.getName().length() > longestToy)
+				longestToy = toyType.getName().length();
+		toyFormat = "%-"+ Integer.toString(longestToy) +"s | $%-10.2f | %-10d";
+		
+		int longestFood = 0;
+		for (FoodType foodType: foodTypes)
+			if (foodType.getName().length() > longestFood)
+				longestFood = foodType.getName().length();
+		foodFormat = "%-"+ Integer.toString(longestFood) +"s | $%-10.2f | %-10d | %-10d";
 	}
 	
 	/**
