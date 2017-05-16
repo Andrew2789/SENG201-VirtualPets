@@ -137,11 +137,11 @@ public class SetupEnvironment {
 		for (int i=0; i<players.length; i++) {
 			System.out.print(String.format("Enter the name of player %d: ", i+1));
 			playerName = scanner.next();
-			while (usedPlayerNames.contains(playerName)) {
-				System.out.print(String.format("There is already a player called %s. Enter a unique name for player %d: ", playerName, i+1));
+			while (usedPlayerNames.contains(playerName.toLowerCase())) {
+				System.out.print(String.format("There is already a player called %s. Enter a unique name for player %d: ", playerName.toLowerCase(), i+1));
 				playerName = scanner.next();
 			}
-			usedPlayerNames.add(playerName);
+			usedPlayerNames.add(playerName.toLowerCase());
 
 			numberOfPets = getInt(String.format("Enter the number of pets for %s (1-3): ", playerName));
 			while (numberOfPets < 1 || numberOfPets > 3) {
@@ -153,11 +153,11 @@ public class SetupEnvironment {
 			for (int j=0; j<playerPets.length; j++) {
 				System.out.print(String.format("Enter the name of %s's next pet: ", playerName));
 				petName = scanner.next();
-				while (usedPetNames.contains(petName)) {
+				while (usedPetNames.contains(petName.toLowerCase())) {
 					System.out.print(String.format("There is already a pet called %s. Enter a unique name for this pet: ", petName));
 					petName = scanner.next();
 				}
-				usedPetNames.add(petName);
+				usedPetNames.add(petName.toLowerCase());
 				
 				// Get pet species, check to make sure input is a valid species
 
