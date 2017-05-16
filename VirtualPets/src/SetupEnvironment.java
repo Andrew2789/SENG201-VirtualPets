@@ -154,7 +154,7 @@ public class SetupEnvironment {
 				System.out.print(String.format("Enter the name of %s's next pet: ", playerName));
 				petName = scanner.next();
 				while (usedPetNames.contains(petName.toLowerCase())) {
-					System.out.print(String.format("There is already a pet called %s. Enter a unique name for this pet: ", petName));
+					System.out.print(String.format("There is already a pet called %s. Enter a unique name for this pet: ", petName.toLowerCase()));
 					petName = scanner.next();
 				}
 				usedPetNames.add(petName.toLowerCase());
