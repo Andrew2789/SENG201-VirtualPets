@@ -174,7 +174,7 @@ public class SetupEnvironment {
 					}
 					else
 						for (; speciesIndex<species.length; speciesIndex++)
-							if (species[speciesIndex].getName().equals(petSpecies))
+							if (Helpers.match(species[speciesIndex].getName(), petSpecies))
 								break;
 				} while (speciesIndex == species.length);
 				
