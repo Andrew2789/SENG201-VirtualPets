@@ -1,6 +1,8 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * TODO: reorganise methods, comment stuff
+ * 
  * @author Andrew Davidson (ada130)
  * Instances of this class represent a pet. The pet has a species and name, and has attributes
  * that must be maintained (hunger, energy, happiness, and weight). The pet may become unhealthy,
@@ -302,16 +304,27 @@ public class Pet {
 	}
 	
 	/**
-	 * Increments hunger by the pet's species hunger gain stat and decrement energy by the 
-	 * species energy loss stat
+	 * Increments hunger by the pet's species hunger gain stat and decrements energy and happiness by the 
+	 * species energy loss and happiness loss stats respectively. Resets action points.
+	 * @return
+	 * The score for this pet
 	 */
-	public void turnDone() {
+	public int finishTurn() {
 		if (alive) {
+			int score = happiness + energy + (100-hunger) + Math.abs(weight-species.getOptimumWeight())*2 + actionPoints*20;
+			if (!healthy)
+				score -= 50;
+			if (!behaving)
+				score -= 50;
+			
 			changeHunger(species.getHungerGain());
 			changeEnergy(-species.getEnergyLoss());
 			changeHappiness(-species.getHappinessLoss());
 			actionPoints = 2;
+			return score;
 		}
+		else
+			return 0;
 	}
 	
 	public void revive() {

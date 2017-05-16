@@ -84,7 +84,6 @@ public class SetupEnvironment {
 	 * Sets up the game environment. The user may add new species, toy types, or food types. Then, each player will be
 	 * named and given a number of pets (the user must specify each pet's name and species). A favourite food and toy 
 	 * are randomly assigned to each pet.
-	 * 
 	 * @return
 	 * The game environment that was set up
 	 */

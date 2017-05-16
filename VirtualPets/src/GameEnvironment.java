@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * TODO: commenting, score, organise methods
+ */
 public class GameEnvironment {
 	Player[] players;
 	Species[] species;
@@ -73,6 +76,15 @@ public class GameEnvironment {
 			System.out.println();
 		}
 		System.out.println("===== Game over =====");
+		
+		Player winner = players[0];
+		System.out.println("Scores:");
+		for (Player player: players) {
+			System.out.println(String.format("%s: %d", player.getName(), player.getScore()));
+			if (player.getScore() > winner.getScore())
+				winner = player;
+		}
+		System.out.println("\n" + winner.getName() + " wins!");
 		System.out.print("Press Enter to continue... ");
 		scanner.next();
 	}
@@ -88,7 +100,6 @@ public class GameEnvironment {
 		
 		for (Player player: players) {
 			// Initialise this player's turn
-			roundScore = 0;
 			System.out.println(String.format("Player %s's turn.", player.getName()));
 			String events = checkPetEvents(player.getPets());
 			System.out.println(events);
@@ -171,9 +182,14 @@ public class GameEnvironment {
 			} while (!Helpers.match(input, "end"));
 			System.out.println();
 			
+			roundScore = 0;
 			for (Pet pet: player.getPets()) {
-				pet.turnDone();
+				roundScore += pet.finishTurn();
 			}
+			System.out.println(String.format("Your score for this round was %d", roundScore));
+			player.changeScore(roundScore);
+			System.out.print("Press enter to move onto the next player's turn...\n");
+			scanner.next();
 		}
 	}
 	
