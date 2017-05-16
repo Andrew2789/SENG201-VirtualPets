@@ -1,0 +1,116 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * @author Alex Tompkins (ato47)
+ *
+ */
+public class Player {
+	private String name;
+	
+	private Pet[] pets;
+	private HashMap<FoodType, Integer> food;
+	private ArrayList<Toy> toys;
+	
+	private double money = (double) 250;
+	private int score = 0;
+	
+	
+	/**
+	 * Initialises a new Player instance with the given name and array of pets.
+	 * Sets food and toys to their respective empty collections.
+	 * 
+	 * @param name
+	 * The name of the player, set at the start of the game. This will not change.
+	 * @param pets
+	 * A collection of the pets belonging to a player.
+	 */
+	public Player(String name, Pet[] pets) {
+		this.name = name;
+		this.pets = pets;
+		
+		this.food = new HashMap<FoodType, Integer>();
+		this.toys = new ArrayList<Toy>();
+	}
+	
+	// Getters
+	public String getName() {
+		return this.name;
+	}
+	
+	public Pet[] getPets() {
+		return this.pets;
+	}
+	
+	public HashMap<FoodType, Integer> getFood() {
+		return this.food;
+	}
+	
+	public ArrayList<Toy> getToys() {
+		return this.toys;
+	}
+	
+	public double getMoney() {
+		return this.money;
+	}
+	
+	public int getScore() {
+		return this.score;
+	}
+	// End Getters
+	
+	/**
+	 * Changes the amount of money the player has by a given amount.
+	 * @param amount
+	 * The amount of money to change the player's balance by (positive to give money to player, negative to take money away).
+	 */
+	public void changeMoney(double amount) {
+		money += amount;
+	}
+	
+	/**
+	 * Changes the score of the player by a given value.
+	 * @param value
+	 * The value to change the player's score by (positive to add score).
+	 */
+	public void changeScore(int value) {
+		score += value;
+	}
+	
+	/**
+	 * Adds one copy of the given food to the player’s inventory.
+	 * @param foodToAdd
+	 * A reference to the FoodType object you wish to add one of.
+	 */
+	public void addFood(FoodType foodToAdd) {
+		if (food.containsKey(foodToAdd))
+			food.put(foodToAdd, food.get(foodToAdd) + 1);
+		else
+			food.put(foodToAdd, 1);
+	}
+
+	/**
+	 * Adds the given toy to the player’s inventory.
+	 * @param toyToAdd
+	 * A reference to the Toy object you want to add to the player's inventory.
+	 */
+	public void addToy(Toy toy) {
+		toys.add(toy);
+	}
+	
+	public void feed(Pet pet, FoodType foodType) {
+		pet.eat(foodType);
+		food.put(foodType, food.get(foodType)-1);
+		if (food.get(foodType) == 0)
+			food.remove(foodType);
+	}
+	
+	public boolean playWith(Pet pet, int toyIndex) {
+		pet.play(toys.get(toyIndex));
+		if (toys.get(toyIndex).getDurability() <= 0) {
+			toys.remove(toyIndex);
+			return false;
+		}
+		return true;
+	}
+}
