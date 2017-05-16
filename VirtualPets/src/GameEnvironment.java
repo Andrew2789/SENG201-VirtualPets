@@ -8,8 +8,8 @@ public class GameEnvironment {
 	int numberOfDays;
 	Scanner scanner;
 	
-	String roundCommands = "Commands: 'select [pet name]', 'revive [pet name]', 'shop food', 'shop toys', 'events', 'inventory', 'pet status', 'com', 'end'";
-	String petCommands = "Commands: 'eat [food name]', 'play [toy name]', 'toilet', 'sleep', 'inventory', 'pet status', 'com', 'exit'";
+	String roundCommands = "Commands: 'select [pet name]', 'revive [pet name]', 'shop food', 'shop toys', 'events', 'inventory', 'pet status', 'score', 'com', 'end'";
+	String petCommands = "Commands: 'eat [food name]', 'play [toy name]', 'toilet', 'sleep', 'cure', 'discipline', 'inventory', 'pet status', 'com', 'exit'";
 	String foodCommands = "Commands: 'buy [food name]', 'buy [food name] [amount]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
 	String toyCommands = "Commands: 'buy [toy name]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
 	
@@ -56,10 +56,10 @@ public class GameEnvironment {
 			for (Pet pet: player.getPets())
 				if (pet.getName().length() > longestPet)
 					longestPet = pet.getName().length();
-		petHeader = String.format("%-"+ Integer.toString(longestPet) +"s | %-"+ Integer.toString(longestSpecies) +"s | AP | Hunger | Energy | Happiness | Weight | Healthy "
+		petHeader = String.format("%-"+ Integer.toString(longestPet) +"s | %-"+ Integer.toString(longestSpecies) +"s | AP | Hunger | Energy | Happiness | Weight | Weight Dev | Healthy "
 				+ "| Behaving | Alive | %-"+ Integer.toString(longestFood) +"s | %-"+ Integer.toString(longestToy) +"s", "Pet name", "Species", "Fav Food", "Fav Toy");
 		petFormat = "%-"+ Integer.toString(longestPet) +"s | %-"+ Integer.toString(longestSpecies) +"s | %-2d | %-6d | %-6d | %-9d "
-				+ "| %-6d | %-7b | %-8b | %-5b | %-"+ Integer.toString(longestFood) +"s | %-"+ Integer.toString(longestToy) +"s";
+				+ "| %-6d | %s%-9d | %-7b | %-8b | %-5b | %-"+ Integer.toString(longestFood) +"s | %-"+ Integer.toString(longestToy) +"s";
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class GameEnvironment {
 						System.out.println("This pet has already been revived once, and is permanently dead now.");
 					
 					else if (player.getMoney() < 50)
-						System.out.println("You need at least $50 to revive a pet.");
+						System.out.println("It costs $50 to revive a pet. You do not have enough money.");
 					
 					else {
 						activePet.revive();
@@ -136,11 +136,16 @@ public class GameEnvironment {
 						petStatus(player);
 					}
 				}
-				else if (Helpers.match(input, "shop food"))
-					foodShop(player);
 				
-				else if (Helpers.match(input, "shop toys"))
+				else if (Helpers.match(input, "shop food")) {
+					foodShop(player);
+					System.out.println(roundCommands);
+				}
+				
+				else if (Helpers.match(input, "shop toys")) {
 					toyShop(player);
+					System.out.println(roundCommands);
+				}
 				
 				else if (Helpers.match(input, "events"))
 					System.out.println(events);
@@ -150,6 +155,9 @@ public class GameEnvironment {
 				
 				else if (Helpers.match(input, "pet status"))
 					petStatus(player);
+				
+				else if (Helpers.match(input, "score"))
+					System.out.println(player.getScore());
 				
 				else if (Helpers.match(input, "com"))
 					System.out.println(roundCommands);
@@ -179,6 +187,7 @@ public class GameEnvironment {
 		boolean[] statusEffectsSet;
 		String events = "New events: ";
 		
+		//Check status newly set status effects
 		for (Pet pet: pets) {
 			statusEffectsSet = pet.genRandomEvents();
 			
@@ -190,6 +199,16 @@ public class GameEnvironment {
 			
 			if (statusEffectsSet[2])
 				events += pet.getName() + " died, ";
+		}
+		
+		//Alert player to status effect implications/starvation
+		for (Pet pet: pets) {
+			if (pet.getHunger() >= 90)
+				System.out.println(String.format("%s is starving and is quickly losing weight, energy, and happiness.", pet.getName()));
+			if (!pet.isHealthy())
+				System.out.println(String.format("%s is sick and is losing 10 energy and 10 happiness per turn. They will continue to be sick until you cure them.", pet.getName()));
+			if (!pet.isBehaving())
+				System.out.println(String.format("%s is misbehaving and is losing 20 happiness per turn. They will continue to misbehave until you discipline them.", pet.getName()));
 		}
 		if (events.length() == 12)
 			events += "None";
@@ -250,7 +269,7 @@ public class GameEnvironment {
 	 * The player whose pets status will be displayed
 	 */
 	private void petStatus(Player player) {
-		System.out.println("Pets: (AP is action points, Fav is short for favourite)\n" + petHeader);
+		System.out.println("Pets: (AP is action points, Fav is short for favourite, Weight Diff is weight difference from optimal weight)\n" + petHeader);
 		for (Pet pet: player.getPets()) {
 			System.out.println(pet.presentAs(petFormat));
 		}
@@ -292,6 +311,29 @@ public class GameEnvironment {
 				System.out.println(activePet.getName() + " slept.");
 				petStatus(player);
 			}
+			
+			else if (Helpers.match(input, "cure")) {
+				if (activePet.isHealthy())
+					System.out.println(String.format("Cannot cure %s because they are healthy.", activePet.getName()));
+				else if (player.getMoney() < 25)
+					System.out.println("Curing a pet costs $25, you do not have enough money.");
+				else {
+					activePet.cure();
+					System.out.println(activePet.getName() + " was cured and is no longer sick. It cost $25.");
+					player.changeMoney(-25);
+					petStatus(player);
+				}
+			}
+			
+			else if (Helpers.match(input, "discipline")) {
+				if (activePet.isHealthy())
+					System.out.println(String.format("Cannot discipline %s because they are behaving.", activePet.getName()));
+				else {
+					activePet.discipline();
+					System.out.println(activePet.getName() + " was disciplined and is no longer misbehaving. They lost 30 happiness because of the disciplining.");
+					petStatus(player);
+				}
+			}
 
 			else if (Helpers.match(input, "inventory"))
 				inventory(player);
@@ -329,8 +371,10 @@ public class GameEnvironment {
 		for (FoodType food: player.getFood().keySet()) {
 			if (Helpers.match(food.getName(), foodName)) {
 				System.out.println(String.format("Fed %s %s.", activePet.getName(), food.getName()));
-				petStatus(player);
 				player.feed(activePet, food);
+				if (activePet.getFavouriteFood() == food)
+					System.out.println(String.format("1.5x more happiness was gained because %s is %s's favourite food!", food.getName(), activePet.getName()));
+				petStatus(player);
 				fed = true;
 				break;
 			}
@@ -363,11 +407,13 @@ public class GameEnvironment {
 		if (!(chosenToyType == null)) {
 			for (int i=0; i<player.getToys().size(); i++) {
 				if (player.getToys().get(i).getToyType() == chosenToyType) {
-					System.out.println(String.format("Played with %s using a %s.", activePet.getName(), player.getToys().get(i).getToyType().getName()));
+					System.out.println(String.format("Played with %s using a %s.", activePet.getName(), chosenToyType.getName()));
 					if (!player.playWith(activePet, i))
 						System.out.println("The toy broke.");
 					else
 						System.out.println(String.format("The toys durability is now %d.", player.getToys().get(i).getDurability()));
+					if (activePet.getFavouriteToy() == chosenToyType)
+						System.out.println(String.format("1.5x more happiness was gained because %s is %s's favourite toy!", chosenToyType.getName(), activePet.getName()));
 					petStatus(player);
 					played = true;
 					break;
@@ -461,8 +507,26 @@ public class GameEnvironment {
 				}
 			}
 			
+			else if (Helpers.match(input, "show shop")) {
+				System.out.println("\nWelcome to the food shop!");
+				System.out.println("These foods are for sale:");
+				System.out.println(foodHeader);
+				for (FoodType foodType : foodTypes) 
+					System.out.println(String.format(foodFormat, foodType.getName(), foodType.getPrice(), foodType.getNutrition(), foodType.getTastiness()));
+			}
+			
+			else if (Helpers.match(input, "inventory"))
+				inventory(player);
+			
+			else if (Helpers.match(input, "pet status"))
+				petStatus(player);
+			
+			else if (Helpers.match(input, "com"))
+				System.out.println(foodCommands);
+			
 			else if (Helpers.match(input, "exit"))
 				System.out.println("Thank you, come again!\n");
+			
 			else
 				System.out.println(String.format("'%s' is not a valid input. Please try again.", input));
 			
@@ -523,8 +587,26 @@ public class GameEnvironment {
 				}
 			}
 			
+			else if (Helpers.match(input, "show shop")) {
+				System.out.println("\nWelcome to the toy shop!");
+				System.out.println("These toys are for sale:");
+				System.out.println(toyHeader);
+				for (ToyType toyType : toyTypes)
+					System.out.println(String.format(toyFormat, toyType.getName(), toyType.getPrice(), toyType.getHappinessGain()));
+			}
+			
+			else if (Helpers.match(input, "inventory"))
+				inventory(player);
+			
+			else if (Helpers.match(input, "pet status"))
+				petStatus(player);
+			
+			else if (Helpers.match(input, "com"))
+				System.out.println(toyCommands);
+			
 			else if (Helpers.match(input, "exit"))
 				System.out.println("Thank you, come again!\n");
+			
 			else
 				System.out.println(String.format("'%s' is not a valid input. Please try again.", input));
 					

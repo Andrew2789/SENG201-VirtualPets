@@ -72,7 +72,7 @@ public class SetupEnvironment {
 			else if (Helpers.match(command, "help"))
 				System.out.println("Do stuff.");
 			else if (Helpers.match(command, "exit")) {
-				System.out.println("I see how it is.");
+				System.out.println();
 				return false;
 			}
 			else
@@ -175,7 +175,7 @@ public class SetupEnvironment {
 					if (Helpers.match(petSpecies, "species")) {
 						System.out.print(speciesList);
 					}
-					else
+					else {
 						for (Species speciesType: species)
 							if (Helpers.match(speciesType.getName(), petSpecies)) {
 								chosenSpecies = speciesType;
@@ -183,6 +183,7 @@ public class SetupEnvironment {
 							}
 						if (chosenSpecies == null)
 							System.out.println("That is not a valid species.");
+					}
 				}
 				
 				// Randomly assign a favourite toy and food to the pet and instantiate it

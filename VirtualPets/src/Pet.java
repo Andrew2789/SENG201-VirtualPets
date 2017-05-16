@@ -17,9 +17,9 @@ public class Pet {
 	private boolean alive = true;
 	private boolean revivable = true;
 	
-	private int hunger = 0;
-	private int energy = 100;
-	private int happiness = 100;
+	private int hunger = 20;
+	private int energy = 80;
+	private int happiness = 80;
 	private int weight;
 	private int actionPoints = 2;
 	
@@ -150,10 +150,19 @@ public class Pet {
 	 * An integer amount to change the weight by (negative or positive). Weight cannot go below 1,
 	 * this function will change out of bound values to be on the relevant boundary.
 	 */
-	private void changeWeight(int amount) {
-		weight += amount;
-		if (weight < 1)
-			weight = 1;
+	private void changeWeight(int amount, boolean starving) {
+		if (starving) {
+			weight += amount;
+			if (weight < 1)
+				weight = 1;
+		}
+		else if (amount > 0)
+			weight += amount;
+		else if (weight > species.getOptimumWeight()) {
+			weight += amount;
+			if (weight < species.getOptimumWeight())
+				weight = species.getOptimumWeight();
+		}
 	}
 	// End private variable modifiers
 	
@@ -167,7 +176,7 @@ public class Pet {
 	public void eat(FoodType food) {
 		changeHappiness(food.getTastiness());
 		changeHunger(-food.getNutrition());
-		changeWeight(food.getWeight());
+		changeWeight(food.getWeight(), false);
 		if (food == favouriteFood)
 			changeHappiness(food.getTastiness()/2);
 		actionPoints -= 1;
@@ -178,7 +187,7 @@ public class Pet {
 	 * the pet's energy, and increases the pet's hunger. Happiness increases more if the toy's type 
 	 * is the pet's favourite toy type.
 	 * @param toy
-	 * The toy to be played with.
+	 * The toy to be played with
 	 */
 	public void play(Toy toy) {
 		toy.changeDurability(-species.genToyDamage());
@@ -186,7 +195,7 @@ public class Pet {
 		changeEnergy(-10);
 		changeHunger(5);
 		if (toy.getToyType() == favouriteToy)
-			changeHappiness(10);
+			changeHappiness(toy.getToyType().getHappinessGain()/2);
 		actionPoints -= 1;
 	}
 	
@@ -194,7 +203,7 @@ public class Pet {
 	 * Makes the pet go to the toilet. Decreases the pet's weight.
 	 */
 	public void goToToilet() {
-		changeWeight(-10);
+		changeWeight(-10, false);
 		actionPoints -= 1;
 	}
 	
@@ -233,8 +242,6 @@ public class Pet {
 			double optWeight = species.getOptimumWeight();
 			
 			int chance = 0;
-			if (hunger > 90)
-				chance += (hunger-90)*10;
 			if (energy < 10)
 				chance += (10-energy)*10;
 			if (Math.abs(weight-optWeight) > optWeight/2)
@@ -277,8 +284,20 @@ public class Pet {
 						statusEffectsSet[1] = true;
 					}
 				}
+				
+				if (hunger >= 90) {
+					changeWeight(-species.getOptimumWeight()/3, true);
+					changeEnergy(-25);
+					changeHappiness(-35);
+				}
 			}
 		}
+		if (!healthy) {
+			changeEnergy(-10);
+			changeHappiness(-10);
+		}
+		if (!behaving)
+			changeHappiness(-20);
 		return statusEffectsSet;
 	}
 	
@@ -290,6 +309,7 @@ public class Pet {
 		if (alive) {
 			changeHunger(species.getHungerGain());
 			changeEnergy(-species.getEnergyLoss());
+			changeHappiness(-species.getHappinessLoss());
 			actionPoints = 2;
 		}
 	}
@@ -305,10 +325,27 @@ public class Pet {
 		alive = true;
 	}
 	
+	public void cure() {
+		healthy = true;
+		actionPoints -= 1;
+	}
+	
+	public void discipline() {
+		behaving = true;
+		changeHappiness(-30);
+		actionPoints -= 1;
+	}
+	
 	/**
 	 * Displays all of the pet's relevant statistics in a text format
 	 */
 	public String presentAs(String format) {
-		return String.format(format, name, species.getName(), actionPoints, hunger, energy, happiness, weight, healthy, behaving, alive, favouriteFood.getName(), favouriteToy.getName());
+		String sign;
+		if (weight-species.getOptimumWeight() >= 0)
+			sign = "+";
+		else
+			sign = "-";
+		return String.format(format, name, species.getName(), actionPoints, hunger, energy, happiness, weight, 
+				sign, Math.abs(weight-species.getOptimumWeight()), healthy, behaving, alive, favouriteFood.getName(), favouriteToy.getName());
 	}
 }
