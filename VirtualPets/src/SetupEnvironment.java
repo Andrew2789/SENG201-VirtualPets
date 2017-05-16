@@ -112,11 +112,9 @@ public class SetupEnvironment {
 		String playerName;
 		String petName;
 		String petSpecies;
-		Pet[] playerPets;
 		int numberOfPets;
+		Pet[] playerPets;
 		Species chosenSpecies;
-		int favouriteToyIndex;
-		int favouriteFoodIndex;
 		
 		int longestSpecies = 7;
 		for (Species speciesType: species)
@@ -187,13 +185,9 @@ public class SetupEnvironment {
 							System.out.println("That is not a valid species.");
 				}
 				
-				// Randomly assign a favourite toy and food to the pet
-				favouriteToyIndex = ThreadLocalRandom.current().nextInt(0, toyTypes.length);
-				favouriteFoodIndex = ThreadLocalRandom.current().nextInt(0, foodTypes.length);
-				
-				playerPets[j] = new Pet(petName, chosenSpecies, toyTypes[favouriteToyIndex], foodTypes[favouriteFoodIndex]);
+				// Randomly assign a favourite toy and food to the pet and instantiate it
+				playerPets[j] = new Pet(petName, chosenSpecies, toyTypes[ThreadLocalRandom.current().nextInt(0, toyTypes.length)], foodTypes[ThreadLocalRandom.current().nextInt(0, foodTypes.length)]);
 			}
-			
 			players[i] = new Player(playerName, playerPets);
 		}
 		currentGameEnvironment = new GameEnvironment(players, species, toyTypes, foodTypes, numberOfDays, longestSpecies, scanner);

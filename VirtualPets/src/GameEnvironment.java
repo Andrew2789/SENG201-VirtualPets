@@ -29,9 +29,7 @@ public class GameEnvironment {
 	 * @param foodTypes
 	 * @param numberOfDays
 	 */
-	public GameEnvironment(Player[] players, Species[] species, ToyType[] toyTypes,
-			FoodType[] foodTypes, int numberOfDays, int longestSpecies, Scanner scanner) {
-		
+	public GameEnvironment(Player[] players, Species[] species, ToyType[] toyTypes, FoodType[] foodTypes, int numberOfDays, int longestSpecies, Scanner scanner) {
 		this.players = players;
 		this.species = species;
 		this.toyTypes = toyTypes;
@@ -74,8 +72,9 @@ public class GameEnvironment {
 			round();
 			System.out.println();
 		}
-		scanner.close();
 		System.out.println("===== Game over =====");
+		System.out.print("Press Enter to continue... ");
+		scanner.next();
 	}
 	
 	/**
@@ -105,34 +104,63 @@ public class GameEnvironment {
 					activePet = checkIsPet(input.substring(7), player);
 					if (activePet == null)
 						System.out.println(String.format("No pet called '%s'.", input.substring(7)));
+					
 					else if (activePet.getActionPoints() == 0)
 						System.out.println(activePet.getName() + " has no action points and cannot be selected.");
+					
 					else if (!activePet.isAlive())
 						System.out.println(activePet.getName() + " is dead and cannot be selected.");
+					
 					else
 						interactWithPet(player, activePet);
 						System.out.println(roundCommands);
 				}
-				
+				else if (input.length() >= 7 && Helpers.match(input.substring(0, 7), "revive ")) {
+					activePet = checkIsPet(input.substring(7), player);
+					if (activePet == null)
+						System.out.println(String.format("No pet called '%s'.", input.substring(7)));
+					
+					else if (activePet.isAlive())
+						System.out.println("This pet is not dead!");
+					
+					else if (!activePet.isRevivable())
+						System.out.println("This pet has already been revived once, and is permanently dead now.");
+					
+					else if (player.getMoney() < 50)
+						System.out.println("You need at least $50 to revive a pet.");
+					
+					else {
+						activePet.revive();
+						player.changeMoney(-50);
+						System.out.println(String.format("%s was revived! It cost $50. They have 0 AP for this turn while they recover.", activePet.getName()));
+						petStatus(player);
+					}
+				}
 				else if (Helpers.match(input, "shop food"))
 					foodShop(player);
 				
 				else if (Helpers.match(input, "shop toys"))
 					toyShop(player);
 				
+				else if (Helpers.match(input, "events"))
+					System.out.println(events);
+				
+				else if (Helpers.match(input, "inventory"))
+					inventory(player);
+				
 				else if (Helpers.match(input, "pet status"))
 					petStatus(player);
 				
-				else if (Helpers.match(input, "help"))
+				else if (Helpers.match(input, "com"))
 					System.out.println(roundCommands);
 				
-				else if (Helpers.match(input, "end turn"))
+				else if (Helpers.match(input, "end"))
 					continue;
 				
 				else
 					System.out.println("Input was not a recognised command.");
 				
-			} while (!Helpers.match(input, "end turn"));
+			} while (!Helpers.match(input, "end"));
 			System.out.println();
 			
 			for (Pet pet: player.getPets()) {
@@ -156,8 +184,10 @@ public class GameEnvironment {
 			
 			if (statusEffectsSet[0]) 
 				events += pet.getName() + " became sick, ";
+			
 			if (statusEffectsSet[1])
 				events += pet.getName() + " has started to misbehave, ";
+			
 			if (statusEffectsSet[2])
 				events += pet.getName() + " died, ";
 		}
@@ -179,7 +209,7 @@ public class GameEnvironment {
 	 */
 	private Pet checkIsPet(String toMatch, Player player) {
 		for (Pet pet: player.getPets())
-			if (pet.getName().equals(toMatch))
+			if (Helpers.match(pet.getName(), toMatch))
 				return pet;
 		return null;
 	}
@@ -192,20 +222,23 @@ public class GameEnvironment {
 	 */
 	private void inventory(Player player) {
 		System.out.println(String.format("Money: $%.2f", player.getMoney()));
-		
 		String outString = "";
 		for (Toy toy: player.getToys())
 			outString += toy + ", ";
+		
 		if (outString.length() == 0)
 			System.out.println("Toys: None");
+		
 		else
 			System.out.println(String.format("Toys: %s", outString.substring(0, outString.length()-2)));
 		
 		outString = "";
 		for (FoodType foodType: player.getFood().keySet())
 			outString += foodType.getName() + String.format(" x %d, ", player.getFood().get(foodType));
+		
 		if (outString.length() == 0)
 			System.out.println("Food: None");
+		
 		else
 			System.out.println(String.format("Food: %s", outString.substring(0, outString.length()-2)));
 	}	
@@ -242,22 +275,35 @@ public class GameEnvironment {
 			
 			// Check the input for a valid command
 			
-			if (input.length() >= 4 && input.substring(0, 4).equals("eat "))
+			if (input.length() >= 4 && Helpers.match(input.substring(0, 4), "eat "))
 				eat(player, activePet, input.substring(4));
 			
-			else if (input.length() >= 5 && input.substring(0, 5).equals("play "))
+			else if (input.length() >= 5 && Helpers.match(input.substring(0, 5), "play "))
 				play(player, activePet, input.substring(5));
 			
-			else if (input.equals("toilet")) {
+			else if (Helpers.match(input, "toilet")) {
 				activePet.goToToilet();
-				System.out.println(String.format("%s went to the toilet. New status: \n%s", activePet.getName(), activePet));
+				System.out.println(activePet.getName() + " went to the toilet.");
+				petStatus(player);
 			}
 			
-			else if (input.equals("help"))
+			else if (Helpers.match(input, "sleep")) {
+				activePet.sleep();
+				System.out.println(activePet.getName() + " slept.");
+				petStatus(player);
+			}
+
+			else if (Helpers.match(input, "inventory"))
+				inventory(player);
+			
+			else if (Helpers.match(input, "pet status"))
+				petStatus(player);
+			
+			else if (Helpers.match(input, "com"))
 				System.out.println(petCommands);
 			
-			else if (input.equals("deselect"))
-				continue;
+			else if (Helpers.match(input, "exit"))
+				System.out.println(activePet.getName() + " deselected.\n");
 			
 			else
 				System.out.println("Input was not a recognised command.");
@@ -265,8 +311,7 @@ public class GameEnvironment {
 			if (activePet.getActionPoints() == 0)
 				System.out.println(String.format(activePet.getName() + " is out of action points and has been deselected."));
 			
-		} while (!(input.equals("deselect")) && activePet.getActionPoints() > 0);
-		System.out.println();
+		} while (!Helpers.match(input, "exit") && activePet.getActionPoints() > 0);
 	}
 	
 	/**
@@ -282,8 +327,9 @@ public class GameEnvironment {
 	private void eat(Player player, Pet activePet, String foodName) {
 		boolean fed = false;
 		for (FoodType food: player.getFood().keySet()) {
-			if (food.getName().equals(foodName)) {
+			if (Helpers.match(food.getName(), foodName)) {
 				System.out.println(String.format("Fed %s %s.", activePet.getName(), food.getName()));
+				petStatus(player);
 				player.feed(activePet, food);
 				fed = true;
 				break;
@@ -308,20 +354,21 @@ public class GameEnvironment {
 		ToyType chosenToyType = null;
 		
 		for (ToyType toyType: toyTypes) {
-			if (toyType.getName().equals(toyName)) {
+			if (Helpers.match(toyType.getName(), toyName)) {
 				chosenToyType = toyType;
 				break;
 			}
 		}
+		
 		if (!(chosenToyType == null)) {
 			for (int i=0; i<player.getToys().size(); i++) {
 				if (player.getToys().get(i).getToyType() == chosenToyType) {
-					System.out.println(String.format("Played with %s using a %s.", 
-							activePet.getName(), player.getToys().get(i).getToyType().getName()));
+					System.out.println(String.format("Played with %s using a %s.", activePet.getName(), player.getToys().get(i).getToyType().getName()));
 					if (!player.playWith(activePet, i))
 						System.out.println("The toy broke.");
 					else
 						System.out.println(String.format("The toys durability is now %d.", player.getToys().get(i).getDurability()));
+					petStatus(player);
 					played = true;
 					break;
 				}
@@ -358,13 +405,14 @@ public class GameEnvironment {
 		}
 		
 		// Section for user input.
-		System.out.println("Enter 'buy [food name]' to buy that food, 'buy [food name] [number] to buy multiple of that food, or 'leave' to leave.");
+		//System.out.println("Enter 'buy [food name]' to buy that food, 'buy [food name] [number] to buy multiple of that food, or 'exit' to exit.");
+		System.out.println(foodCommands);
 		do {
 			System.out.println(String.format("\nYou have $%.2f.", player.getMoney()));
 			System.out.print("What do you want to do? ");
 			input = scanner.next();
 			
-			if (input.length() >= 4 && input.substring(0, 4).equals("buy ")) {
+			if (input.length() >= 4 && Helpers.match(input.substring(0, 4), "buy ")) {
 				inputParts = input.substring(4).split(" ");
 				
 				// Check format of input and set numFood to -1 if invalid, otherwise parse input for numFood.
@@ -393,7 +441,7 @@ public class GameEnvironment {
 					// Check that foodType given is valid.
 					desiredFood = null;
 					for (FoodType foodType : foodTypes) {
-						if (foodType.getName().toLowerCase().equals(inputParts[0].toLowerCase()))
+						if (Helpers.match(foodType.getName().toLowerCase(), inputParts[0].toLowerCase()))
 							desiredFood = foodType;
 					}
 					if (desiredFood == null)
@@ -413,12 +461,12 @@ public class GameEnvironment {
 				}
 			}
 			
-			else if (input.equals("leave"))
+			else if (Helpers.match(input, "exit"))
 				System.out.println("Thank you, come again!\n");
 			else
 				System.out.println(String.format("'%s' is not a valid input. Please try again.", input));
 			
-		} while (!input.equals("leave"));
+		} while (!Helpers.match(input, "exit"));
 	}
 	
 	/**
@@ -444,18 +492,19 @@ public class GameEnvironment {
 		}
 		
 		// Section for user input.
-		System.out.println("Enter 'buy [toy name]' to buy one of that toy, or 'leave' to leave.");
+		//System.out.println("Enter 'buy [toy name]' to buy one of that toy, or 'exit' to exit.");
+		System.out.println(toyCommands);
 		do {
 			System.out.println(String.format("\nYou have $%.2f.", player.getMoney()));
 			System.out.print("What do you want to do? ");
 			input = scanner.next();
 			
 			// Check the format of the user input.
-			if (input.length() >= 4 && input.substring(0, 4).equals("buy ")) {
+			if (input.length() >= 4 && Helpers.match(input.substring(0, 4), "buy ")) {
 				// Search the known toy types to try find a match for user input.
 				desiredToy = null;
 				for (ToyType toyType : toyTypes) {
-					if (toyType.getName().toLowerCase().equals(input.substring(4).toLowerCase()))
+					if (Helpers.match(toyType.getName().toLowerCase(), input.substring(4).toLowerCase()))
 						desiredToy = toyType;
 				}
 				if (desiredToy == null)
@@ -474,11 +523,11 @@ public class GameEnvironment {
 				}
 			}
 			
-			else if (input.equals("leave"))
+			else if (Helpers.match(input, "exit"))
 				System.out.println("Thank you, come again!\n");
 			else
 				System.out.println(String.format("'%s' is not a valid input. Please try again.", input));
 					
-		} while (!input.equals("leave"));
+		} while (!Helpers.match(input, "exit"));
 	}
 }

@@ -15,7 +15,7 @@ public class Pet {
 	private boolean healthy = true;
 	private boolean behaving = true;
 	private boolean alive = true;
-	private boolean hasBeenRevived = false;
+	private boolean revivable = true;
 	
 	private int hunger = 0;
 	private int energy = 100;
@@ -65,6 +65,10 @@ public class Pet {
 	
 	public boolean isAlive() {
 		return alive;
+	}
+	
+	public boolean isRevivable() {
+		return revivable;
 	}
 	
 	public int getHunger() {
@@ -198,7 +202,7 @@ public class Pet {
 	 * Makes the pet sleep. Increases the pet's energy.
 	 */
 	public void sleep() {
-		changeEnergy(25);
+		changeEnergy(30);
 		actionPoints -= 1;
 	}
 	
@@ -288,6 +292,17 @@ public class Pet {
 			changeEnergy(-species.getEnergyLoss());
 			actionPoints = 2;
 		}
+	}
+	
+	public void revive() {
+		revivable = false;
+		hunger = 25;
+		energy = 75;
+		happiness = 75;
+		weight = species.getOptimumWeight()*9/10;
+		healthy = true;
+		behaving = true;
+		alive = true;
 	}
 	
 	/**
