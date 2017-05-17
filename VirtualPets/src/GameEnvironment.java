@@ -11,10 +11,10 @@ public class GameEnvironment {
 	int numberOfDays;
 	Scanner scanner;
 	
-	String roundCommands = "Commands: 'select [pet name]', 'revive [pet name]', 'shop food', 'shop toys', 'events', 'inventory', 'pet status', 'score', 'com', 'end'";
-	String petCommands = "Commands: 'eat [food name]', 'play [toy name]', 'toilet', 'sleep', 'cure', 'discipline', 'inventory', 'pet status', 'com', 'exit'";
-	String foodCommands = "Commands: 'buy [food name]', 'buy [food name] [amount]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
-	String toyCommands = "Commands: 'buy [toy name]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
+	final String roundCommands = "Commands: 'select [pet name]', 'revive [pet name]', 'shop food', 'shop toys', 'events', 'inventory', 'pet status', 'score', 'com', 'end'";
+	final String petCommands = "Commands: 'eat [food name]', 'play [toy name]', 'toilet', 'sleep', 'cure', 'discipline', 'inventory', 'pet status', 'com', 'exit'";
+	final String foodCommands = "Commands: 'buy [food name]', 'buy [food name] [amount]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
+	final String toyCommands = "Commands: 'buy [toy name]', 'show shop', 'inventory', 'pet status', 'com', 'exit'";
 	
 	String petHeader;
 	String petFormat;
