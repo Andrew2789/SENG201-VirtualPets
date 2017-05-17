@@ -329,9 +329,9 @@ public class Pet {
 	
 	public void revive() {
 		revivable = false;
-		hunger = 25;
-		energy = 75;
-		happiness = 75;
+		hunger = 35;
+		energy = 65;
+		happiness = 65;
 		weight = species.getOptimumWeight()*9/10;
 		healthy = true;
 		behaving = true;

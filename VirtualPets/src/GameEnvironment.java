@@ -44,25 +44,25 @@ public class GameEnvironment {
 		for (ToyType toyType: toyTypes)
 			if (toyType.getName().length() > longestToy)
 				longestToy = toyType.getName().length();
-		toyHeader = String.format("%-"+ Integer.toString(longestToy) +"s | Price     | Happiness Gain", "Toy");
-		toyFormat = "%-"+ Integer.toString(longestToy) +"s | $%-8.2f | %-5d";
+		toyHeader = String.format("%-"+ longestToy +"s | Price     | Happiness Gain", "Toy");
+		toyFormat = "%-"+ longestToy +"s | $%-8.2f | %-5d";
 		
 		int longestFood = 8;
 		for (FoodType foodType: foodTypes)
 			if (foodType.getName().length() > longestFood)
 				longestFood = foodType.getName().length();
-		foodHeader = String.format("%-"+ Integer.toString(longestFood) +"s | Price     | Nutrition | Tastiness ", "Food");
-		foodFormat = "%-"+ Integer.toString(longestFood) +"s | $%-8.2f | %-9d | %-9d";
+		foodHeader = String.format("%-"+ longestFood +"s | Price     | Nutrition | Tastiness ", "Food");
+		foodFormat = "%-"+ longestFood +"s | $%-8.2f | %-9d | %-9d";
 		
 		int longestPet = 8;
 		for (Player player: players)
 			for (Pet pet: player.getPets())
 				if (pet.getName().length() > longestPet)
 					longestPet = pet.getName().length();
-		petHeader = String.format("%-"+ Integer.toString(longestPet) +"s | %-"+ Integer.toString(longestSpecies) +"s | AP | Hunger | Energy | Happiness | Weight | Weight Dev | Healthy "
-				+ "| Behaving | Alive | %-"+ Integer.toString(longestFood) +"s | %-"+ Integer.toString(longestToy) +"s", "Pet name", "Species", "Fav Food", "Fav Toy");
-		petFormat = "%-"+ Integer.toString(longestPet) +"s | %-"+ Integer.toString(longestSpecies) +"s | %-2d | %-6d | %-6d | %-9d "
-				+ "| %-6d | %s%-9d | %-7b | %-8b | %-5b | %-"+ Integer.toString(longestFood) +"s | %-"+ Integer.toString(longestToy) +"s";
+		petHeader = String.format("%-"+ longestPet +"s | %-"+ longestSpecies +"s | AP | Hunger | Energy | Happiness | Weight | Weight Dev | Healthy "
+				+ "| Behaving | Alive | %-"+ longestFood +"s | %-"+ longestToy +"s", "Pet name", "Species", "Fav Food", "Fav Toy");
+		petFormat = "%-"+ longestPet +"s | %-"+ longestSpecies +"s | %-2d | %-6d | %-6d | %-9d "
+				+ "| %-6d | %s%-9d | %-7b | %-8b | %-5b | %-"+ longestFood +"s | %-"+ longestToy +"s";
 	}
 	
 	/**
