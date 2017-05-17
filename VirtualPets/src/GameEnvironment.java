@@ -285,7 +285,7 @@ public class GameEnvironment {
 	 * The player whose pets status will be displayed
 	 */
 	private void petStatus(Player player) {
-		System.out.println("Pets: (AP is action points, Fav is short for favourite, Weight Diff is weight difference from optimal weight)\n" + petHeader);
+		System.out.println("Pets: (AP is action points, Fav is short for favourite, Weight Dev is weight difference from optimal weight)\n" + petHeader);
 		for (Pet pet: player.getPets()) {
 			System.out.println(pet.presentAs(petFormat));
 		}

@@ -205,7 +205,7 @@ public class Pet {
 	 * Makes the pet go to the toilet. Decreases the pet's weight.
 	 */
 	public void goToToilet() {
-		changeWeight(-10, false);
+		changeWeight(-species.getOptimumWeight()/6, false);
 		actionPoints -= 1;
 	}
 	

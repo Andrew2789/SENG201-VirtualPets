@@ -89,9 +89,11 @@ public class SetupEnvironment {
 	 */
 	private void newGame() {
 		Species[] species = {
-				new Species("Cat", 20, 10, 15, 5, 40, 70),
-				new Species("Doggo", 40, 15, 25, 10, 30, 55),
-				new Species("Pupperrrrr", 25, 12, 18, 20, 15, 35)
+				new Species("Cat", 60, 10, 15, 5, 40, 70),
+				new Species("Dog", 90, 15, 25, 10, 30, 55),
+				new Species("Crab", 10, 12, 30, 10, 25, 45),
+				new Species("Fish", 35, 20, 20, 2, 10, 20),
+				new Species("Sloth", 55, 5, 50, 5, 15, 25)
 		};
 		
 		ToyType[] toyTypes = {
@@ -102,8 +104,9 @@ public class SetupEnvironment {
 		
 		FoodType[] foodTypes = {
 				new FoodType("Lasagne", 20, 50, 25, 10),
-				new FoodType("Berries", 5, -100, -100, 5),
-				new FoodType("Mushrooms", 10, 20, 100, 5)
+				new FoodType("Berries", 5, -10, -10, 5),
+				new FoodType("Mushrooms", 10, 20, 20, 5),
+				new FoodType("$2-rice", 2, 15, 10, 5)
 		};
 
 		ArrayList<String> usedPlayerNames = new ArrayList<String>();
