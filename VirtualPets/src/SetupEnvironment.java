@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 /**
  * @author Andrew Davidson (ada130)
  * This class is used to prompt the user for information required to set up a game, and then to create a game environment
@@ -13,34 +14,6 @@ public class SetupEnvironment {
 	
 	public SetupEnvironment(Scanner scanner) {
 		this.scanner = scanner;
-	}
-	
-	/**
-	 * Gets an integer from a scanner with a specified prompt. Prompts for input until valid input is entered.
-	 * 
-	 * @param scanner
-	 * The scanner to get input from
-	 * @param prompt
-	 * The prompt for input
-	 * @return
-	 * The integer from the scanner
-	 */
-	private int getInt(String prompt) {
-		String input;
-		boolean valid;
-		do {
-			System.out.print(prompt);
-			input = scanner.next();
-			try {
-				Integer.parseInt(input);
-				valid = true;
-			}
-			catch (NumberFormatException e) {
-				System.out.println("Input was not an integer.");
-				valid = false;
-			}
-		} while (!valid);
-		return Integer.parseInt(input);
 	}
 	
 	/**
@@ -130,14 +103,14 @@ public class SetupEnvironment {
 					speciesType.getEnergyLoss(), speciesType.getHappinessLoss(), speciesType.getMinToyDamage(), speciesType.getMaxToyDamage());
 		
 		System.out.println();
-		int numberOfPlayers = getInt("Enter the number of players (1-3): ");
+		int numberOfPlayers = Helpers.getInt(scanner, "Enter the number of players (1-3): ");
 		while (numberOfPlayers < 1 || numberOfPlayers > 3) {
-			numberOfPlayers = getInt("Must have 1-3 players. Enter a valid number of players: ");
+			numberOfPlayers = Helpers.getInt(scanner, "Must have 1-3 players. Enter a valid number of players: ");
 		}
 
-		int numberOfDays = getInt("Enter the number of days to play for: ");
+		int numberOfDays = Helpers.getInt(scanner, "Enter the number of days to play for: ");
 		while (numberOfDays < 1){
-			numberOfDays = getInt("Cannot play for less than 1 day. Enter a valid number of days: ");
+			numberOfDays = Helpers.getInt(scanner, "Cannot play for less than 1 day. Enter a valid number of days: ");
 		}
 		
 		Player[] players = new Player[numberOfPlayers];
@@ -152,9 +125,9 @@ public class SetupEnvironment {
 			}
 			usedPlayerNames.add(playerName.toLowerCase());
 
-			numberOfPets = getInt(String.format("Enter the number of pets for %s (1-3): ", playerName));
+			numberOfPets = Helpers.getInt(scanner, String.format("Enter the number of pets for %s (1-3): ", playerName));
 			while (numberOfPets < 1 || numberOfPets > 3) {
-				numberOfPets = getInt(String.format("Cannot have that number of pets. Enter a valid number of pets for %s (1-3): ", playerName));
+				numberOfPets = Helpers.getInt(scanner, String.format("Cannot have that number of pets. Enter a valid number of pets for %s (1-3): ", playerName));
 			}
 			
 			playerPets = new Pet[numberOfPets];
