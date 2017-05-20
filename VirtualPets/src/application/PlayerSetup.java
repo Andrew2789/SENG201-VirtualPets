@@ -1,4 +1,4 @@
-package gui;
+package application;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -8,7 +8,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import playerData.Pet;
 import javax.swing.ImageIcon;
 
 public class PlayerSetup extends JPanel {
@@ -20,13 +19,13 @@ public class PlayerSetup extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PlayerSetup(Font semiBoldFont, Font regularFont, int playerNumber) {
+	public PlayerSetup(Species[] species, String[] speciesNames, ImageIcon[] speciesIcons, ToyType[] toyTypes, FoodType[] foodTypes, Font semiBoldFont, Font regularFont, int playerNumber) {
 		setLayout(null);
 		setOpaque(false);
 		
 		petSetups = new PetSetup[3];
 		for (int i=0; i<3; i++) {
-			petSetups[i] = new PetSetup(semiBoldFont, regularFont, i+1);
+			petSetups[i] = new PetSetup(species, speciesNames, speciesIcons, toyTypes, foodTypes, semiBoldFont, regularFont, i+1);
 			petSetups[i].setBounds(0, 60 + 110*i, 240, 125);
 			petSetups[i].setVisible(false);
 			add(petSetups[i]);
@@ -74,15 +73,10 @@ public class PlayerSetup extends JPanel {
 		add(label);
 	}
 	
-	public String getPlayerName() {
-		return playerNameField.getText();
-	}
-	
-	public Pet[] getPets() {
+	public Player generatePlayer(int startingMoney) {
 		Pet[] pets = new Pet[numberOfPets];
-		for (int i=0; i<numberOfPets; i++) {
-			//petSetups[i];
-		}
-		return pets;
+		for (int i=0; i<numberOfPets; i++)
+			pets[i] = petSetups[i].generatePet();
+		return new Player(playerNameField.getText(), pets, startingMoney);
 	}
 }

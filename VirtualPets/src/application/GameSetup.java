@@ -1,4 +1,4 @@
-package gui;
+package application;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,8 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import playerData.Player;
-import playerData.Species;
 
 public class GameSetup extends JPanel {
 	private static final long serialVersionUID = 1441493919925710008L;
@@ -23,18 +21,25 @@ public class GameSetup extends JPanel {
 	private int startingMoney = 150;
 	private int incomePerTurn = 35;
 	private PlayerSetup[] playerSetups;
+	
+	private JButton buttonDone;
+	private JButton buttonBack;
 
 	/**
 	 * Create the panel.
 	 */
-	public GameSetup(Species[] species, Font titleFont, Font boldFont, Font semiBoldFont, Font regularFont) {
+	public GameSetup(Species[] species, ImageIcon[] speciesIcons, ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font boldFont, Font semiBoldFont, Font regularFont) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
 		
+		String[] speciesNames = new String[species.length];
+		for (int i=0; i<species.length; i++)
+			speciesNames[i] = species[i].getName();
+		
 		playerSetups = new PlayerSetup[3];
 		for (int i=0; i<3; i++) {
-			playerSetups[i] = new PlayerSetup(semiBoldFont, regularFont, i+1);
+			playerSetups[i] = new PlayerSetup(species, speciesNames, speciesIcons, toyTypes, foodTypes, semiBoldFont, regularFont, i+1);
 			playerSetups[i].setBounds(40 + 240*i, 150, 240, 450);
 			playerSetups[i].setVisible(false);
 			add(playerSetups[i]);
@@ -116,18 +121,18 @@ public class GameSetup extends JPanel {
 		moneyPerTurnChooser.setBounds(475, 103, 47, 22);
 		add(moneyPerTurnChooser);
 		
-		JButton buttonDone = new JButton("Done");
+		buttonDone = new JButton("Done");
 		buttonDone.setFont(boldFont);
-		buttonDone.setBounds(561, 101, 89, 25);
+		buttonDone.setBounds(561, 98, 89, 25);
 		add(buttonDone);
 		
-		JButton buttonBack = new JButton("Back");
+		buttonBack = new JButton("Back");
 		buttonBack.setFont(boldFont);
 		buttonBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		buttonBack.setBounds(651, 101, 89, 25);
+		buttonBack.setBounds(651, 98, 89, 25);
 		add(buttonBack);
 		
 		JLabel backgroundImage = new JLabel("");
@@ -136,10 +141,18 @@ public class GameSetup extends JPanel {
 		add(backgroundImage);
 	}
 	
+	public JButton getDoneButton() {
+		return buttonDone;
+	}
+	
+	public JButton getBackButton() {
+		return buttonBack;
+	}
+	
 	public Game generateGame() {
 		Player[] players = new Player[numberOfPlayers];
 		for (int i=0; i<numberOfPlayers; i++)
-			players[i] = new Player(playerSetups[i].getPlayerName(), playerSetups[i].getPets(), startingMoney);
+			players[i] = playerSetups[i].generatePlayer(startingMoney);
 		return new Game(players, numberOfDays, incomePerTurn);
 	}
 }

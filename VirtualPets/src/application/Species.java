@@ -1,4 +1,4 @@
-package playerData;
+package application;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**

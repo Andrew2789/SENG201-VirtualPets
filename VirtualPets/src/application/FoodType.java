@@ -1,4 +1,4 @@
-package playerData;
+package application;
 
 /**
  * @author Andrew Davidson (ada130)

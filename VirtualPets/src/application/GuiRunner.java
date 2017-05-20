@@ -1,4 +1,4 @@
-package gui;
+package application;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -7,10 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import playerData.Species;
-import playerData.ToyType;
-import playerData.FoodType;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class GuiRunner {
@@ -20,7 +18,8 @@ public class GuiRunner {
 	private Font sourceSansProBold;
 	
 	private Species[] species;
-	private ToyType[] toyType;
+	private ImageIcon[] speciesIcons;
+	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
 	
 	private JFrame frame;
@@ -48,7 +47,7 @@ public class GuiRunner {
 	 * Create the application.
 	 */
 	public GuiRunner() {
-		Species[] species = {
+		species = new Species[] {
 				new Species("Cat", 60, 10, 15, 5, 40, 70),
 				new Species("Dog", 90, 15, 25, 10, 30, 55),
 				new Species("Crab", 10, 12, 30, 10, 25, 45),
@@ -56,13 +55,17 @@ public class GuiRunner {
 				new Species("Sloth", 55, 5, 40, 5, 15, 25)
 		};
 		
-		ToyType[] toyTypes = {
+		speciesIcons = new ImageIcon[species.length];
+		for (int i=0; i<speciesIcons.length; i++)
+			speciesIcons[i] = new ImageIcon("images/species/"+species[i].getName()+".png");
+		
+		toyTypes = new ToyType[] {
 				new ToyType("Proleteriat", -100, 100),
 				new ToyType("Bell", 10, 15),
 				new ToyType("Mouse", 25, 50)
 		};
 		
-		FoodType[] foodTypes = {
+		foodTypes = new FoodType[] {
 				new FoodType("Lasagne", 20, 50, 25, 10),
 				new FoodType("Berries", 5, -10, -10, 5),
 				new FoodType("Mushrooms", 10, 20, 20, 5),
@@ -116,6 +119,7 @@ public class GuiRunner {
 		
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				loadGameSetup();
 				mainMenu.setVisible(false);
 				gameSetup.setVisible(true);
 			}
@@ -135,7 +139,22 @@ public class GuiRunner {
 	 * Load the game setup screen and store it.
 	 */
 	private void loadGameSetup() {
-		gameSetup = new GameSetup(species, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+		gameSetup = new GameSetup(species, speciesIcons, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+
+		gameSetup.getDoneButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				game = gameSetup.generateGame();
+				gameSetup.setVisible(false);
+				frame.getContentPane().add(game);
+			}
+		});
+		
+		gameSetup.getBackButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				gameSetup.setVisible(false);
+				mainMenu.setVisible(true);
+			}
+		});
 		
 		frame.getContentPane().add(gameSetup);
 	}
