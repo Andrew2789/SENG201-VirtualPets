@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JList;
@@ -12,7 +13,7 @@ public class PetSetup extends JPanel {
 	 * Create the panel.
 	 */
 	public PetSetup() {
-		setOpaque(false);
+		setOpaque(true);
 		setLayout(null);
 		
 		JComboBox comboBox = new JComboBox();

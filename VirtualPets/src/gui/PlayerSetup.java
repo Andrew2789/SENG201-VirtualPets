@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -13,8 +14,15 @@ public class PlayerSetup extends JPanel {
 	 * Create the panel.
 	 */
 	public PlayerSetup() {
-		setOpaque(false);
+		setOpaque(true);
 		setLayout(null);
+		
+		petSetups = new PetSetup[3];
+		for (int i=0; i<3; i++) {
+			petSetups[i] = new PetSetup();
+			petSetups[i].setBounds(150*i, 70, 150, 100);
+			add(petSetups[i]);
+		}
 		
 		JLabel lblPlayerName = new JLabel("Player Name");
 		lblPlayerName.setBounds(12, 12, 99, 15);
@@ -39,11 +47,6 @@ public class PlayerSetup extends JPanel {
 		slider.setBounds(150, 25, 200, 50);
 		add(slider);
 		
-		petSetups = new PetSetup[3];
-		for (int i=0; i<3; i++) {
-			petSetups[i] = new PetSetup();
-			petSetups[i].setBounds(150*i, 70, 150, 100);
-			add(petSetups[i]);
-		}
+		
 	}
 }

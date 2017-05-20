@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -5,6 +6,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class MainMenu extends JPanel {
 	private JButton btnNewGame;
@@ -18,6 +20,7 @@ public class MainMenu extends JPanel {
 	 */
 	public MainMenu() {
 		setLayout(null);
+		setSize(800,600);
 		
 		btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {

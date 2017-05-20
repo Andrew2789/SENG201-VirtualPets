@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,6 +16,13 @@ public class GameSetup extends JPanel {
 	 */
 	public GameSetup() {
 		setLayout(null);
+		
+		playerSetups = new PlayerSetup[3];
+		for (int i=0; i<3; i++) {
+			playerSetups[i] = new PlayerSetup();
+			playerSetups[i].setBounds(350, 75 + 175*i, 450, 175);
+			add(playerSetups[i]);
+		}
 		
 		JSlider slider = new JSlider();
 		slider.addChangeListener(new ChangeListener() {
@@ -42,11 +50,6 @@ public class GameSetup extends JPanel {
 		label.setIcon(new ImageIcon("images/menuBackground.png"));
 		add(label);
 		
-		playerSetups = new PlayerSetup[3];
-		for (int i=0; i<3; i++) {
-			playerSetups[i] = new PlayerSetup();
-			playerSetups[i].setBounds(350, 75 + 175*i, 450, 175);
-			add(playerSetups[i]);
-		}
+		
 	}
 }

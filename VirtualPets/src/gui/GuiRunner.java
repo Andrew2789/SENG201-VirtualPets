@@ -1,3 +1,5 @@
+package gui;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -5,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 public class GuiRunner {
+	private Dimension windowDimensions = new Dimension(800, 600);
 
 	private JFrame frame;
 
@@ -37,14 +40,15 @@ public class GuiRunner {
 	 */
 	private void initialise() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 800, 800);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
+		frame.getContentPane().setPreferredSize(windowDimensions);
+		frame.pack();
 	}
 	
 	private MainMenu loadMainMenu() {
 		MainMenu mainMenu = new MainMenu();
-		mainMenu.setSize(800, 600);
 
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
