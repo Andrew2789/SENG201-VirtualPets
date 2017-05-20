@@ -5,18 +5,28 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
+import playerData.Species;
+import playerData.ToyType;
+import playerData.FoodType;
 
 import javax.swing.JFrame;
 
 public class GuiRunner {
 	private Font poppins;
 	private Font sourceSansPro;
-	private Font sourceSansProHeavy;
+	private Font sourceSansProSemiBold;
+	private Font sourceSansProBold;
+	
+	private Species[] species;
+	private ToyType[] toyType;
+	private FoodType[] foodTypes;
 	
 	private JFrame frame;
 	private MainMenu mainMenu;
 	private GameSetup gameSetup;
+	private Game game;
 
 	/**
 	 * Launch the application.
@@ -38,6 +48,27 @@ public class GuiRunner {
 	 * Create the application.
 	 */
 	public GuiRunner() {
+		Species[] species = {
+				new Species("Cat", 60, 10, 15, 5, 40, 70),
+				new Species("Dog", 90, 15, 25, 10, 30, 55),
+				new Species("Crab", 10, 12, 30, 10, 25, 45),
+				new Species("Fish", 35, 20, 20, 2, 10, 20),
+				new Species("Sloth", 55, 5, 40, 5, 15, 25)
+		};
+		
+		ToyType[] toyTypes = {
+				new ToyType("Proleteriat", -100, 100),
+				new ToyType("Bell", 10, 15),
+				new ToyType("Mouse", 25, 50)
+		};
+		
+		FoodType[] foodTypes = {
+				new FoodType("Lasagne", 20, 50, 25, 10),
+				new FoodType("Berries", 5, -10, -10, 5),
+				new FoodType("Mushrooms", 10, 20, 20, 5),
+				new FoodType("$2-rice", 2, 5, 20, 5)
+		};
+		
 		initialise();
 		loadMainMenu();
 		loadGameSetup();
@@ -55,16 +86,33 @@ public class GuiRunner {
 		frame.getContentPane().setPreferredSize(new Dimension(800, 600));
 		frame.pack();
 		
-		poppins = FontLoader.loadFont("fonts/Poppins/Poppins-Regular.ttf");
-		sourceSansPro = FontLoader.loadFont("fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf");
-		sourceSansProHeavy = FontLoader.loadFont("fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf");
+		poppins = loadFont("fonts/Poppins/Poppins-Regular.ttf");
+		sourceSansPro = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf");
+		sourceSansProSemiBold = loadFont("fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf");
+		sourceSansProBold = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf");
 	};
+	
+	public Font loadFont(String location) {
+		File font_file = new File(location);
+		try {
+			Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+			return font;
+		}
+		catch (FontFormatException e) {
+			System.out.println("Font must be a truetype font.");
+			return null;
+		}
+		catch (IOException e) {
+			System.out.println("Failed to load font.");
+			return null;
+		}
+	}
 	
 	/**
 	 * Load the main menu screen and store it.
 	 */
 	private void loadMainMenu() {
-		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProHeavy.deriveFont(16f));
+		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemiBold.deriveFont(16f));
 		
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -87,7 +135,7 @@ public class GuiRunner {
 	 * Load the game setup screen and store it.
 	 */
 	private void loadGameSetup() {
-		gameSetup = new GameSetup(poppins.deriveFont(48f), sourceSansPro.deriveFont(14f));
+		gameSetup = new GameSetup(species, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
 		
 		frame.getContentPane().add(gameSetup);
 	}

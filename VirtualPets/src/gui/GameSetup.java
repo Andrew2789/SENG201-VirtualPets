@@ -5,16 +5,21 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import playerData.Player;
+import playerData.Species;
 
 public class GameSetup extends JPanel {
+	private static final long serialVersionUID = 1441493919925710008L;
+	private int numberOfPlayers;
+	private int numberOfDays = 5;
 	private int startingMoney = 150;
 	private int incomePerTurn = 35;
 	private PlayerSetup[] playerSetups;
@@ -22,71 +27,119 @@ public class GameSetup extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GameSetup(Font titleFont, Font regularFont) {
+	public GameSetup(Species[] species, Font titleFont, Font boldFont, Font semiBoldFont, Font regularFont) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
 		
 		playerSetups = new PlayerSetup[3];
 		for (int i=0; i<3; i++) {
-			playerSetups[i] = new PlayerSetup();
+			playerSetups[i] = new PlayerSetup(semiBoldFont, regularFont, i+1);
 			playerSetups[i].setBounds(40 + 240*i, 150, 240, 450);
+			playerSetups[i].setVisible(false);
 			add(playerSetups[i]);
 		}
+		playerSetups[0].setVisible(true);
 		
-		JLabel gameSetupTitle = new JLabel("Game Setup");
-		gameSetupTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		gameSetupTitle.setFont(titleFont);
-		gameSetupTitle.setBounds(240, 30, 320, 50);
-		add(gameSetupTitle);
+		JLabel title = new JLabel("Game Setup");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setFont(titleFont);
+		title.setBounds(240, 30, 320, 50);
+		add(title);
 		
-		JLabel lblNumberOfPlayers = new JLabel("Number of Players");
-		lblNumberOfPlayers.setFont(regularFont);
-		lblNumberOfPlayers.setBounds(130, 85, 100, 17);
-		add(lblNumberOfPlayers);
+		JLabel numberOfPlayersLabel = new JLabel("Number of Players");
+		numberOfPlayersLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		numberOfPlayersLabel.setFont(boldFont);
+		numberOfPlayersLabel.setBounds(100, 85, 115, 17);
+		add(numberOfPlayersLabel);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3"}));
-		comboBox.setBounds(130, 103, 40, 20);
-		add(comboBox);
+		JComboBox<String> numberOfPlayersChooser = new JComboBox<String>();
+		numberOfPlayersChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				numberOfPlayers = numberOfPlayersChooser.getSelectedIndex();
+				for (int i=0; i<3; i++) {
+					if (i > numberOfPlayers)
+						playerSetups[i].setVisible(false);
+					else
+						playerSetups[i].setVisible(true);
+				}
+			}
+		});
+		numberOfPlayersChooser.setFont(regularFont);
+		numberOfPlayersChooser.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3"}));
+		numberOfPlayersChooser.setBounds(137, 103, 40, 22);
+		add(numberOfPlayersChooser);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(250, 0, 500, 10));
-		spinner.setBounds(260, 103, 47, 20);
-		add(spinner);
+		JLabel numberOfDaysLabel = new JLabel("Number of Days");
+		numberOfDaysLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		numberOfDaysLabel.setFont(boldFont);
+		numberOfDaysLabel.setBounds(223, 86, 107, 17);
+		add(numberOfDaysLabel);
 		
-		JLabel lblStartingMoney = new JLabel("Starting Money");
-		lblStartingMoney.setFont(regularFont);
-		lblStartingMoney.setBounds(260, 85, 82, 17);
-		add(lblStartingMoney);
+		JSpinner numberOfDaysChooser = new JSpinner();
+		numberOfDaysChooser.setModel(new SpinnerNumberModel(new Integer(5), new Integer(1), null, new Integer(1)));
+		numberOfDaysChooser.setFont(null);
+		numberOfDaysChooser.setBounds(252, 103, 47, 22);
+		add(numberOfDaysChooser);
 		
-		JLabel lblIncomePerTurn = new JLabel("Money per Turn");
-		lblIncomePerTurn.setFont(regularFont);
-		lblIncomePerTurn.setBounds(380, 85, 100, 17);
-		add(lblIncomePerTurn);
+		JLabel startingMoneyLabel = new JLabel("Starting Money");
+		startingMoneyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		startingMoneyLabel.setFont(boldFont);
+		startingMoneyLabel.setBounds(340, 85, 96, 17);
+		add(startingMoneyLabel);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(35, 0, 100, 1));
-		spinner_1.setBounds(380, 103, 47, 20);
-		add(spinner_1);
+		JSpinner startingMoneyChooser = new JSpinner();
+		startingMoneyChooser.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				startingMoney = (int)startingMoneyChooser.getValue();
+			}
+		});
+		startingMoneyChooser.setFont(regularFont);
+		startingMoneyChooser.setModel(new SpinnerNumberModel(250, 0, 500, 10));
+		startingMoneyChooser.setBounds(365, 103, 47, 22);
+		add(startingMoneyChooser);
 		
-		JButton btnDone = new JButton("Done");
-		btnDone.setBounds(490, 91, 89, 23);
-		add(btnDone);
+		JLabel moneyPerTurnLabel = new JLabel("Money per Turn");
+		moneyPerTurnLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		moneyPerTurnLabel.setFont(boldFont);
+		moneyPerTurnLabel.setBounds(450, 85, 98, 17);
+		add(moneyPerTurnLabel);
 		
-		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener() {
+		JSpinner moneyPerTurnChooser = new JSpinner();
+		moneyPerTurnChooser.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				incomePerTurn = (int)moneyPerTurnChooser.getValue();
+			}
+		});
+		moneyPerTurnChooser.setFont(regularFont);
+		moneyPerTurnChooser.setModel(new SpinnerNumberModel(35, 0, 100, 1));
+		moneyPerTurnChooser.setBounds(475, 103, 47, 22);
+		add(moneyPerTurnChooser);
+		
+		JButton buttonDone = new JButton("Done");
+		buttonDone.setFont(boldFont);
+		buttonDone.setBounds(561, 101, 89, 25);
+		add(buttonDone);
+		
+		JButton buttonBack = new JButton("Back");
+		buttonBack.setFont(boldFont);
+		buttonBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnBack.setBounds(590, 91, 89, 23);
-		add(btnBack);
+		buttonBack.setBounds(651, 101, 89, 25);
+		add(buttonBack);
 		
-		JLabel label = new JLabel("");
-		label.setBounds(0, 0, 800, 600);
-		label.setIcon(new ImageIcon("images/setupBackground.png"));
-		add(label);
-		
-		
+		JLabel backgroundImage = new JLabel("");
+		backgroundImage.setBounds(0, 0, 800, 600);
+		backgroundImage.setIcon(new ImageIcon("images/setupBackground.png"));
+		add(backgroundImage);
+	}
+	
+	public Game generateGame() {
+		Player[] players = new Player[numberOfPlayers];
+		for (int i=0; i<numberOfPlayers; i++)
+			players[i] = new Player(playerSetups[i].getPlayerName(), playerSetups[i].getPets(), startingMoney);
+		return new Game(players, numberOfDays, incomePerTurn);
 	}
 }

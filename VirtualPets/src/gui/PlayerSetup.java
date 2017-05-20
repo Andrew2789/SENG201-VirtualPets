@@ -1,55 +1,88 @@
 package gui;
 import javax.swing.JPanel;
-import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JSlider;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import playerData.Pet;
+import javax.swing.ImageIcon;
 
 public class PlayerSetup extends JPanel {
-	private JTextField textField;
+	private static final long serialVersionUID = -138517277103698226L;
+	private JTextField playerNameField;
 	private PetSetup[] petSetups;
+	private int numberOfPets;
 
 	/**
 	 * Create the panel.
 	 */
-	public PlayerSetup() {
+	public PlayerSetup(Font semiBoldFont, Font regularFont, int playerNumber) {
 		setLayout(null);
 		setOpaque(false);
 		
 		petSetups = new PetSetup[3];
 		for (int i=0; i<3; i++) {
-			petSetups[i] = new PetSetup();
-			petSetups[i].setBounds(0, 75 + 125*i, 240, 125);
+			petSetups[i] = new PetSetup(semiBoldFont, regularFont, i+1);
+			petSetups[i].setBounds(0, 60 + 110*i, 240, 125);
+			petSetups[i].setVisible(false);
 			add(petSetups[i]);
 		}
+		petSetups[0].setVisible(true);
 		
-		JLabel lblPlayerName = new JLabel("Player %d's Name");
-		lblPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblPlayerName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPlayerName.setBounds(12, 12, 114, 15);
-		add(lblPlayerName);
+		JLabel playerNameLabel = new JLabel("Player "+playerNumber+"'s Name");
+		playerNameLabel.setFont(semiBoldFont);
+		playerNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		playerNameLabel.setBounds(10, 10, 114, 15);
+		add(playerNameLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(12, 28, 114, 19);
-		add(textField);
-		textField.setColumns(10);
+		playerNameField = new JTextField();
+		playerNameField.setFont(regularFont);
+		playerNameField.setBounds(10, 27, 114, 22);
+		add(playerNameField);
+		playerNameField.setColumns(10);
 		
-		JLabel lblNumberOfPets = new JLabel("Number of Pets");
-		lblNumberOfPets.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNumberOfPets.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNumberOfPets.setBounds(136, 12, 94, 15);
-		add(lblNumberOfPets);
+		JLabel petAmountLabel = new JLabel("Number of Pets");
+		petAmountLabel.setFont(semiBoldFont);
+		petAmountLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		petAmountLabel.setBounds(134, 10, 94, 15);
+		add(petAmountLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
-		comboBox.setBounds(163, 27, 40, 20);
-		add(comboBox);
+		JComboBox<String> petAmountChooser = new JComboBox<String>();
+		petAmountChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				numberOfPets = petAmountChooser.getSelectedIndex();
+				for (int i=0; i<3; i++) {
+					if (i > numberOfPets)
+						petSetups[i].setVisible(false);
+					else
+						petSetups[i].setVisible(true);
+				}
+			}
+		});
+		petAmountChooser.setFont(regularFont);
+		petAmountChooser.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3"}));
+		petAmountChooser.setBounds(134, 27, 40, 21);
+		add(petAmountChooser);
 		
-		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("images/playerSetupBack.png"));
+		label.setBounds(0, 0, 235, 58);
+		add(label);
+	}
+	
+	public String getPlayerName() {
+		return playerNameField.getText();
+	}
+	
+	public Pet[] getPets() {
+		Pet[] pets = new Pet[numberOfPets];
+		for (int i=0; i<numberOfPets; i++) {
+			//petSetups[i];
+		}
+		return pets;
 	}
 }

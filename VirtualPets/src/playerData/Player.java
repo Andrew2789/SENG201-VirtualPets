@@ -13,7 +13,7 @@ public class Player {
 	private HashMap<FoodType, Integer> food;
 	private ArrayList<Toy> toys;
 	
-	private double money = (double) 250;
+	private double money;
 	private int score = 0;
 	
 	
@@ -26,12 +26,14 @@ public class Player {
 	 * @param pets
 	 * A collection of the pets belonging to a player.
 	 */
-	public Player(String name, Pet[] pets) {
+	public Player(String name, Pet[] pets, double money) {
 		this.name = name;
 		this.pets = pets;
 		
 		this.food = new HashMap<FoodType, Integer>();
 		this.toys = new ArrayList<Toy>();
+		
+		this.money = money;
 	}
 	
 	// Getters
