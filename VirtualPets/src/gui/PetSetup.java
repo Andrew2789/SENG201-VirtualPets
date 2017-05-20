@@ -5,32 +5,49 @@ import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PetSetup extends JPanel {
-	private JTextField textField;
+	private JTextField petNameField;
 
 	/**
 	 * Create the panel.
 	 */
 	public PetSetup() {
-		setOpaque(true);
 		setLayout(null);
+		setOpaque(false);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(12, 64, 126, 24);
-		add(comboBox);
+		JComboBox<String> speciesChooser = new JComboBox<String>();
+		speciesChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		speciesChooser.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		speciesChooser.setBounds(12, 75, 114, 26);
+		add(speciesChooser);
 		
-		JLabel lblSpecies = new JLabel("Species");
-		lblSpecies.setBounds(12, 47, 70, 15);
-		add(lblSpecies);
+		JLabel speciesChooserLabel = new JLabel("Species");
+		speciesChooserLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		speciesChooserLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		speciesChooserLabel.setBounds(12, 58, 178, 15);
+		add(speciesChooserLabel);
 		
-		JLabel lblPetName = new JLabel("Pet Name");
-		lblPetName.setBounds(12, 12, 70, 15);
-		add(lblPetName);
+		JLabel petNameFieldLabel = new JLabel("Pet Name");
+		petNameFieldLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		petNameFieldLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		petNameFieldLabel.setBounds(12, 11, 114, 15);
+		add(petNameFieldLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(12, 28, 114, 19);
-		add(textField);
-		textField.setColumns(10);
+		petNameField = new JTextField();
+		petNameField.setBounds(12, 28, 114, 19);
+		add(petNameField);
+		petNameField.setColumns(10);
+		
+		JLabel speciesIcon = new JLabel("");
+		speciesIcon.setBounds(130, 11, 100, 100);
+		add(speciesIcon);
 	}
 }
