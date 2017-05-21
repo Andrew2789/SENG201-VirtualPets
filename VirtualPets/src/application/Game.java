@@ -1,10 +1,8 @@
 package application;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -71,7 +69,14 @@ public class Game extends JPanel {
 		
 		JPanel petInfoPanel = new JPanel();
 		petInfoPanel.setBounds(0, 255, 500, 345);
+		petInfoPanel.setOpaque(false);
 		add(petInfoPanel);
+		petInfoPanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("images/petInteractBack.png"));
+		lblNewLabel.setBounds(0, 0, 500, 345);
+		petInfoPanel.add(lblNewLabel);
 		
 		JLabel background = new JLabel("");
 		background.setBounds(0, 0, 800, 600);
