@@ -23,7 +23,7 @@ public class PetSetup extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PetSetup(Species[] species, String[] speciesNames, ImageIcon[] speciesIcons, ToyType[] toyTypes, FoodType[] foodTypes, Font semiBoldFont, Font regularFont, int petNumber) {
+	public PetSetup(Species[] species, String[] speciesNames, ToyType[] toyTypes, FoodType[] foodTypes, Font semiBoldFont, Font regularFont, int petNumber) {
 		setLayout(null);
 		setOpaque(false);
 				
@@ -37,7 +37,7 @@ public class PetSetup extends JPanel {
 		speciesChooser.setModel(new DefaultComboBoxModel<String>(speciesNames));
 		speciesChooser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				speciesIcon.setIcon(speciesIcons[speciesChooser.getSelectedIndex()]);
+				speciesIcon.setIcon(species[speciesChooser.getSelectedIndex()].getIcon());
 			}
 		});
 		speciesChooser.setFont(regularFont);
@@ -58,7 +58,7 @@ public class PetSetup extends JPanel {
 		
 		speciesIcon = new JLabel("");
 		speciesIcon.setBounds(130, 4, 100, 100);
-		speciesIcon.setIcon(speciesIcons[0]);
+		speciesIcon.setIcon(species[0].getIcon());
 		add(speciesIcon);
 		
 		JLabel background = new JLabel("");

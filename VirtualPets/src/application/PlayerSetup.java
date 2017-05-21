@@ -14,18 +14,18 @@ public class PlayerSetup extends JPanel {
 	private static final long serialVersionUID = -138517277103698226L;
 	private JTextField playerNameField;
 	private PetSetup[] petSetups;
-	private int numberOfPets;
+	private int numberOfPets = 1;
 
 	/**
 	 * Create the panel.
 	 */
-	public PlayerSetup(Species[] species, String[] speciesNames, ImageIcon[] speciesIcons, ToyType[] toyTypes, FoodType[] foodTypes, Font semiBoldFont, Font regularFont, int playerNumber) {
+	public PlayerSetup(Species[] species, String[] speciesNames, ToyType[] toyTypes, FoodType[] foodTypes, Font semiBoldFont, Font regularFont, int playerNumber) {
 		setLayout(null);
 		setOpaque(false);
 		
 		petSetups = new PetSetup[3];
 		for (int i=0; i<3; i++) {
-			petSetups[i] = new PetSetup(species, speciesNames, speciesIcons, toyTypes, foodTypes, semiBoldFont, regularFont, i+1);
+			petSetups[i] = new PetSetup(species, speciesNames, toyTypes, foodTypes, semiBoldFont, regularFont, i+1);
 			petSetups[i].setBounds(0, 60 + 110*i, 240, 125);
 			petSetups[i].setVisible(false);
 			add(petSetups[i]);
@@ -53,9 +53,9 @@ public class PlayerSetup extends JPanel {
 		JComboBox<String> petAmountChooser = new JComboBox<String>();
 		petAmountChooser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				numberOfPets = petAmountChooser.getSelectedIndex();
+				numberOfPets = petAmountChooser.getSelectedIndex()+1;
 				for (int i=0; i<3; i++) {
-					if (i > numberOfPets)
+					if (i > numberOfPets-1)
 						petSetups[i].setVisible(false);
 					else
 						petSetups[i].setVisible(true);

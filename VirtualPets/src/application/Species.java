@@ -1,5 +1,6 @@
 package application;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.swing.ImageIcon;
 
 /**
  * @author Andrew Davidson (ada130)
@@ -9,6 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Species {
 	private String name;
+	private ImageIcon icon;
 	private int optimumWeight;
 	
 	private int hungerGain;
@@ -34,8 +36,9 @@ public class Species {
 	 * @param maxToyDamage
 	 * The maximum amount of damage a member of this species will do to a toy.
 	 */
-	public Species(String name, int optimumWeight, int hungerGain, int energyLoss, int happinessLoss, int minToyDamage, int maxToyDamage) {
+	public Species(String name, ImageIcon icon, int optimumWeight, int hungerGain, int energyLoss, int happinessLoss, int minToyDamage, int maxToyDamage) {
 		this.name = name;
+		this.icon = icon;
 		this.optimumWeight = optimumWeight;
 		this.hungerGain = hungerGain;
 		this.energyLoss = energyLoss;
@@ -47,6 +50,10 @@ public class Species {
 	// Getters
 	public String getName() {
 		return name;
+	}
+	
+	public ImageIcon getIcon() {
+		return icon;
 	}
 	
 	public int getOptimumWeight() {

@@ -18,7 +18,6 @@ public class GuiRunner {
 	private Font sourceSansProBold;
 	
 	private Species[] species;
-	private ImageIcon[] speciesIcons;
 	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
 	
@@ -48,16 +47,12 @@ public class GuiRunner {
 	 */
 	public GuiRunner() {
 		species = new Species[] {
-				new Species("Cat", 60, 10, 15, 5, 40, 70),
-				new Species("Dog", 90, 15, 25, 10, 30, 55),
-				new Species("Crab", 10, 12, 30, 10, 25, 45),
-				new Species("Fish", 35, 20, 20, 2, 10, 20),
-				new Species("Sloth", 55, 5, 40, 5, 15, 25)
+				new Species("Cat", new ImageIcon("images/species/Cat.png"), 60, 10, 15, 5, 40, 70),
+				new Species("Dog", new ImageIcon("images/species/Dog.png"), 90, 15, 25, 10, 30, 55),
+				new Species("Crab", new ImageIcon("images/species/Crab.png"), 10, 12, 30, 10, 25, 45),
+				new Species("Fish", new ImageIcon("images/species/Fish.png"), 35, 20, 20, 2, 10, 20),
+				new Species("Sloth", new ImageIcon("images/species/Sloth.png"), 55, 5, 40, 5, 15, 25)
 		};
-		
-		speciesIcons = new ImageIcon[species.length];
-		for (int i=0; i<speciesIcons.length; i++)
-			speciesIcons[i] = new ImageIcon("images/species/"+species[i].getName()+".png");
 		
 		toyTypes = new ToyType[] {
 				new ToyType("Proleteriat", -100, 100),
@@ -74,7 +69,6 @@ public class GuiRunner {
 		
 		initialise();
 		loadMainMenu();
-		loadGameSetup();
 		mainMenu.setVisible(true);
 	}
 
@@ -139,13 +133,14 @@ public class GuiRunner {
 	 * Load the game setup screen and store it.
 	 */
 	private void loadGameSetup() {
-		gameSetup = new GameSetup(species, speciesIcons, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+		gameSetup = new GameSetup(species, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
 
 		gameSetup.getDoneButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				game = gameSetup.generateGame();
+				loadGame();
+				gameSetup.setGamePlayers(game);
 				gameSetup.setVisible(false);
-				frame.getContentPane().add(game);
+				game.setVisible(true);
 			}
 		});
 		
@@ -157,5 +152,11 @@ public class GuiRunner {
 		});
 		
 		frame.getContentPane().add(gameSetup);
+	}
+	
+	private void loadGame() {
+		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+		
+		frame.getContentPane().add(game);
 	}
 }
