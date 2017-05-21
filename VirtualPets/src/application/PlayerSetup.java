@@ -67,8 +67,7 @@ public class PlayerSetup extends JPanel {
 		petAmountChooser.setBounds(134, 27, 40, 21);
 		add(petAmountChooser);
 		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("images/playerSetupBack.png"));
+		JLabel label = new JLabel(new ImageIcon("images/playerSetupBack.png"));
 		label.setBounds(0, 0, 235, 58);
 		add(label);
 	}

@@ -14,7 +14,6 @@ public class PetTab extends JPanel {
 	private JLabel petIcon;
 	private JLabel petNameLabel;
 	private JLabel actionPointsLabel;
-	private boolean clicked = false;
 
 	/**
 	 * Create the panel.
@@ -43,7 +42,6 @@ public class PetTab extends JPanel {
 		clickDetector = new JButton(new ImageIcon("images/tabBack.png"));
 		clickDetector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				clicked = true;
 			}
 		});
 		clickDetector.setContentAreaFilled(false);
@@ -59,12 +57,6 @@ public class PetTab extends JPanel {
 	
 	public void setActionPoints(int amount) {
 		actionPointsLabel.setText("Action Points: "+amount);
-	}
-	
-	public boolean checkClicked() {
-		boolean wasClicked = clicked;
-		clicked = false;
-		return wasClicked;
 	}
 	
 	public JButton getClickDetector() {

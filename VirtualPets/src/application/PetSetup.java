@@ -56,14 +56,12 @@ public class PetSetup extends JPanel {
 		add(petNameField);
 		petNameField.setColumns(10);
 		
-		speciesIcon = new JLabel("");
+		speciesIcon = new JLabel(species[0].getIcon());
 		speciesIcon.setBounds(130, 4, 100, 100);
-		speciesIcon.setIcon(species[0].getIcon());
 		add(speciesIcon);
 		
-		JLabel background = new JLabel("");
+		JLabel background = new JLabel(new ImageIcon("images/petSetupBack.png"));
 		background.setVerticalAlignment(SwingConstants.TOP);
-		background.setIcon(new ImageIcon("images/petSetupBack.png"));
 		background.setBounds(0, 0, 235, 108);
 		add(background);
 		

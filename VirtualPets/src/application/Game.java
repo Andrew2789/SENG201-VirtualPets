@@ -32,22 +32,20 @@ public class Game extends JPanel {
 		
 		for (int i=0; i<3; i++) {
 			petTabs[i] = new PetTab(semiBoldFont);
-			petTabs[i].setBounds(0 + 150*i, 100, 149, 155);
+			petTabs[i].setBounds(0 + 150*i, 100, 148, 155);
 			petTabs[i].setVisible(false);
 			
+			final int finalI = i;
 			petTabs[i].getClickDetector().addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					for (int i=0; i<3; i++) {
-						if (petTabs[i].checkClicked()) {
+						if (i == finalI)
 							petTabs[i].setBorder(new MatteBorder(2, 2, 0, 2, (Color) new Color(255,255,255)));
-							selectedPetIndex = i;
-						}
 						else
 							petTabs[i].setBorder(null);
 					}
 				}
 			});
-			
 			add(petTabs[i]);
 		}
 		petTabs[0].setBorder(new MatteBorder(2, 2, 0, 2, (Color) new Color(255,255,255)));

@@ -145,8 +145,7 @@ public class GameSetup extends JPanel {
 		buttonSpeciesInfo.setBounds(558, 110, 150, 22);
 		add(buttonSpeciesInfo);
 		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("images/settingsBack.png"));
+		JLabel label = new JLabel(new ImageIcon("images/settingsBack.png"));
 		label.setBounds(40, 82, 493, 52);
 		add(label);
 		
@@ -154,9 +153,8 @@ public class GameSetup extends JPanel {
 		label_1.setBounds(543, 82, 181, 52);
 		add(label_1);
 		
-		JLabel backgroundImage = new JLabel("");
+		JLabel backgroundImage = new JLabel(new ImageIcon("images/setupBackground.png"));
 		backgroundImage.setBounds(0, 0, 800, 600);
-		backgroundImage.setIcon(new ImageIcon("images/setupBackground.png"));
 		add(backgroundImage);
 	}
 	
