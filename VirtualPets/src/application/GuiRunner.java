@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -85,7 +84,7 @@ public class GuiRunner {
 		
 		poppins = loadFont("fonts/Poppins/Poppins-Regular.ttf");
 		sourceSansPro = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf");
-		sourceSansProSemiBold = loadFont("fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf");
+		sourceSansProSemiBold = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Semibold.ttf");
 		sourceSansProBold = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf");
 	};
 	
@@ -100,6 +99,7 @@ public class GuiRunner {
 			return null;
 		}
 		catch (IOException e) {
+			e.printStackTrace();
 			System.out.println("Failed to load font.");
 			return null;
 		}
