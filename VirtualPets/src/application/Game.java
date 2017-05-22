@@ -9,6 +9,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 public class Game extends JPanel {
 	private static final long serialVersionUID = 1557753595413288282L;
@@ -21,7 +23,20 @@ public class Game extends JPanel {
 	private JLabel dayLabel;
 	private JLabel playerLabel;
 	private PetTab[] petTabs = new PetTab[3];
-	private int selectedPetIndex = 0;
+	
+	private JLabel speciesLabel;
+	private JLabel favouriteToyLabel;
+	private JLabel favouriteToyIcon;
+	private JLabel favouriteFoodLabel;
+	private JLabel favouriteFoodIcon;
+	private JLabel healthyLabel;
+	private JButton buttonCure;
+	private JLabel behavingLabel;
+	private JButton buttonDiscipline;
+	
+	private Player activePlayer;
+	private Pet activePet;
+	private JLabel speciesTitle;
 
 	/**
 	 * Create the panel.
@@ -44,6 +59,7 @@ public class Game extends JPanel {
 							petTabs[i].setBorder(new MatteBorder(2, 2, 0, 2, (Color) new Color(255,255,255)));
 						else
 							petTabs[i].setBorder(null);
+						setPet(finalI);
 					}
 				}
 			});
@@ -72,72 +88,101 @@ public class Game extends JPanel {
 		add(petInfoPanel);
 		petInfoPanel.setLayout(null);
 		
-		JLabel speciesLabel = new JLabel("Species: %s");
-		speciesLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		speciesLabel.setBounds(12, 12, 232, 16);
+		speciesTitle = new JLabel("Species:");
+		speciesTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		speciesTitle.setFont(boldFont);
+		speciesTitle.setBounds(12, 12, 232, 16);
+		petInfoPanel.add(speciesTitle);
+		
+		speciesLabel = new JLabel("");
+		speciesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		speciesLabel.setFont(semiBoldFont);
+		speciesLabel.setBounds(12, 28, 232, 16);
 		petInfoPanel.add(speciesLabel);
 		
-		JLabel healthyLabel = new JLabel("This pet is healthy");
-		healthyLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		healthyLabel.setBounds(12, 36, 232, 16);
+		healthyLabel = new JLabel("");
+		healthyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		healthyLabel.setFont(boldFont);
+		healthyLabel.setBounds(12, 48, 232, 16);
 		petInfoPanel.add(healthyLabel);
 		
-		JLabel behavingLabel = new JLabel("This pet is behaving");
-		behavingLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		behavingLabel.setBounds(12, 80, 232, 16);
+		behavingLabel = new JLabel("");
+		behavingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		behavingLabel.setFont(boldFont);
+		behavingLabel.setBounds(12, 92, 232, 16);
 		petInfoPanel.add(behavingLabel);
 		
-		JButton btnCure = new JButton("Cure");
-		btnCure.setEnabled(false);
-		btnCure.setToolTipText("ADD");
-		btnCure.setBounds(12, 54, 102, 20);
-		petInfoPanel.add(btnCure);
+		buttonCure = new JButton("Cure");
+		buttonCure.setEnabled(false);
+		buttonCure.setFont(boldFont);
+		buttonCure.setToolTipText("ADD");
+		buttonCure.setBounds(82, 66, 100, 20);
+		petInfoPanel.add(buttonCure);
 		
-		JButton btnDiscipline = new JButton("Discipline");
-		btnDiscipline.setEnabled(false);
-		btnDiscipline.setToolTipText("ADD");
-		btnDiscipline.setBounds(12, 98, 102, 20);
-		petInfoPanel.add(btnDiscipline);
+		buttonDiscipline = new JButton("Discipline");
+		buttonDiscipline.setEnabled(false);
+		buttonDiscipline.setFont(boldFont);
+		buttonDiscipline.setToolTipText("ADD");
+		buttonDiscipline.setBounds(82, 110, 100, 20);
+		petInfoPanel.add(buttonDiscipline);
 		
-		JLabel favouriteToyLabel = new JLabel("Favourite Toy:\n%s");
+		JLabel favouriteToyTitle = new JLabel("Favourite Toy:");
+		favouriteToyTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		favouriteToyTitle.setVerticalAlignment(SwingConstants.TOP);
+		favouriteToyTitle.setFont(boldFont);
+		favouriteToyTitle.setBounds(12, 142, 110, 26);
+		petInfoPanel.add(favouriteToyTitle);
+		
+		favouriteToyLabel = new JLabel("");
+		favouriteToyLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteToyLabel.setVerticalAlignment(SwingConstants.TOP);
-		favouriteToyLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		favouriteToyLabel.setBounds(12, 130, 179, 47);
+		favouriteToyLabel.setFont(semiBoldFont);
+		favouriteToyLabel.setBounds(12, 158, 110, 16);
 		petInfoPanel.add(favouriteToyLabel);
 		
-		JLabel favouriteToyIcon = new JLabel("");
-		favouriteToyIcon.setBounds(162, 122, 80, 80);
+		favouriteToyIcon = new JLabel("");
+		favouriteToyIcon.setIcon(new ImageIcon("images/species/Cat.png"));
+		favouriteToyIcon.setBounds(20, 180, 94, 94);
 		petInfoPanel.add(favouriteToyIcon);
 		
-		JLabel favouriteFoodLabel = new JLabel("Favourite Food:\n%s");
+		JLabel favouriteFoodTitle = new JLabel("Favourite Food:");
+		favouriteFoodTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		favouriteFoodTitle.setVerticalAlignment(SwingConstants.TOP);
+		favouriteFoodTitle.setFont(boldFont);
+		favouriteFoodTitle.setBounds(132, 142, 110, 26);
+		petInfoPanel.add(favouriteFoodTitle);
+		
+		favouriteFoodLabel = new JLabel("");
+		favouriteFoodLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteFoodLabel.setVerticalAlignment(SwingConstants.TOP);
-		favouriteFoodLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-		favouriteFoodLabel.setBounds(12, 203, 179, 47);
+		favouriteFoodLabel.setFont(semiBoldFont);
+		favouriteFoodLabel.setBounds(134, 158, 110, 16);
 		petInfoPanel.add(favouriteFoodLabel);
 		
-		JLabel favouriteFoodIcon = new JLabel("");
-		favouriteFoodIcon.setBounds(162, 205, 80, 80);
+		favouriteFoodIcon = new JLabel("");
+		favouriteFoodIcon.setIcon(new ImageIcon("images/species/Dog.png"));
+		favouriteFoodIcon.setBounds(142, 180, 94, 94);
 		petInfoPanel.add(favouriteFoodIcon);
 		
-		JButton btnPlayer = new JButton("Play");
-		btnPlayer.setToolTipText("Play with the selected pet. You will need to select a toy. This will use 1 action point.");
-		btnPlayer.setBounds(12, 298, 110, 35);
-		petInfoPanel.add(btnPlayer);
+		JButton buttonPlay = new JButton("Play");
+		buttonPlay.setToolTipText("Play with the selected pet. You will need to select a toy. This will use 1 action point.");
+		buttonPlay.setBounds(14, 298, 110, 35);
+		petInfoPanel.add(buttonPlay);
 		
-		JButton btnEat = new JButton("Feed");
-		btnEat.setToolTipText("Feed the selected pet. You will need to select a food. This will use 1 action point.");
-		btnEat.setBounds(132, 298, 110, 35);
-		petInfoPanel.add(btnEat);
+		JButton buttonFeed = new JButton("Feed");
+		buttonFeed.setToolTipText("Feed the selected pet. You will need to select a food. This will use 1 action point.");
+		buttonFeed.setBounds(134, 298, 110, 35);
+		petInfoPanel.add(buttonFeed);
 		
-		JButton btnRest = new JButton("Rest");
-		btnRest.setToolTipText("Have the selected pet rest. This will use 1 action point.");
-		btnRest.setBounds(254, 298, 110, 35);
-		petInfoPanel.add(btnRest);
+		JButton buttonRest = new JButton("Rest");
+		buttonRest.setToolTipText("Have the selected pet rest. This will use 1 action point.");
+		buttonRest.setBounds(256, 298, 110, 35);
+		petInfoPanel.add(buttonRest);
 		
-		JButton btnToilet = new JButton("Toilet");
-		btnToilet.setToolTipText("Send the selected pet to the toilet. This will use 1 action point.");
-		btnToilet.setBounds(376, 298, 110, 35);
-		petInfoPanel.add(btnToilet);
+		JButton buttonToilet = new JButton("Toilet");
+		buttonToilet.setToolTipText("Send the selected pet to the toilet. This will use 1 action point.");
+		buttonToilet.setBounds(378, 298, 110, 35);
+		petInfoPanel.add(buttonToilet);
 		
 		JLabel petInfoBackground = new JLabel(new ImageIcon("images/petInteractBack.png"));
 		petInfoBackground.setBounds(0, 0, 500, 345);
@@ -158,6 +203,7 @@ public class Game extends JPanel {
 	
 	public void setTurn(Player player) {
 		playerLabel.setText(player.getName()+"'s turn");
+		activePlayer = player;
 		for (int i=0; i<3; i++) {
 			if (i < player.getPets().length) {
 				petTabs[i].setPet(player.getPets()[i]);
@@ -167,5 +213,25 @@ public class Game extends JPanel {
 			else
 				petTabs[i].setVisible(false);
 		}
+		setPet(0);
+	}
+	
+	public void setPet(int petIndex) {
+		activePet = activePlayer.getPets()[petIndex];
+		speciesLabel.setText(activePet.getSpecies().getName());
+		if (activePet.isHealthy())
+			healthyLabel.setText("This pet is healthy");
+		else
+			healthyLabel.setText("This pet is sick");
+		buttonCure.setEnabled(!activePet.isHealthy());
+		
+		if (activePet.isBehaving())
+			behavingLabel.setText("This pet is behaving");
+		else
+			behavingLabel.setText("This pet is misbehaving");
+		buttonDiscipline.setEnabled(!activePet.isBehaving());
+		
+		favouriteToyLabel.setText(activePet.getFavouriteToy().getName());
+		favouriteFoodLabel.setText(activePet.getFavouriteFood().getName());
 	}
 }
