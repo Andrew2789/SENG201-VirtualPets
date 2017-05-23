@@ -38,16 +38,16 @@ $Bunny
 	minToyDamage=10
 	maxToyDamage=20
 /Bunny
-$Sloth
-	name="Sloth"
-	icon="/images/species/Sloth.png"
+$Duck
+	name="Duck"
+	icon="/images/species/Duck.png"
 	optimumWeight=55
 	hungerGain=5
 	energyLoss=40
 	happinessLoss=5
 	minToyDamage=15
 	maxToyDamage=25
-/Sloth
+/Duck
 $Mochi
 	name="Mochi"
 	icon="/images/species/Mochi.png"

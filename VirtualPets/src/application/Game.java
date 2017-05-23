@@ -44,7 +44,6 @@ public class Game extends JPanel {
 	private Player activePlayer;
 	private Pet activePet;
 	private JLabel speciesTitle;
-	private JLabel buttonShopIcon;
 	private JLabel inventoryLabelBackground;
 
 	/**
@@ -77,15 +76,17 @@ public class Game extends JPanel {
 		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, (Color) new Color(255,255,255)));
 		
 		dayLabel = new JLabel("");
+		dayLabel.setForeground(Color.WHITE);
 		dayLabel.setFont(titleFont);
 		dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		dayLabel.setBounds(250, 10, 300, 50);
 		add(dayLabel);
 		
 		playerLabel = new JLabel("");
+		playerLabel.setForeground(Color.WHITE);
 		playerLabel.setFont(subtitleFont);
 		playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabel.setBounds(300, 70, 200, 30);
+		playerLabel.setBounds(300, 60, 200, 30);
 		add(playerLabel);
 		
 		JButton buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
@@ -104,6 +105,7 @@ public class Game extends JPanel {
 		add(buttonMenu);
 		
 		JLabel inventoryLabel = new JLabel("Inventory");
+		inventoryLabel.setForeground(Color.BLACK);
 		inventoryLabel.setBounds(506, 212, 294, 20);
 		inventoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		inventoryLabel.setFont(subtitleFont);
@@ -243,6 +245,11 @@ public class Game extends JPanel {
 		happinessSlider.setBounds(257, 132, 232, 50);
 		petInfoPanel.add(happinessSlider);
 		
+		weightSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Weight", new ImageIcon(Game.class.getResource("/images/weightSlider.png")), 
+				"How much this pet weighs.", new Color(127, 127, 127), 0, 100, 6, 6);
+		weightSlider.setBounds(257, 192, 232, 50);
+		petInfoPanel.add(weightSlider);
+		
 		JLabel petInfoBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/petInteractBack.png")));
 		petInfoBackground.setBounds(0, 0, 500, 345);
 		petInfoPanel.add(petInfoBackground);
@@ -298,6 +305,10 @@ public class Game extends JPanel {
 		hungerSlider.setStat(activePet.getHunger());
 		energySlider.setStat(activePet.getEnergy());
 		happinessSlider.setStat(activePet.getHappiness());
+		int optWeight = activePet.getSpecies().getOptimumWeight();
+		weightSlider.setMinMax(optWeight*1/3, optWeight*5/3);
+		weightSlider.setStat(activePet.getWeight());
+		
 		favouriteToyLabel.setText(activePet.getFavouriteToy().getName());
 		favouriteFoodLabel.setText(activePet.getFavouriteFood().getName());
 	}

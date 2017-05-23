@@ -58,7 +58,7 @@ public class GuiRunner {
 				new FoodType("Lasagne", 20, 50, 25, 10),
 				new FoodType("Berries", 5, -10, -10, 5),
 				new FoodType("Mushrooms", 10, 20, 20, 5),
-				new FoodType("$2-rice", 2, 5, 20, 5)
+				new FoodType("$2-Rice", 2, 5, 20, 5)
 		};
 		
 		initialise();
