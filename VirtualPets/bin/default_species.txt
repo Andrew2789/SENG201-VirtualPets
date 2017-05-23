@@ -1,0 +1,60 @@
+$Cat
+	name="Cat"
+	icon="/images/species/Cat.png"
+	optimumWeight=60
+	hungerGain=10
+	energyLoss=15
+	happinessLoss=5
+	minToyDamage=40
+	maxToyDamage=70
+/Cat
+$Bear
+	name="Bear"
+	icon="/images/species/Bear.png"
+	optimumWeight=90
+	hungerGain=15
+	energyLoss=25
+	happinessLoss=10
+	minToyDamage=30
+	maxToyDamage=55
+/Bear
+$Crab
+	name="Crab"
+	icon="/images/species/Crab.png"
+	optimumWeight=10
+	hungerGain=12
+	energyLoss=30
+	happinessLoss=10
+	minToyDamage=25
+	maxToyDamage=45
+/Crab
+$Bunny
+	name="Bunny"
+	icon="/images/species/Bunny.png"
+	optimumWeight=35
+	hungerGain=20
+	energyLoss=20
+	happinessLoss=2
+	minToyDamage=10
+	maxToyDamage=20
+/Bunny
+$Duck
+	name="Duck"
+	icon="/images/species/Duck.png"
+	optimumWeight=55
+	hungerGain=5
+	energyLoss=40
+	happinessLoss=5
+	minToyDamage=15
+	maxToyDamage=25
+/Duck
+$Mochi
+	name="Mochi"
+	icon="/images/species/Mochi.png"
+	optimumWeight=20
+	hungerGain=10
+	energyLoss=25
+	happinessLoss=25
+	minToyDamage=10
+	maxToyDamage=20
+/Mochi
