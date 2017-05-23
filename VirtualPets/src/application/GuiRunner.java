@@ -46,14 +46,7 @@ public class GuiRunner {
 	 * Create the application.
 	 */
 	public GuiRunner() {
-		species = new Species[] {
-				new Species("Cat", new ImageIcon(GuiRunner.class.getResource("/images/species/Cat.png")), 60, 10, 15, 5, 40, 70),
-				new Species("Bear", new ImageIcon(GuiRunner.class.getResource("/images/species/Bear.png")), 90, 15, 25, 10, 30, 55),
-				new Species("Crab", new ImageIcon(GuiRunner.class.getResource("/images/species/Crab.png")), 10, 12, 30, 10, 25, 45),
-				new Species("Bunny", new ImageIcon(GuiRunner.class.getResource("/images/species/Bunny.png")), 35, 20, 20, 2, 10, 20),
-				new Species("Sloth", new ImageIcon(GuiRunner.class.getResource("/images/species/Sloth.png")), 55, 5, 40, 5, 15, 25),
-				new Species("Mochi", new ImageIcon(GuiRunner.class.getResource("/images/species/Mochi.png")), 20, 10, 25, 25, 10, 20)
-		};
+		species = SettingsLoader.loadCustomSpeciesFile("resources/default_species.txt");
 		
 		toyTypes = new ToyType[] {
 				new ToyType("Proleteriat", -100, 100),

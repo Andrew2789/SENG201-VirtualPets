@@ -56,7 +56,7 @@ public class SettingsLoader
 		return attributes;
 	}
 
-	public static Object[] loadCustomFile(String file_path, LoadFormat loadFormat)
+	private static Object[] loadCustomFile(String file_path, LoadFormat loadFormat)
 	{
 		ArrayList<Object> customObjects = new ArrayList<Object>();
 		final String[] lines = readAllLines(file_path);
@@ -98,15 +98,35 @@ public class SettingsLoader
 		return customObjects.toArray(new Object[customObjects.size()]);
 	}
 	
-	// DEBUG MAIN
-	
-	public static void main(String[] args) {
-		Object[] custom_object_array = loadCustomFile("sample_species.txt", new SpeciesLoadFormat());
-		
-		Species[] custom_species_array = Arrays.copyOf(
-				custom_object_array, 
-				custom_object_array.length, 
+	public static Species[] loadCustomSpeciesFile(String file_path) {
+		Object[] custom_objects = loadCustomFile(file_path, new SpeciesLoadFormat());
+		return Arrays.copyOf(
+				custom_objects, 
+				custom_objects.length, 
 				Species[].class);
+	}
+	
+	public static ToyType[] loadCustomToyTypesFile(String file_path) {
+		Object[] custom_objects = loadCustomFile(file_path, new ToyTypeLoadFormat());
+		return Arrays.copyOf(
+				custom_objects, 
+				custom_objects.length, 
+				ToyType[].class);
+	}
+	
+	public static FoodType[] loadCustomFoodTypesFile(String file_path) {
+		Object[] custom_objects = loadCustomFile(file_path, new FoodTypeLoadFormat());
+		return Arrays.copyOf(
+				custom_objects, 
+				custom_objects.length, 
+				FoodType[].class);
+	}
+	
+	// DEBUG MAIN
+	/*
+	public static void main(String[] args) {
+		Species[] custom_species_array = loadCustomSpeciesFile("sample_species.txt");
+		
 		for (Species species : custom_species_array) {
 			System.out.println(species.getName());
 			System.out.println(species.getOptimumWeight());
@@ -118,5 +138,7 @@ public class SettingsLoader
 			System.out.println();
 		}
 	}
+	*/
+	
 	
 }
