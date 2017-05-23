@@ -155,7 +155,7 @@ public class GuiRunner {
 	}
 	
 	private void loadGame() {
-		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), poppins.deriveFont(18f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
 		
 		frame.getContentPane().add(game);
 	}

@@ -9,7 +9,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.Icon;
 
 public class Game extends JPanel {
 	private static final long serialVersionUID = 1557753595413288282L;
@@ -37,6 +36,8 @@ public class Game extends JPanel {
 	private PetStatDisplayer happinessSlider;
 	private PetStatDisplayer weightSlider;
 	
+	private JLabel inventoryMoney;
+	
 	private Player activePlayer;
 	private Pet activePet;
 	private JLabel speciesTitle;
@@ -44,7 +45,7 @@ public class Game extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Game(ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font boldFont, Font semiBoldFont, Font regularFont) {
+	public Game(ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font subtitleFont, Font boldFont, Font semiBoldFont, Font regularFont) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
@@ -77,10 +78,26 @@ public class Game extends JPanel {
 		add(dayLabel);
 		
 		playerLabel = new JLabel("");
-		playerLabel.setFont(boldFont);
+		playerLabel.setFont(subtitleFont);
 		playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		playerLabel.setBounds(300, 70, 200, 30);
 		add(playerLabel);
+		
+		JLabel inventoryLabel = new JLabel("Inventory");
+		inventoryLabel.setBounds(506, 212, 294, 20);
+		add(inventoryLabel);
+		inventoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		inventoryLabel.setFont(subtitleFont);
+		
+		inventoryMoney = new JLabel("");
+		inventoryMoney.setHorizontalAlignment(SwingConstants.CENTER);
+		inventoryMoney.setFont(boldFont);
+		inventoryMoney.setBounds(506, 233, 294, 20);
+		add(inventoryMoney);
+		
+		JLabel inventoryBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/inventoryBack.png")));
+		inventoryBackground.setBounds(506, 255, 294, 345);
+		add(inventoryBackground);
 		
 		JPanel petInfoPanel = new JPanel();
 		petInfoPanel.setBounds(0, 255, 500, 345);
@@ -115,14 +132,14 @@ public class Game extends JPanel {
 		buttonCure = new JButton("Cure");
 		buttonCure.setEnabled(false);
 		buttonCure.setFont(boldFont);
-		buttonCure.setToolTipText("ADD");
+		buttonCure.setToolTipText("Cures sickness. Costs $50 and consumes one action point.");
 		buttonCure.setBounds(82, 66, 100, 20);
 		petInfoPanel.add(buttonCure);
 		
 		buttonDiscipline = new JButton("Discipline");
 		buttonDiscipline.setEnabled(false);
 		buttonDiscipline.setFont(boldFont);
-		buttonDiscipline.setToolTipText("ADD");
+		buttonDiscipline.setToolTipText("Will make your pet unhappy (-30 happiness) but stops them from misbehaving. Consumes one action point.");
 		buttonDiscipline.setBounds(82, 110, 100, 20);
 		petInfoPanel.add(buttonDiscipline);
 		
@@ -130,7 +147,7 @@ public class Game extends JPanel {
 		favouriteToyTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteToyTitle.setVerticalAlignment(SwingConstants.TOP);
 		favouriteToyTitle.setFont(boldFont);
-		favouriteToyTitle.setBounds(12, 142, 110, 26);
+		favouriteToyTitle.setBounds(12, 142, 110, 28);
 		petInfoPanel.add(favouriteToyTitle);
 		
 		favouriteToyLabel = new JLabel("");
@@ -149,7 +166,7 @@ public class Game extends JPanel {
 		favouriteFoodTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteFoodTitle.setVerticalAlignment(SwingConstants.TOP);
 		favouriteFoodTitle.setFont(boldFont);
-		favouriteFoodTitle.setBounds(132, 142, 110, 26);
+		favouriteFoodTitle.setBounds(132, 142, 110, 28);
 		petInfoPanel.add(favouriteFoodTitle);
 		
 		favouriteFoodLabel = new JLabel("");
@@ -185,27 +202,23 @@ public class Game extends JPanel {
 		petInfoPanel.add(buttonToilet);
 		
 		hungerSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Hunger", new ImageIcon(Game.class.getResource("/images/hungerSlider.png")), 
-				"How hungry this pet is. Once hunger reaches the orange region, the pet will begin to starve.", 0, 100, 0, 8);
+				"How hungry this pet is. Once hunger reaches the orange region, the pet will begin to starve.", new Color(227, 66, 52), 0, 100, 0, 8);
 		hungerSlider.setBounds(257, 12, 232, 50);
 		petInfoPanel.add(hungerSlider);
 		
 		energySlider = new PetStatDisplayer(boldFont, semiBoldFont, "Energy", new ImageIcon(Game.class.getResource("/images/energySlider.png")), 
-				"How much energy this pet has. Once energy reaches the red region, the pet will have a chance to die at the end of each turn.", 0, 100, 6, 0);
+				"How much energy this pet has. Once energy reaches the red region, the pet will have a chance to die at the end of each turn.", new Color(30, 224, 220), 0, 100, 6, 0);
 		energySlider.setBounds(257, 72, 232, 50);
 		petInfoPanel.add(energySlider);
 		
 		happinessSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Happiness", new ImageIcon(Game.class.getResource("/images/happinessSlider.png")), 
-				"How happy this pet is.", 0, 100, 3, 0);
+				"How happy this pet is.", new Color(255, 180, 0), 0, 100, 3, 0);
 		happinessSlider.setBounds(257, 132, 232, 50);
 		petInfoPanel.add(happinessSlider);
 		
 		JLabel petInfoBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/petInteractBack.png")));
 		petInfoBackground.setBounds(0, 0, 500, 345);
 		petInfoPanel.add(petInfoBackground);
-		
-		JLabel inventoryBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/inventoryBack.png")));
-		inventoryBackground.setBounds(506, 255, 294, 345);
-		add(inventoryBackground);
 		
 		JLabel background = new JLabel(new ImageIcon(Game.class.getResource("/images/setupBackground.png")));
 		background.setBounds(0, 0, 800, 600);
@@ -226,6 +239,7 @@ public class Game extends JPanel {
 	public void setTurn(Player player) {
 		playerLabel.setText(player.getName()+"'s turn");
 		activePlayer = player;
+		inventoryMoney.setText("Money: $"+player.getMoney());
 		for (int i=0; i<3; i++) {
 			if (i < player.getPets().length) {
 				petTabs[i].setPet(player.getPets()[i]);

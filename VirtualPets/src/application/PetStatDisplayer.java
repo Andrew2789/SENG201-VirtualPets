@@ -17,7 +17,8 @@ public class PetStatDisplayer extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PetStatDisplayer(Font boldFont, Font semiBoldFont, String title, ImageIcon slider, String tooltip, int min, int max, int minLabelOffset, int maxLabelOffset) {
+	public PetStatDisplayer(Font boldFont, Font semiBoldFont, String title, ImageIcon slider, 
+			String tooltip, Color sliderColour, int min, int max, int minLabelOffset, int maxLabelOffset) {
 		setLayout(null);
 		setOpaque(false);
 		
@@ -34,7 +35,7 @@ public class PetStatDisplayer extends JPanel {
 		
 		sliderRect = new JLabel("");
 		sliderRect.setBounds(22, 19, 0, 8);
-		sliderRect.setBackground(new Color(80, 240, 100));
+		sliderRect.setBackground(sliderColour);
 		sliderRect.setOpaque(true);
 		add(sliderRect);
 		
