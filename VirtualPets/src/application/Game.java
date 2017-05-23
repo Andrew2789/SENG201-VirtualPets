@@ -32,10 +32,10 @@ public class Game extends JPanel {
 	private JButton buttonCure;
 	private JLabel behavingLabel;
 	private JButton buttonDiscipline;
-	private JLabel hungerSliderRect;
-	private JLabel energySliderRect;
-	private JLabel happinessSliderRect;
-	private JLabel weightSliderRect;
+	private PetStatDisplayer hungerSlider;
+	private PetStatDisplayer energySlider;
+	private PetStatDisplayer happinessSlider;
+	private PetStatDisplayer weightSlider;
 	
 	private Player activePlayer;
 	private Pet activePet;
@@ -184,90 +184,28 @@ public class Game extends JPanel {
 		buttonToilet.setBounds(378, 298, 110, 35);
 		petInfoPanel.add(buttonToilet);
 		
-		JLabel hungerLabel = new JLabel("Hunger");
-		hungerLabel.setBounds(256, 10, 232, 18);
-		petInfoPanel.add(hungerLabel);
-		hungerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		hungerLabel.setFont(boldFont);
+		hungerSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Hunger", new ImageIcon(Game.class.getResource("/images/hungerSlider.png")), 
+				"How hungry this pet is. Once hunger reaches the orange region, the pet will begin to starve.", 0, 100, 0, 8);
+		hungerSlider.setBounds(257, 12, 232, 50);
+		petInfoPanel.add(hungerSlider);
 		
-		JLabel hungerSliderIcon = new JLabel(new ImageIcon(Game.class.getResource("/images/hungerSlider.png")));
-		hungerSliderIcon.setBounds(257, 30, 232, 19);
-		petInfoPanel.add(hungerSliderIcon);
-		hungerSliderIcon.setToolTipText("How hungry this pet is. Once hunger reaches the orange region, the pet will begin to starve.");
+		energySlider = new PetStatDisplayer(boldFont, semiBoldFont, "Energy", new ImageIcon(Game.class.getResource("/images/energySlider.png")), 
+				"How much energy this pet has. Once energy reaches the red region, the pet will have a chance to die at the end of each turn.", 0, 100, 6, 0);
+		energySlider.setBounds(257, 72, 232, 50);
+		petInfoPanel.add(energySlider);
 		
-		hungerSliderRect = new JLabel("");
-		hungerSliderRect.setBounds(279, 30, 0, 8);
-		hungerSliderRect.setBackground(new Color(80, 240, 100));
-		hungerSliderRect.setOpaque(true);
-		petInfoPanel.add(hungerSliderRect);
-		
-		JLabel hungerMinLabel = new JLabel("0");
-		hungerMinLabel.setBounds(274, 38, 18, 18);
-		hungerMinLabel.setFont(semiBoldFont);
-		petInfoPanel.add(hungerMinLabel);
-		
-		JLabel hungerMaxLabel = new JLabel("100");
-		hungerMaxLabel.setBounds(454, 46, 30, 18);
-		hungerMaxLabel.setFont(semiBoldFont);
-		petInfoPanel.add(hungerMaxLabel);
-		
-		JLabel energyLabel = new JLabel("Energy");
-		energyLabel.setBounds(256, 72, 232, 18);
-		energyLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		energyLabel.setFont(boldFont);
-		petInfoPanel.add(energyLabel);
-		
-		JLabel energySliderIcon = new JLabel(new ImageIcon(Game.class.getResource("/images/energySlider.png")));
-		energySliderIcon.setBounds(257, 92, 232, 16);
-		energySliderIcon.setToolTipText("How much energy this pet has. Once energy reaches the red region, the pet will have a chance to die at the end of each turn.");
-		petInfoPanel.add(energySliderIcon);
-		
-		energySliderRect = new JLabel("");
-		energySliderRect.setBounds(279, 92, 0, 8);
-		energySliderRect.setBackground(new Color(80, 240, 100));
-		energySliderRect.setOpaque(true);
-		petInfoPanel.add(energySliderRect);
-		
-		JLabel energyMinLabel = new JLabel("0");
-		energyMinLabel.setBounds(274, 103, 18, 18);
-		energyMinLabel.setFont(semiBoldFont);
-		petInfoPanel.add(energyMinLabel);
-		
-		JLabel energyMaxLabel = new JLabel("100");
-		energyMaxLabel.setBounds(454, 100, 30, 18);
-		energyMaxLabel.setFont(semiBoldFont);
-		petInfoPanel.add(energyMaxLabel);
-		
-		JLabel happinessLabel = new JLabel("Happiness");
-		happinessLabel.setBounds(256, 134, 232, 18);
-		happinessLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		happinessLabel.setFont(boldFont);
-		petInfoPanel.add(happinessLabel);
-		
-		JLabel happinessSliderIcon = new JLabel(new ImageIcon(Game.class.getResource("/images/happinessSlider.png")));
-		happinessSliderIcon.setBounds(257, 154, 232, 16);
-		happinessSliderIcon.setToolTipText("How happy this pet is.");
-		petInfoPanel.add(happinessSliderIcon);
-		
-		happinessSliderRect = new JLabel("");
-		happinessSliderRect.setBounds(279, 154, 0, 8);
-		happinessSliderRect.setBackground(new Color(80, 240, 100));
-		happinessSliderRect.setOpaque(true);
-		petInfoPanel.add(happinessSliderRect);
-		
-		JLabel happinessMinLabel = new JLabel("0");
-		happinessMinLabel.setBounds(274, 163, 18, 18);
-		happinessMinLabel.setFont(semiBoldFont);
-		petInfoPanel.add(happinessMinLabel);
-		
-		JLabel happinessMaxLabel = new JLabel("100");
-		happinessMaxLabel.setBounds(454, 161, 30, 18);
-		happinessMaxLabel.setFont(semiBoldFont);
-		petInfoPanel.add(happinessMaxLabel);
+		happinessSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Happiness", new ImageIcon(Game.class.getResource("/images/happinessSlider.png")), 
+				"How happy this pet is.", 0, 100, 3, 0);
+		happinessSlider.setBounds(257, 132, 232, 50);
+		petInfoPanel.add(happinessSlider);
 		
 		JLabel petInfoBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/petInteractBack.png")));
 		petInfoBackground.setBounds(0, 0, 500, 345);
 		petInfoPanel.add(petInfoBackground);
+		
+		JLabel inventoryBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/inventoryBack.png")));
+		inventoryBackground.setBounds(506, 255, 294, 345);
+		add(inventoryBackground);
 		
 		JLabel background = new JLabel(new ImageIcon(Game.class.getResource("/images/setupBackground.png")));
 		background.setBounds(0, 0, 800, 600);
@@ -315,9 +253,9 @@ public class Game extends JPanel {
 			behavingLabel.setText("This pet is misbehaving");
 		buttonDiscipline.setEnabled(!activePet.isBehaving());
 		
-		hungerSliderRect.setBounds(279, 30, activePet.getHunger()*188/100, 8);
-		energySliderRect.setBounds(279, 92, activePet.getEnergy()*188/100, 8);
-		happinessSliderRect.setBounds(279, 154, activePet.getHappiness()*188/100, 8);
+		hungerSlider.setStat(activePet.getHunger());
+		energySlider.setStat(activePet.getEnergy());
+		happinessSlider.setStat(activePet.getHappiness());
 		favouriteToyLabel.setText(activePet.getFavouriteToy().getName());
 		favouriteFoodLabel.setText(activePet.getFavouriteFood().getName());
 	}
