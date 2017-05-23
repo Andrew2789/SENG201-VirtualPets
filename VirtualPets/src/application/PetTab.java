@@ -39,7 +39,7 @@ public class PetTab extends JPanel {
 		add(actionPointsLabel);
 		
 		
-		clickDetector = new JButton(new ImageIcon("images/tabBack.png"));
+		clickDetector = new JButton(new ImageIcon(PetTab.class.getResource("/images/tabBack.png")));
 		clickDetector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

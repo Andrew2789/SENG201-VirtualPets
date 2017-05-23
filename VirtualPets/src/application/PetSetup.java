@@ -60,7 +60,7 @@ public class PetSetup extends JPanel {
 		speciesIcon.setBounds(130, 4, 100, 100);
 		add(speciesIcon);
 		
-		JLabel background = new JLabel(new ImageIcon("images/petSetupBack.png"));
+		JLabel background = new JLabel(new ImageIcon(PetSetup.class.getResource("/images/petSetupBack.png")));
 		background.setVerticalAlignment(SwingConstants.TOP);
 		background.setBounds(0, 0, 235, 108);
 		add(background);

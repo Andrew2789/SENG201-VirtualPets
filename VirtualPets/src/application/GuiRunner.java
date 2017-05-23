@@ -5,8 +5,9 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -46,11 +47,11 @@ public class GuiRunner {
 	 */
 	public GuiRunner() {
 		species = new Species[] {
-				new Species("Cat", new ImageIcon("images/species/Cat.png"), 60, 10, 15, 5, 40, 70),
-				new Species("Dog", new ImageIcon("images/species/Dog.png"), 90, 15, 25, 10, 30, 55),
-				new Species("Crab", new ImageIcon("images/species/Crab.png"), 10, 12, 30, 10, 25, 45),
-				new Species("Fish", new ImageIcon("images/species/Fish.png"), 35, 20, 20, 2, 10, 20),
-				new Species("Sloth", new ImageIcon("images/species/Sloth.png"), 55, 5, 40, 5, 15, 25)
+				new Species("Cat", new ImageIcon(GuiRunner.class.getResource("/images/species/Cat.png")), 60, 10, 15, 5, 40, 70),
+				new Species("Dog", new ImageIcon(GuiRunner.class.getResource("/images/species/Dog.png")), 90, 15, 25, 10, 30, 55),
+				new Species("Crab", new ImageIcon(GuiRunner.class.getResource("/images/species/Crab.png")), 10, 12, 30, 10, 25, 45),
+				new Species("Fish", new ImageIcon(GuiRunner.class.getResource("/images/species/Fish.png")), 35, 20, 20, 2, 10, 20),
+				new Species("Sloth", new ImageIcon(GuiRunner.class.getResource("/images/species/Sloth.png")), 55, 5, 40, 5, 15, 25)
 		};
 		
 		toyTypes = new ToyType[] {
@@ -82,16 +83,15 @@ public class GuiRunner {
 		frame.getContentPane().setPreferredSize(new Dimension(800, 600));
 		frame.pack();
 		
-		poppins = loadFont("fonts/Poppins/Poppins-Regular.ttf");
-		sourceSansPro = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf");
-		sourceSansProSemiBold = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Semibold.ttf");
-		sourceSansProBold = loadFont("fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf");
+		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
+		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
+		sourceSansProSemiBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Semibold.ttf"));
+		sourceSansProBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"));
 	};
 	
-	public Font loadFont(String location) {
-		File font_file = new File(location);
+	public Font loadFont(URL location) {
 		try {
-			Font font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+			Font font = Font.createFont(Font.TRUETYPE_FONT, location.openStream());
 			return font;
 		}
 		catch (FontFormatException e) {

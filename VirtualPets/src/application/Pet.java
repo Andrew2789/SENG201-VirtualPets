@@ -349,17 +349,4 @@ public class Pet {
 		changeHappiness(-30);
 		actionPoints -= 1;
 	}
-	
-	/**
-	 * Displays all of the pet's relevant statistics in a text format
-	 */
-	public String presentAs(String format) {
-		String sign;
-		if (weight-species.getOptimumWeight() >= 0)
-			sign = "+";
-		else
-			sign = "-";
-		return String.format(format, name, species.getName(), actionPoints, hunger, energy, happiness, weight, 
-				sign, Math.abs(weight-species.getOptimumWeight()), healthy, behaving, alive, favouriteFood.getName(), favouriteToy.getName());
-	}
 }

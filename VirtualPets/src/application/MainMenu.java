@@ -92,7 +92,7 @@ public class MainMenu extends JPanel {
 		add(buttonQuit);
 		
 		JLabel backgroundImage = new JLabel("");
-		backgroundImage.setIcon(new ImageIcon("images/menuBackground.png"));
+		backgroundImage.setIcon(new ImageIcon(MainMenu.class.getResource("/images/menuBackground.png")));
 		backgroundImage.setBounds(0, 0, 800, 600);
 		add(backgroundImage);
 
