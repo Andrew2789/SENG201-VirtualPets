@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.ImageIcon;
 
 public class SettingsLoader
 {
-	private String[] readFile(String file_path)
+	private static String[] readAllLines(String file_path)
 	{
 		BufferedReader buffer;
 		ArrayList<String> lines = new ArrayList<String>();
@@ -23,7 +22,7 @@ public class SettingsLoader
 			String line = buffer.readLine();
 			while (line != null)
 			{
-				lines.add(line);
+				lines.add(line.trim());
 				line = buffer.readLine();
 			}
 		}
@@ -38,7 +37,7 @@ public class SettingsLoader
 		return lines.toArray(new String[lines.size()]);
 	}
 
-	private HashMap<String, String> parseAttributesBlock(String[] validAttributes, List<String> block) 
+	private static HashMap<String, String> parseAttributesBlock(String[] validAttributes, List<String> block) 
 	{
 		// Initialise new attributes HashMap for this object
 		HashMap<String, String> attributes = new HashMap<String, String>();
@@ -50,71 +49,74 @@ public class SettingsLoader
 				String[] lineParts = line.split("=");
 				// Check through valid attributes to see if valid assignment line
 				for (String validAttribute : validAttributes)
-					if (lineParts[0].toLowerCase() == validAttribute.toLowerCase())
+					if (lineParts[0].equals(validAttribute))
 						attributes.put(lineParts[0], lineParts[1]);
 			}
 
 		return attributes;
 	}
 
-	public Species[] loadSpeciesFile(String file_path)
+	public static Object[] loadCustomFile(String file_path, LoadFormat loadFormat)
 	{
-		final String[] validSpeciesAttributes = { "name", "icon", "optimumWeight", "hungerGain", "energyLoss",
-				"happinessLoss", "minToyDamage", "maxToyDamage" };
-		ArrayList<Species> customSpecies = new ArrayList<Species>();
-		final String[] lines = readFile(file_path);
+		ArrayList<Object> customObjects = new ArrayList<Object>();
+		final String[] lines = readAllLines(file_path);
 
 		int i = 0;
 		while (i < lines.length)
 		{
-			if (lines[i].substring(0, 1) == "$")
+			if (lines[i].substring(0, 1).equals("$"))
 			{
 				// Record the index and label at the start of the block.
 				int block_start_index = i + 1;
 				String label = lines[i].substring(1);
-
+				
 				// Check through lines until end of block found.
-				while (lines[i] != "/" + label)
-					i++;
+				try
+				{
+					while (!lines[i].equals("/" + label))
+						i++;
+				}
+				catch (ArrayIndexOutOfBoundsException e)
+				{
+					System.err.println(String.format("Could not find end of '%s' block while parsing file.", label));
+				}
 
 				// Creates a list reference to the lines which comprise the block found.
 				List<String> block = Arrays.asList(lines).subList(block_start_index, i);
 				
 				// Then pass that list reference to the parseAttributesBlock method which will return
 				// the attributes defined by that block.
-				HashMap<String, String> attributes = parseAttributesBlock(validSpeciesAttributes, block);
-
+				HashMap<String, String> attributes = parseAttributesBlock(loadFormat.getValidAttributes(), block);
+				
 				// At end of block, try to create new object with given attributes & values.
-				try
-				{
-					// Parse each attribute's given value to check if valid and return correct type to
-					// constructor.
-					Species newSpecies = new Species(
-							attributes.get("name").substring(1, attributes.get("name").length() - 1),
-							new ImageIcon(this.getClass().getResource(
-									attributes.get("icon").substring(1, attributes.get("icon").length() - 1)
-									)),
-							Integer.parseInt(attributes.get("optimumWeight")), 
-							Integer.parseInt(attributes.get("hungerGain")),
-							Integer.parseInt(attributes.get("energyLoss")), 
-							Integer.parseInt(attributes.get("happinessLoss")),
-							Integer.parseInt(attributes.get("minToyDamage")),
-							Integer.parseInt(attributes.get("maxToyDamage")));
-					customSpecies.add(newSpecies);
-				}
-				catch (NumberFormatException e)
-				{
-
-				}
-				catch (NullPointerException e)
-				{
-
-				}
+				customObjects = loadFormat.addCustomObject(customObjects, attributes);
 			}
 			// Increment line counter after processing any block.
 			i++;
 		}
 		// Processing of all blocks done, return custom species defined in file as Species array.
-		return customSpecies.toArray(new Species[customSpecies.size()]);
+		return customObjects.toArray(new Object[customObjects.size()]);
 	}
+	
+	// DEBUG MAIN
+	
+	public static void main(String[] args) {
+		Object[] custom_object_array = loadCustomFile("sample_species.txt", new SpeciesLoadFormat());
+		
+		Species[] custom_species_array = Arrays.copyOf(
+				custom_object_array, 
+				custom_object_array.length, 
+				Species[].class);
+		for (Species species : custom_species_array) {
+			System.out.println(species.getName());
+			System.out.println(species.getOptimumWeight());
+			System.out.println(species.getEnergyLoss());
+			System.out.println(species.getHungerGain());
+			System.out.println(species.getHappinessLoss());
+			System.out.println(species.getMinToyDamage());
+			System.out.println(species.getMaxToyDamage());
+			System.out.println();
+		}
+	}
+	
 }
