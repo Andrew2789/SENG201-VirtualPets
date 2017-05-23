@@ -204,7 +204,7 @@ public class Game extends JPanel {
 		petInfoPanel.add(favouriteFoodLabel);
 		
 		favouriteFoodIcon = new JLabel("");
-		favouriteFoodIcon.setIcon(new ImageIcon(Game.class.getResource("/images/species/Dog.png")));
+		favouriteFoodIcon.setIcon(new ImageIcon(Game.class.getResource("/images/species/Bunny.png")));
 		favouriteFoodIcon.setBounds(142, 180, 94, 94);
 		petInfoPanel.add(favouriteFoodIcon);
 		
