@@ -41,6 +41,7 @@ public class Game extends JPanel {
 	private Player activePlayer;
 	private Pet activePet;
 	private JLabel speciesTitle;
+	private JLabel buttonShopIcon;
 
 	/**
 	 * Create the panel.
@@ -83,11 +84,26 @@ public class Game extends JPanel {
 		playerLabel.setBounds(300, 70, 200, 30);
 		add(playerLabel);
 		
+		JButton buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
+		buttonShop.setBounds(531, 123, 65, 65);
+		buttonShop.setFont(boldFont);
+		add(buttonShop);
+		
+		JButton buttonEndTurn = new JButton("");
+		buttonEndTurn.setBounds(608, 110, 90, 90);
+		buttonEndTurn.setFont(boldFont);
+		add(buttonEndTurn);
+		
+		JButton buttonMenu = new JButton("");
+		buttonMenu.setBounds(710, 123, 65, 65);
+		buttonMenu.setFont(boldFont);
+		add(buttonMenu);
+		
 		JLabel inventoryLabel = new JLabel("Inventory");
 		inventoryLabel.setBounds(506, 212, 294, 20);
-		add(inventoryLabel);
 		inventoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		inventoryLabel.setFont(subtitleFont);
+		add(inventoryLabel);
 		
 		inventoryMoney = new JLabel("");
 		inventoryMoney.setHorizontalAlignment(SwingConstants.CENTER);
@@ -102,8 +118,8 @@ public class Game extends JPanel {
 		JPanel petInfoPanel = new JPanel();
 		petInfoPanel.setBounds(0, 255, 500, 345);
 		petInfoPanel.setOpaque(false);
-		add(petInfoPanel);
 		petInfoPanel.setLayout(null);
+		add(petInfoPanel);
 		
 		speciesTitle = new JLabel("Species");
 		speciesTitle.setHorizontalAlignment(SwingConstants.CENTER);

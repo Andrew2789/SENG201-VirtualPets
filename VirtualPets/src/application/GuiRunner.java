@@ -51,7 +51,8 @@ public class GuiRunner {
 				new Species("Dog", new ImageIcon(GuiRunner.class.getResource("/images/species/Dog.png")), 90, 15, 25, 10, 30, 55),
 				new Species("Crab", new ImageIcon(GuiRunner.class.getResource("/images/species/Crab.png")), 10, 12, 30, 10, 25, 45),
 				new Species("Fish", new ImageIcon(GuiRunner.class.getResource("/images/species/Fish.png")), 35, 20, 20, 2, 10, 20),
-				new Species("Sloth", new ImageIcon(GuiRunner.class.getResource("/images/species/Sloth.png")), 55, 5, 40, 5, 15, 25)
+				new Species("Sloth", new ImageIcon(GuiRunner.class.getResource("/images/species/Sloth.png")), 55, 5, 40, 5, 15, 25),
+				new Species("Mochi", new ImageIcon(GuiRunner.class.getResource("/images/species/Mochi.png")), 20, 10, 25, 25, 10, 20)
 		};
 		
 		toyTypes = new ToyType[] {
