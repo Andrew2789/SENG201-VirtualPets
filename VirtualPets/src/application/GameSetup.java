@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.Color;
 
 public class GameSetup extends JPanel {
 	private static final long serialVersionUID = 1441493919925710008L;
@@ -47,9 +48,10 @@ public class GameSetup extends JPanel {
 		playerSetups[0].setVisible(true);
 		
 		JLabel title = new JLabel("Game Setup");
+		title.setForeground(Color.WHITE);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setFont(titleFont);
-		title.setBounds(240, 30, 320, 50);
+		title.setBounds(240, 20, 320, 50);
 		add(title);
 		
 		JLabel numberOfPlayersLabel = new JLabel("Number of Players");
@@ -153,7 +155,7 @@ public class GameSetup extends JPanel {
 		label_1.setBounds(543, 82, 181, 52);
 		add(label_1);
 		
-		JLabel backgroundImage = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/setupBackground.png")));
+		JLabel backgroundImage = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/gameBackground.png")));
 		backgroundImage.setBounds(0, 0, 800, 600);
 		add(backgroundImage);
 	}

@@ -47,11 +47,11 @@ public class GuiRunner {
 	 */
 	public GuiRunner() {
 		species = new Species[] {
-				new Species("Cat", new ImageIcon(GuiRunner.class.getResource("/images/species/Cat.png")), 60, 10, 15, 5, 40, 70),
+				new Species("Cat", new ImageIcon(GuiRunner.class.getResource("/images/species/Cat.png")), 55, 10, 15, 5, 40, 70),
 				new Species("Bear", new ImageIcon(GuiRunner.class.getResource("/images/species/Bear.png")), 90, 15, 25, 10, 30, 55),
 				new Species("Crab", new ImageIcon(GuiRunner.class.getResource("/images/species/Crab.png")), 10, 12, 30, 10, 25, 45),
 				new Species("Bunny", new ImageIcon(GuiRunner.class.getResource("/images/species/Bunny.png")), 35, 20, 20, 2, 10, 20),
-				new Species("Sloth", new ImageIcon(GuiRunner.class.getResource("/images/species/Sloth.png")), 55, 5, 40, 5, 15, 25),
+				new Species("Duck", new ImageIcon(GuiRunner.class.getResource("/images/species/Duck.png")), 55, 5, 40, 5, 15, 25),
 				new Species("Mochi", new ImageIcon(GuiRunner.class.getResource("/images/species/Mochi.png")), 20, 10, 25, 25, 10, 20)
 		};
 		
@@ -65,7 +65,7 @@ public class GuiRunner {
 				new FoodType("Lasagne", 20, 50, 25, 10),
 				new FoodType("Berries", 5, -10, -10, 5),
 				new FoodType("Mushrooms", 10, 20, 20, 5),
-				new FoodType("$2-rice", 2, 5, 20, 5)
+				new FoodType("$2-Rice", 2, 5, 20, 5)
 		};
 		
 		initialise();

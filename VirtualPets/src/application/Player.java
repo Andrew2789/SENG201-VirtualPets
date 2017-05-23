@@ -13,7 +13,7 @@ public class Player {
 	private HashMap<FoodType, Integer> food;
 	private ArrayList<Toy> toys;
 	
-	private double money;
+	private int money;
 	private int score = 0;
 	
 	
@@ -26,7 +26,7 @@ public class Player {
 	 * @param pets
 	 * A collection of the pets belonging to a player.
 	 */
-	public Player(String name, Pet[] pets, double money) {
+	public Player(String name, Pet[] pets, int money) {
 		this.name = name;
 		this.pets = pets;
 		
@@ -53,7 +53,7 @@ public class Player {
 		return this.toys;
 	}
 	
-	public double getMoney() {
+	public int getMoney() {
 		return this.money;
 	}
 	
@@ -67,7 +67,7 @@ public class Player {
 	 * @param amount
 	 * The amount of money to change the player's balance by (positive to give money to player, negative to take money away).
 	 */
-	public void changeMoney(double amount) {
+	public void changeMoney(int amount) {
 		money += amount;
 	}
 	
