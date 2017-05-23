@@ -18,6 +18,9 @@ public class Game extends JPanel {
 	private int numberOfDays;
 	private int incomePerTurn;
 	
+	private int[][] tabLayouts = {{175, 0, 0},
+								  {100, 250, 0},
+								  {25, 175, 325}};
 	private JLabel dayLabel;
 	private JLabel playerLabel;
 	private PetTab[] petTabs = new PetTab[3];
@@ -42,6 +45,7 @@ public class Game extends JPanel {
 	private Pet activePet;
 	private JLabel speciesTitle;
 	private JLabel buttonShopIcon;
+	private JLabel inventoryLabelBackground;
 
 	/**
 	 * Create the panel.
@@ -53,7 +57,7 @@ public class Game extends JPanel {
 		
 		for (int i=0; i<3; i++) {
 			petTabs[i] = new PetTab(semiBoldFont);
-			petTabs[i].setBounds(0 + 150*i, 100, 148, 155);
+			petTabs[i].setBounds(0, 100, 148, 155);
 			petTabs[i].setVisible(false);
 			
 			final int finalI = i;
@@ -61,7 +65,7 @@ public class Game extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					for (int i=0; i<3; i++) {
 						if (i == finalI)
-							petTabs[i].setBorder(new MatteBorder(2, 2, 0, 2, (Color) new Color(255,255,255)));
+							petTabs[i].setBorder(new MatteBorder(4, 4, 0, 4, (Color) new Color(255,255,255)));
 						else
 							petTabs[i].setBorder(null);
 						setPet(finalI);
@@ -70,7 +74,7 @@ public class Game extends JPanel {
 			});
 			add(petTabs[i]);
 		}
-		petTabs[0].setBorder(new MatteBorder(2, 2, 0, 2, (Color) new Color(255,255,255)));
+		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, (Color) new Color(255,255,255)));
 		
 		dayLabel = new JLabel("");
 		dayLabel.setFont(titleFont);
@@ -86,17 +90,17 @@ public class Game extends JPanel {
 		
 		JButton buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
 		buttonShop.setBounds(531, 123, 65, 65);
-		buttonShop.setFont(boldFont);
+		buttonShop.setToolTipText("Shop for food and toys for your pets.");
 		add(buttonShop);
 		
-		JButton buttonEndTurn = new JButton("");
+		JButton buttonEndTurn = new JButton(new ImageIcon(Game.class.getResource("/images/endTurn.png")));
 		buttonEndTurn.setBounds(608, 110, 90, 90);
-		buttonEndTurn.setFont(boldFont);
+		buttonEndTurn.setToolTipText("End your turn.");
 		add(buttonEndTurn);
 		
-		JButton buttonMenu = new JButton("");
+		JButton buttonMenu = new JButton(new ImageIcon(Game.class.getResource("/images/menu.png")));
 		buttonMenu.setBounds(710, 123, 65, 65);
-		buttonMenu.setFont(boldFont);
+		buttonMenu.setToolTipText("Open the menu.");
 		add(buttonMenu);
 		
 		JLabel inventoryLabel = new JLabel("Inventory");
@@ -114,6 +118,13 @@ public class Game extends JPanel {
 		JLabel inventoryBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/inventoryBack.png")));
 		inventoryBackground.setBounds(506, 255, 294, 345);
 		add(inventoryBackground);
+		
+		inventoryLabelBackground = new JLabel("");
+		inventoryLabelBackground.setIcon(new ImageIcon(Game.class.getResource("/images/inventoryTitleBack.png")));
+		inventoryLabelBackground.setHorizontalAlignment(SwingConstants.CENTER);
+		inventoryLabelBackground.setFont(null);
+		inventoryLabelBackground.setBounds(589, 210, 130, 45);
+		add(inventoryLabelBackground);
 		
 		JPanel petInfoPanel = new JPanel();
 		petInfoPanel.setBounds(0, 255, 500, 345);
@@ -236,7 +247,7 @@ public class Game extends JPanel {
 		petInfoBackground.setBounds(0, 0, 500, 345);
 		petInfoPanel.add(petInfoBackground);
 		
-		JLabel background = new JLabel(new ImageIcon(Game.class.getResource("/images/setupBackground.png")));
+		JLabel background = new JLabel(new ImageIcon(Game.class.getResource("/images/gameBackground.png")));
 		background.setBounds(0, 0, 800, 600);
 		add(background);
 
@@ -258,6 +269,7 @@ public class Game extends JPanel {
 		inventoryMoney.setText("Money: $"+player.getMoney());
 		for (int i=0; i<3; i++) {
 			if (i < player.getPets().length) {
+				petTabs[i].setBounds(tabLayouts[player.getPets().length-1][i], 100, 148, 155);
 				petTabs[i].setPet(player.getPets()[i]);
 				petTabs[i].setActionPoints(2);
 				petTabs[i].setVisible(true);

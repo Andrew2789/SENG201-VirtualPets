@@ -48,7 +48,7 @@ public class GuiRunner {
 	public GuiRunner() {
 		species = new Species[] {
 				new Species("Cat", new ImageIcon(GuiRunner.class.getResource("/images/species/Cat.png")), 60, 10, 15, 5, 40, 70),
-				new Species("Dog", new ImageIcon(GuiRunner.class.getResource("/images/species/Dog.png")), 90, 15, 25, 10, 30, 55),
+				new Species("Bear", new ImageIcon(GuiRunner.class.getResource("/images/species/Bear.png")), 90, 15, 25, 10, 30, 55),
 				new Species("Crab", new ImageIcon(GuiRunner.class.getResource("/images/species/Crab.png")), 10, 12, 30, 10, 25, 45),
 				new Species("Fish", new ImageIcon(GuiRunner.class.getResource("/images/species/Fish.png")), 35, 20, 20, 2, 10, 20),
 				new Species("Sloth", new ImageIcon(GuiRunner.class.getResource("/images/species/Sloth.png")), 55, 5, 40, 5, 15, 25),
