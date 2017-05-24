@@ -341,6 +341,7 @@ public class Pet {
 	
 	public void cure() {
 		healthy = true;
+		changeHappiness(20);
 		actionPoints -= 1;
 	}
 	

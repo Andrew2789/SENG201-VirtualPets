@@ -98,7 +98,7 @@ public class PetInteract extends JPanel {
 		buttonCure = new JButton("Cure");
 		buttonCure.setEnabled(false);
 		buttonCure.setFont(boldFont);
-		buttonCure.setToolTipText("Cures sickness. Costs $50 and consumes one action point.");
+		buttonCure.setToolTipText("Cures sickness and makes the pet happy (+20 happiness). Costs $50 and consumes one action point.");
 		buttonCure.setBounds(82, 66, 100, 20);
 		add(buttonCure);
 		
