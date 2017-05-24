@@ -60,7 +60,7 @@ public class PetInteract extends JPanel {
 		behavingLabel = new JLabel("");
 		behavingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		behavingLabel.setFont(boldFont);
-		behavingLabel.setBounds(12, 92, 232, 16);
+		behavingLabel.setBounds(12, 97, 232, 16);
 		add(behavingLabel);
 		
 		buttonCure = new JButton("Cure");
@@ -74,45 +74,43 @@ public class PetInteract extends JPanel {
 		buttonDiscipline.setEnabled(false);
 		buttonDiscipline.setFont(boldFont);
 		buttonDiscipline.setToolTipText("Will make your pet unhappy (-30 happiness) but stops them from misbehaving. Consumes one action point.");
-		buttonDiscipline.setBounds(82, 110, 100, 20);
+		buttonDiscipline.setBounds(82, 115, 100, 20);
 		add(buttonDiscipline);
 		
 		JLabel favouriteToyTitle = new JLabel("Favourite Toy");
 		favouriteToyTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteToyTitle.setVerticalAlignment(SwingConstants.TOP);
 		favouriteToyTitle.setFont(boldFont);
-		favouriteToyTitle.setBounds(12, 142, 110, 28);
+		favouriteToyTitle.setBounds(12, 155, 110, 28);
 		add(favouriteToyTitle);
 		
 		favouriteToyLabel = new JLabel("");
 		favouriteToyLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteToyLabel.setVerticalAlignment(SwingConstants.TOP);
 		favouriteToyLabel.setFont(semiBoldFont);
-		favouriteToyLabel.setBounds(12, 158, 110, 16);
+		favouriteToyLabel.setBounds(12, 172, 110, 16);
 		add(favouriteToyLabel);
 		
 		favouriteToyIcon = new JLabel("");
-		favouriteToyIcon.setIcon(new ImageIcon(Game.class.getResource("/images/species/Cat.png")));
-		favouriteToyIcon.setBounds(20, 180, 94, 94);
+		favouriteToyIcon.setBounds(30, 185, 75, 75);
 		add(favouriteToyIcon);
 		
 		JLabel favouriteFoodTitle = new JLabel("Favourite Food");
 		favouriteFoodTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteFoodTitle.setVerticalAlignment(SwingConstants.TOP);
 		favouriteFoodTitle.setFont(boldFont);
-		favouriteFoodTitle.setBounds(132, 142, 110, 28);
+		favouriteFoodTitle.setBounds(132, 155, 110, 28);
 		add(favouriteFoodTitle);
 		
 		favouriteFoodLabel = new JLabel("");
 		favouriteFoodLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		favouriteFoodLabel.setVerticalAlignment(SwingConstants.TOP);
 		favouriteFoodLabel.setFont(semiBoldFont);
-		favouriteFoodLabel.setBounds(134, 158, 110, 16);
+		favouriteFoodLabel.setBounds(134, 172, 110, 16);
 		add(favouriteFoodLabel);
 		
 		favouriteFoodIcon = new JLabel("");
-		favouriteFoodIcon.setIcon(new ImageIcon(Game.class.getResource("/images/species/Bunny.png")));
-		favouriteFoodIcon.setBounds(142, 180, 94, 94);
+		favouriteFoodIcon.setBounds(151, 185, 75, 75);
 		add(favouriteFoodIcon);
 		
 		buttonPlay = new JButton("Play");
@@ -184,6 +182,9 @@ public class PetInteract extends JPanel {
 		
 		favouriteToyLabel.setText(activePet.getFavouriteToy().getName());
 		favouriteFoodLabel.setText(activePet.getFavouriteFood().getName());
+
+		favouriteToyIcon.setIcon(activePet.getFavouriteToy().getIcon());
+		favouriteFoodIcon.setIcon(activePet.getFavouriteFood().getIcon());
 	}
 	
 	public void setButtonsEnabled(boolean enabled) {

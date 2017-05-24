@@ -1,19 +1,19 @@
-$Lasagne
-	name="Lasagne"
-	icon="/images/species/Cat.png"
+$Fish
+	name="Fish"
+	icon="/images/food/Fish.png"
 	price=20
 	nutrition=50
 	tastiness=25
 	weight=15
-/Lasagne
-$Berries
-	name="Berries"
-	icon="/images/species/Cat.png"
+/Fish
+$Candy
+	name="Candy"
+	icon="/images/food/Candy.png"
 	price=5
 	nutrition=10
 	tastiness=10
 	weight=5
-/Berries
+/Candy
 $Mushrooms
 	name="Mushrooms"
 	icon="/images/food/Mushroom.png"
@@ -22,9 +22,25 @@ $Mushrooms
 	tastiness=20
 	weight=5
 /Mushrooms
+$Orange
+	name="Orange"
+	icon="/images/food/Orange.png"
+	price=10
+	nutrition=20
+	tastiness=20
+	weight=5
+/Orange
+$Carrot
+	name="Carrot"
+	icon="/images/food/Carrot.png"
+	price=10
+	nutrition=20
+	tastiness=20
+	weight=5
+/Carrot
 $$2-Rice
 	name="$2-Rice"
-	icon="/images/species/Cat.png"
+	icon="/images/food/Carrot.png"
 	price=2
 	nutrition=5
 	tastiness=20

@@ -139,7 +139,7 @@ public class Game extends JPanel {
 				currentDialog.setVisible(true);
 			}
 		});
-		
+
 		petInteract.getButtonFeed().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setButtonsEnabled(false);
@@ -154,6 +154,20 @@ public class Game extends JPanel {
 				});
 				
 				currentDialog.setVisible(true);
+			}
+		});
+
+		petInteract.getButtonRest().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				activePet.sleep();
+				refreshPetInfo();
+			}
+		});
+		
+		petInteract.getButtonToilet().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				activePet.goToToilet();
+				refreshPetInfo();
 			}
 		});
 		
@@ -259,6 +273,7 @@ public class Game extends JPanel {
 		for (int i=0; i<3; i++) {
 			if (i < activePlayer.getPets().length) {
 				petTabs[i].setBounds(tabLayouts[activePlayer.getPets().length-1][i], 100, 148, 155);
+				petTabs[i].setBorder(null);
 				petTabs[i].setPet(activePlayer.getPets()[i]);
 				petTabs[i].setActionPoints(2);
 				petTabs[i].setVisible(true);
@@ -267,11 +282,21 @@ public class Game extends JPanel {
 				petTabs[i].setVisible(false);
 		}
 		setPet(0);
+		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, Color.WHITE));
+	}
+	
+	public void refreshPetInfo() {
+		for (int i=0; i<activePlayer.getPets().length; i++)
+			petTabs[i].setActionPoints(activePlayer.getPets()[i].getActionPoints());
+		petInteract.setPet(activePet);
+		if (activePet.getActionPoints() == 0)
+			petInteract.setButtonsEnabled(false);
 	}
 	
 	public void setPet(int petIndex) {
 		activePet = activePlayer.getPets()[petIndex];
 		petInteract.setPet(activePet);
+		petInteract.setButtonsEnabled(activePet.getActionPoints() > 0);
 	}
 	
 	public void endTurn() {
@@ -292,7 +317,8 @@ public class Game extends JPanel {
 		buttonShop.setEnabled(enabled);
 		buttonEndTurn.setEnabled(enabled);
 		buttonMenu.setEnabled(enabled);
-		petInteract.setButtonsEnabled(enabled);
+		if (activePet.getActionPoints() > 0)
+			petInteract.setButtonsEnabled(enabled);
 		for (PetTab petTab: petTabs)
 			petTab.setButtonEnabled(enabled);
 	}

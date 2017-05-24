@@ -1,18 +1,30 @@
 $Proleteriat
 	name="Proleteriat"
 	icon="/images/species/Cat.png"
-	price=-100.00
+	price=-100
 	happinessGain=100
 /Proleteriat
 $Bell
 	name="Bell"
-	icon="/images/species/Bunny.png"
+	icon="/images/toys/Bell.png"
 	price=10
 	happinessGain=15
 /Bell
 $Mouse
 	name="Mouse"
-	icon="/images/species/Bear.png"
+	icon="/images/toys/Mouse.png"
 	price=25
 	happinessGain=50
 /Mouse
+$Ball
+	name="Ball"
+	icon="/images/toys/Ball.png"
+	price=25
+	happinessGain=50
+/Ball
+$Shell
+	name="Shell"
+	icon="/images/toys/Shell.png"
+	price=25
+	happinessGain=50
+/Shell
