@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 public class FoodType {
 	private String name;
 	private ImageIcon icon;
-	private double price;
+	private int price;
 	private int nutrition;
 	private int tastiness;
 	private int weight;
@@ -26,7 +26,7 @@ public class FoodType {
 	 * @param tastiness
 	 * How tasty the food is - a tastier food will increase happiness more when consumed.
 	 */
-	public FoodType(String name, ImageIcon icon, double price, int nutrition, int tastiness, int weight) {
+	public FoodType(String name, ImageIcon icon, int price, int nutrition, int tastiness, int weight) {
 		this.name = name;
 		this.icon = icon;
 		this.price = price;
@@ -36,7 +36,7 @@ public class FoodType {
 	}
 	
 	// DELETE ME ONCE ICONS HAVE BEEN ADDED FOR FOOD TYPES
-	public FoodType(String name, double price, int nutrition, int tastiness, int weight) {
+	public FoodType(String name, int price, int nutrition, int tastiness, int weight) {
 		this.name = name;
 		this.price = price;
 		this.nutrition = nutrition;

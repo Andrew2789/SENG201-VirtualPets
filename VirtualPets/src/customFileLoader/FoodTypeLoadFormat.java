@@ -24,9 +24,9 @@ public class FoodTypeLoadFormat implements LoadFormat {
 					attributes.get("name").substring(1, attributes.get("name").length() - 1),
 					new ImageIcon(SettingsLoader.class.getResource(
 							attributes.get("icon").substring(1, attributes.get("icon").length() - 1)
-							)),
-					Double.parseDouble(attributes.get("price")), 
-					Integer.parseInt(attributes.get("nutrition")),
+							)), 
+					Integer.parseInt(attributes.get("price")), 
+					Integer.parseInt(attributes.get("nutrition")), 
 					Integer.parseInt(attributes.get("tastiness")), 
 					Integer.parseInt(attributes.get("weight")));
 			customObjects.add(newFoodType);

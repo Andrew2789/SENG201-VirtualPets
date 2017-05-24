@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 public class ToyType {
 	private String name;
 	private ImageIcon icon;
-	private double price;
+	private int price;
 	private int happinessGain;
 	
 	/**
@@ -22,7 +22,7 @@ public class ToyType {
 	 * @param happinessGain
 	 * A number representation of the base amount of happiness playing with this toy will give a pet.
 	 */
-	public ToyType(String name, ImageIcon icon, double price, int happinessGain) {
+	public ToyType(String name, ImageIcon icon, int price, int happinessGain) {
 		this.name = name;
 		this.icon = icon;
 		this.price = price;
@@ -30,7 +30,7 @@ public class ToyType {
 	}
 	
 	// DELETE ME ONCE ICONS HAVE BEEN ADDED FOR TOY TYPES
-	public ToyType(String name, double price, int happinessGain) {
+	public ToyType(String name, int price, int happinessGain) {
 		this.name = name;
 		this.price = price;
 		this.happinessGain = happinessGain;

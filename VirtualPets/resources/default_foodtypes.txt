@@ -1,7 +1,7 @@
 $Lasagne
 	name="Lasagne"
 	icon="/images/species/Cat.png"
-	price=20.0
+	price=20
 	nutrition=50
 	tastiness=25
 	weight=15
@@ -9,7 +9,7 @@ $Lasagne
 $Berries
 	name="Berries"
 	icon="/images/species/Cat.png"
-	price=5.0
+	price=5
 	nutrition=10
 	tastiness=10
 	weight=5
@@ -17,7 +17,7 @@ $Berries
 $Mushrooms
 	name="Mushrooms"
 	icon="/images/species/Cat.png"
-	price=10.0
+	price=10
 	nutrition=20
 	tastiness=20
 	weight=5
@@ -25,7 +25,7 @@ $Mushrooms
 $$2-Rice
 	name="$2-Rice"
 	icon="/images/species/Cat.png"
-	price=2.0
+	price=2
 	nutrition=5
 	tastiness=20
 	weight=10
