@@ -9,6 +9,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class Game extends JPanel {
 	private static final long serialVersionUID = 1557753595413288282L;
@@ -38,10 +40,14 @@ public class Game extends JPanel {
 	private int[][] tabLayouts = {{175, 0, 0}, {100, 250, 0}, {25, 175, 325}};
 	private PetInteract petInteract;
 	
+	private JScrollPane foodInventoryScrollPane;
+	private JPanel foodInventory;
+	
 	private JLabel inventoryMoney;
 	private boolean selectingToy = false;
 	private boolean selectingFood = false;
 	
+	private Font semiBoldFont;
 
 	/**
 	 * Create the panel.
@@ -79,6 +85,11 @@ public class Game extends JPanel {
 		});
 		closeMenu.setBounds(50, 222, 210, 50);
 		menu.add(closeMenu);
+		
+		foodInventoryScrollPane = new JScrollPane();
+		foodInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		foodInventoryScrollPane.setBounds(506, 264, 290, 156);
+		add(foodInventoryScrollPane);
 		
 		currentDialog = new InternalDialog(boldFont);
 		currentDialog.setBounds(275, 200, 250, 100);
@@ -283,6 +294,7 @@ public class Game extends JPanel {
 
 		this.toyTypes = toyTypes;
 		this.foodTypes = foodTypes;
+		this.semiBoldFont = semiBoldFont;
 	}
 	
 	public void initialise(Player[] players, int numberOfDays, int incomePerTurn) {
@@ -300,6 +312,11 @@ public class Game extends JPanel {
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn");
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+		// DEBUG ONLY
+		activePlayer.addFood(foodTypes[0]);
+		// END DEBUG
+		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
+		foodInventoryScrollPane.setViewportView(foodInventory);
 		for (int i=0; i<3; i++) {
 			if (i < activePlayer.getPets().length) {
 				petTabs[i].setBounds(tabLayouts[activePlayer.getPets().length-1][i], 100, 148, 155);
