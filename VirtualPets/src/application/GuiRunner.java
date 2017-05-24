@@ -142,6 +142,20 @@ public class GuiRunner {
 	
 	private void loadGame() {
 		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), poppins.deriveFont(18f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+
+		game.getExitToMainMenu().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				mainMenu.setVisible(true);
+				game.setVisible(false);
+			}
+		});
+		
+		game.getExitToDesktop().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				frame.dispose();
+			}
+		});
 		
 		frame.getContentPane().add(game);
 	}
