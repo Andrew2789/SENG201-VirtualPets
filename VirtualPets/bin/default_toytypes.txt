@@ -1,0 +1,18 @@
+$Proleteriat
+	name="Proleteriat"
+	icon="/images/species/Cat.png"
+	price=-100.00
+	happinessGain=100
+/Proleteriat
+$Bell
+	name="Bell"
+	icon="/images/species/Bunny.png"
+	price=10
+	happinessGain=15
+/Bell
+$Mouse
+	name="Mouse"
+	icon="/images/species/Bear.png"
+	price=25
+	happinessGain=50
+/Mouse
