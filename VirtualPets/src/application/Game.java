@@ -317,6 +317,7 @@ public class Game extends JPanel {
 		background.setBounds(0, 0, 800, 600);
 		add(background);
 
+		roundOverview.initialise();
 		roundOverview.getButtonContinue().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(true);
@@ -397,9 +398,16 @@ public class Game extends JPanel {
 				currentPlayerIndex = i;
 		currentPlayerIndex = (currentPlayerIndex+1)%players.length;
 		if (currentPlayerIndex == 0) {
-			roundOverview.displayEndOfRound(currentDay, players);
-			setVisible(false);
-			roundOverview.setVisible(true);
+			if (currentDay == numberOfDays) {
+				roundOverview.displayEndOfGame(currentDay, players);
+				setVisible(false);
+				roundOverview.setVisible(true);
+			}
+			else {
+				roundOverview.displayEndOfRound(currentDay, players);
+				setVisible(false);
+				roundOverview.setVisible(true);
+			}
 		}
 		
 		setTurn(currentPlayerIndex);

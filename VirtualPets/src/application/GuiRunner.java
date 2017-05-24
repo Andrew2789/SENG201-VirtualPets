@@ -152,6 +152,14 @@ public class GuiRunner {
 	 */
 	private void loadGame() {
 		RoundOverview roundOverview = new RoundOverview(poppins.deriveFont(36f), poppins.deriveFont(22f), sourceSansProBold.deriveFont(16f));
+		
+		roundOverview.getButtonEndGame().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				roundOverview.setVisible(false);
+				mainMenu.setVisible(true);
+			}
+		});
+		
 		frame.getContentPane().add(roundOverview);
 		
 		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), poppins.deriveFont(18f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f), roundOverview);

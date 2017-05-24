@@ -13,7 +13,9 @@ public class RoundOverview extends JPanel {
 	private JLabel dayLabel;
 	private JLabel[][] playerLabels;
 	private JButton buttonContinue;
+	private JButton buttonEndGame;
 	private int[] previousScores;
+	private JLabel winnerLabel;
 
 	/**
 	 * Create the panel.
@@ -75,16 +77,34 @@ public class RoundOverview extends JPanel {
 		playerLabels[2][1].setBounds(200, 342, 400, 30);
 		add(playerLabels[2][1]);
 		
+		winnerLabel = new JLabel("");
+		winnerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		winnerLabel.setForeground(Color.WHITE);
+		winnerLabel.setFont(subtitleFont);
+		winnerLabel.setBounds(200, 380, 400, 40);
+		add(winnerLabel);
+		
 		buttonContinue = new JButton("Continue");
 		buttonContinue.setBounds(300, 450, 200, 50);
 		buttonContinue.setFont(boldFont);
 		add(buttonContinue);
+		
+		buttonEndGame = new JButton("End Game");
+		buttonEndGame.setBounds(300, 450, 200, 50);
+		buttonEndGame.setFont(boldFont);
+		add(buttonEndGame);
 		
 		JLabel background = new JLabel(new ImageIcon(Game.class.getResource("/images/gameBackground.png")));
 		background.setBounds(0, 0, 800, 600);
 		add(background);
 	}
 
+	public void initialise() {
+		winnerLabel.setText("");
+		buttonContinue.setVisible(true);
+		buttonEndGame.setVisible(false);
+	}
+	
 	public void displayEndOfRound(int dayNumber, Player[] players) {
 		dayLabel.setText("Score Summary for Day "+dayNumber);
 		for (int i=0; i<3; i++) {
@@ -100,7 +120,36 @@ public class RoundOverview extends JPanel {
 		}
 	}
 	
+	public void displayEndOfGame(int dayNumber, Player[] players) {
+		dayLabel.setText("Game Finished After "+dayNumber+" Days");
+		buttonContinue.setVisible(false);
+		buttonEndGame.setVisible(true);
+		for (int i=0; i<3; i++) {
+			if (i < players.length) {
+				playerLabels[i][0].setText(players[i].getName());
+				playerLabels[i][1].setText(String.format("Final Score: %d", players[i].getScore()));
+			}
+			else {
+				playerLabels[i][0].setText("");
+				playerLabels[i][1].setText("");
+			}
+		}
+		int winningScore = players[0].getScore();
+		Player winner = players[0];
+		for (Player player: players)
+			if (player.getScore() >= winningScore) {
+				winningScore = player.getScore();
+				winner = player;
+			}
+		
+		winnerLabel.setText(winner.getName()+" wins!");
+	}
+
 	public JButton getButtonContinue() {
 		return buttonContinue;
+	}
+	
+	public JButton getButtonEndGame() {
+		return buttonEndGame;
 	}
 }
