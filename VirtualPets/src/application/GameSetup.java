@@ -89,7 +89,7 @@ public class GameSetup extends JPanel {
 				numberOfDays = (int)numberOfDaysChooser.getValue();
 			}
 		});
-		numberOfDaysChooser.setModel(new SpinnerNumberModel(new Integer(5), new Integer(1), null, new Integer(1)));
+		numberOfDaysChooser.setModel(new SpinnerNumberModel(5, 1, null, 1));
 		numberOfDaysChooser.setFont(null);
 		numberOfDaysChooser.setBounds(210, 103, 47, 22);
 		add(numberOfDaysChooser);
@@ -147,7 +147,7 @@ public class GameSetup extends JPanel {
 		buttonSpeciesInfo.setBounds(558, 110, 150, 22);
 		add(buttonSpeciesInfo);
 		
-		JLabel label = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/settingsBack.png")));
+		JLabel label = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/backs/settings.png")));
 		label.setBounds(40, 82, 493, 52);
 		add(label);
 		

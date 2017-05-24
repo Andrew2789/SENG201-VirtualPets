@@ -117,12 +117,12 @@ public class Game extends JPanel {
 		inventoryMoney.setBounds(506, 233, 294, 20);
 		add(inventoryMoney);
 		
-		JLabel inventoryBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/inventoryBack.png")));
+		JLabel inventoryBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/backs/inventory.png")));
 		inventoryBackground.setBounds(506, 255, 294, 345);
 		add(inventoryBackground);
 		
 		inventoryLabelBackground = new JLabel("");
-		inventoryLabelBackground.setIcon(new ImageIcon(Game.class.getResource("/images/inventoryTitleBack.png")));
+		inventoryLabelBackground.setIcon(new ImageIcon(Game.class.getResource("/images/backs/inventoryTitle.png")));
 		inventoryLabelBackground.setHorizontalAlignment(SwingConstants.CENTER);
 		inventoryLabelBackground.setFont(null);
 		inventoryLabelBackground.setBounds(589, 210, 130, 45);
@@ -230,27 +230,27 @@ public class Game extends JPanel {
 		buttonToilet.setBounds(378, 298, 110, 35);
 		petInfoPanel.add(buttonToilet);
 		
-		hungerSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Hunger", new ImageIcon(Game.class.getResource("/images/hungerSlider.png")), 
+		hungerSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Hunger", new ImageIcon(Game.class.getResource("/images/sliders/hunger.png")), 
 				"How hungry this pet is. Once hunger reaches the orange region, the pet will begin to starve.", new Color(227, 66, 52), 0, 100, 0, 8);
 		hungerSlider.setBounds(257, 12, 232, 50);
 		petInfoPanel.add(hungerSlider);
 		
-		energySlider = new PetStatDisplayer(boldFont, semiBoldFont, "Energy", new ImageIcon(Game.class.getResource("/images/energySlider.png")), 
+		energySlider = new PetStatDisplayer(boldFont, semiBoldFont, "Energy", new ImageIcon(Game.class.getResource("/images/sliders/energy.png")), 
 				"How much energy this pet has. Once energy reaches the red region, the pet will have a chance to die at the end of each turn.", new Color(30, 224, 220), 0, 100, 6, 0);
 		energySlider.setBounds(257, 72, 232, 50);
 		petInfoPanel.add(energySlider);
 		
-		happinessSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Happiness", new ImageIcon(Game.class.getResource("/images/happinessSlider.png")), 
+		happinessSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Happiness", new ImageIcon(Game.class.getResource("/images/sliders/happiness.png")), 
 				"How happy this pet is.", new Color(255, 180, 0), 0, 100, 3, 0);
 		happinessSlider.setBounds(257, 132, 232, 50);
 		petInfoPanel.add(happinessSlider);
 		
-		weightSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Weight", new ImageIcon(Game.class.getResource("/images/weightSlider.png")), 
+		weightSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Weight", new ImageIcon(Game.class.getResource("/images/sliders/weight.png")), 
 				"How much this pet weighs.", new Color(127, 127, 127), 0, 100, 6, 6);
 		weightSlider.setBounds(257, 192, 232, 50);
 		petInfoPanel.add(weightSlider);
 		
-		JLabel petInfoBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/petInteractBack.png")));
+		JLabel petInfoBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/backs/petInteract.png")));
 		petInfoBackground.setBounds(0, 0, 500, 345);
 		petInfoPanel.add(petInfoBackground);
 		
@@ -267,17 +267,17 @@ public class Game extends JPanel {
 		this.numberOfDays = numberOfDays;
 		this.incomePerTurn = incomePerTurn;
 		dayLabel.setText("Day 1 of "+numberOfDays);
-		setTurn(players[0]);
+		setTurn(0);
 	}
 	
-	public void setTurn(Player player) {
-		playerLabel.setText(player.getName()+"'s turn");
-		activePlayer = player;
-		inventoryMoney.setText("Money: $"+player.getMoney());
+	public void setTurn(int playerIndex) {
+		activePlayer = players[playerIndex];
+		playerLabel.setText(activePlayer.getName()+"'s turn");
+		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
 		for (int i=0; i<3; i++) {
-			if (i < player.getPets().length) {
-				petTabs[i].setBounds(tabLayouts[player.getPets().length-1][i], 100, 148, 155);
-				petTabs[i].setPet(player.getPets()[i]);
+			if (i < activePlayer.getPets().length) {
+				petTabs[i].setBounds(tabLayouts[activePlayer.getPets().length-1][i], 100, 148, 155);
+				petTabs[i].setPet(activePlayer.getPets()[i]);
 				petTabs[i].setActionPoints(2);
 				petTabs[i].setVisible(true);
 			}
