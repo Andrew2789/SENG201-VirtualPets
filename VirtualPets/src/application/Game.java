@@ -85,7 +85,7 @@ public class Game extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					for (int i=0; i<3; i++) {
 						if (i == finalI)
-							petTabs[i].setBorder(new MatteBorder(4, 4, 0, 4, (Color) new Color(255,255,255)));
+							petTabs[i].setBorder(new MatteBorder(4, 4, 0, 4, Color.WHITE));
 						else
 							petTabs[i].setBorder(null);
 						setPet(finalI);
@@ -94,7 +94,7 @@ public class Game extends JPanel {
 			});
 			add(petTabs[i]);
 		}
-		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, (Color) new Color(255,255,255)));
+		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, Color.WHITE));
 		
 		dayLabel = new JLabel("");
 		dayLabel.setForeground(Color.WHITE);
@@ -120,6 +120,11 @@ public class Game extends JPanel {
 		add(buttonShop);
 		
 		buttonEndTurn = new JButton(new ImageIcon(Game.class.getResource("/images/endTurn.png")));
+		buttonEndTurn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setTurn(1);
+			}
+		});
 		buttonEndTurn.setBounds(608, 110, 90, 90);
 		buttonEndTurn.setToolTipText("End your turn.");
 		add(buttonEndTurn);
