@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 public class FoodInventory extends JPanel {
 	private static final long serialVersionUID = -581342435839614651L;
-	private static final int[] itemHorizontalPositions = {5, 95, 185};
+	private static final int[] itemHorizontalPositions = {0, 90, 180};
 	private static final int itemVerticalDistance = 90;
 	
 	private HashMap<FoodType, FoodInventoryItem> foodItems;
@@ -19,15 +19,16 @@ public class FoodInventory extends JPanel {
 		
 		foodItems = new HashMap<FoodType, FoodInventoryItem>();
 		
-		int i = 1;
+		int i = 0;
 		for (FoodType food : playerFoods.keySet()) {
 			foodItems.put(food, new FoodInventoryItem(food, playerFoods.get(food), semiBoldFont));
 			foodItems.get(food).setFood(food);
 			foodItems.get(food).setQuantity(playerFoods.get(food));
 			foodItems.get(food).setBounds(itemHorizontalPositions[i%3], 
-													i/3*itemVerticalDistance,
+													(i+1)/3*itemVerticalDistance,
 													85,85);
 			add(foodItems.get(food));
+			i++;
 		}
 		
 	}

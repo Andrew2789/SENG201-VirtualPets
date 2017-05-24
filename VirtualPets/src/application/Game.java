@@ -1,5 +1,6 @@
 package application;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,7 +93,7 @@ public class Game extends JPanel {
 
 		foodInventoryScrollPane = new JScrollPane();
 		foodInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		foodInventoryScrollPane.setBounds(506, 264, 290, 156);
+		foodInventoryScrollPane.setBounds(510, 264, 286, 156);
 		add(foodInventoryScrollPane);
 		
 		for (int i=0; i<3; i++) {
@@ -335,10 +336,16 @@ public class Game extends JPanel {
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+		
 		// DEBUG ONLY
 		activePlayer.addFood(foodTypes[0]);
+		activePlayer.addFood(foodTypes[1]);
+		activePlayer.addFood(foodTypes[2]);
+		activePlayer.addFood(foodTypes[3]);
 		// END DEBUG
 		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
+		foodInventory.setPreferredSize(new Dimension(269, activePlayer.getFood().size()/3*90));
+		
 		foodInventoryScrollPane.setViewportView(foodInventory);
 		for (int i=0; i<3; i++) {
 			if (i < activePlayer.getPets().length) {
