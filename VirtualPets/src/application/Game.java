@@ -17,24 +17,26 @@ public class Game extends JPanel {
 	private Player[] players;
 	private int numberOfDays;
 	private int incomePerTurn;
+	private Player activePlayer;
+	private Pet activePet;
 	
 	private JLabel dayLabel;
 	private JLabel playerLabel;
-	
 	private JButton buttonShop;
 	private JButton buttonEndTurn;
 	private JButton buttonMenu;
 	
+	private JPanel menu;
+	private JButton saveGame;
+	private JButton exitToMainMenu;
+	private JButton exitToDesktop;
+	
 	private PetTab[] petTabs = new PetTab[3];
-	private int[][] tabLayouts = {{175, 0, 0},
-			  {100, 250, 0},
-			  {25, 175, 325}};
+	private int[][] tabLayouts = {{175, 0, 0}, {100, 250, 0}, {25, 175, 325}};
 	private PetInteract petInteract;
 	
 	private JLabel inventoryMoney;
 	
-	private Player activePlayer;
-	private Pet activePet;
 
 	/**
 	 * Create the panel.
@@ -43,6 +45,35 @@ public class Game extends JPanel {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
+		
+		menu = new JPanel();
+		menu.setBackground(Color.GRAY);
+		menu.setBounds(245, 180, 310, 310);
+		menu.setVisible(false);
+		menu.setLayout(null);
+		add(menu);
+		
+		saveGame = new JButton("Save Game");
+		saveGame.setBounds(50, 36, 210, 50);
+		menu.add(saveGame);
+		
+		exitToMainMenu = new JButton("Exit to Main Menu");
+		exitToMainMenu.setBounds(50, 98, 210, 50);
+		menu.add(exitToMainMenu);
+		
+		exitToDesktop = new JButton("Exit to Desktop");
+		exitToDesktop.setBounds(50, 160, 210, 50);
+		menu.add(exitToDesktop);
+		
+		JButton closeMenu = new JButton("Close Menu");
+		closeMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menu.setVisible(false);
+				setButtonsEnabled(true);
+			}
+		});
+		closeMenu.setBounds(50, 222, 210, 50);
+		menu.add(closeMenu);
 		
 		for (int i=0; i<3; i++) {
 			petTabs[i] = new PetTab(semiBoldFont);
@@ -97,6 +128,7 @@ public class Game extends JPanel {
 		buttonMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setButtonsEnabled(false);
+				menu.setVisible(true);
 			}
 		});
 		buttonMenu.setBounds(710, 123, 65, 65);
@@ -172,5 +204,13 @@ public class Game extends JPanel {
 		petInteract.setButtonsEnabled(enabled);
 		for (PetTab petTab: petTabs)
 			petTab.setButtonEnabled(enabled);
+	}
+	
+	public JButton getExitToMainMenu() {
+		return exitToMainMenu;
+	}
+	
+	public JButton getExitToDesktop() {
+		return exitToDesktop;
 	}
 }
