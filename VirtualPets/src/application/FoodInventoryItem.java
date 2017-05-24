@@ -2,12 +2,10 @@ package application;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
-
+import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public class FoodInventoryItem extends JPanel {
 	private static final long serialVersionUID = 2475277303480636218L;
@@ -31,7 +29,7 @@ public class FoodInventoryItem extends JPanel {
 		foodIcon.setBounds(5, 5, 75, 75);
 		add(foodIcon);
 		
-		clickDetector = new JButton(new ImageIcon(PetTab.class.getResource("/images/backs/foodInventoryItem.png")));
+		clickDetector = new JButton();
 		clickDetector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

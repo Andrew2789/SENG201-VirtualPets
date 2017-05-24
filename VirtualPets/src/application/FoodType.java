@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
  * @author Andrew Davidson (ada130)
  * Instances of this class represent the various food types available to buy and consume in the game.
  */
-public class FoodType {
+public class FoodType implements Comparable<FoodType> {
 	private String name;
 	private ImageIcon icon;
 	private int price;
@@ -70,4 +70,8 @@ public class FoodType {
 		return weight;
 	}
 	// End Getters
+	
+	public int compareTo(FoodType other) {
+		return this.name.compareTo(other.name);
+	}
 }
