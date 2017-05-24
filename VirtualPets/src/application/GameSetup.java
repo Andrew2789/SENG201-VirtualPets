@@ -24,7 +24,7 @@ public class GameSetup extends JPanel {
 	private static final long serialVersionUID = 1441493919925710008L;
 	private int numberOfPlayers = 1;
 	private int numberOfDays = 5;
-	private int startingMoney = 150;
+	private int startingMoney = 250;
 	private int incomePerTurn = 35;
 	private PlayerSetup[] playerSetups;
 	

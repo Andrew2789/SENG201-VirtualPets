@@ -17,6 +17,8 @@ public class Game extends JPanel {
 	private Player[] players;
 	private int numberOfDays;
 	private int incomePerTurn;
+	
+	private int currentDay = 0;
 	private Player activePlayer;
 	private Pet activePet;
 	
@@ -25,6 +27,7 @@ public class Game extends JPanel {
 	private JButton buttonShop;
 	private JButton buttonEndTurn;
 	private JButton buttonMenu;
+	private InternalDialog currentDialog;
 	
 	private JPanel menu;
 	private JButton saveGame;
@@ -45,7 +48,7 @@ public class Game extends JPanel {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
-		
+
 		menu = new JPanel();
 		menu.setBackground(Color.GRAY);
 		menu.setBounds(245, 180, 310, 310);
@@ -74,6 +77,10 @@ public class Game extends JPanel {
 		});
 		closeMenu.setBounds(50, 222, 210, 50);
 		menu.add(closeMenu);
+		
+		currentDialog = new InternalDialog(boldFont);
+		currentDialog.setBounds(275, 200, 250, 100);
+		add(currentDialog);
 		
 		for (int i=0; i<3; i++) {
 			petTabs[i] = new PetTab(semiBoldFont);
@@ -122,13 +129,40 @@ public class Game extends JPanel {
 		buttonEndTurn = new JButton(new ImageIcon(Game.class.getResource("/images/endTurn.png")));
 		buttonEndTurn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setTurn(1);
+				boolean requiresPrompt = false;
+				for (Pet pet: activePlayer.getPets()) {
+					if (pet.getActionPoints() > 0) {
+						requiresPrompt = true;
+						break;
+					}
+				}
+				if (requiresPrompt) {
+					System.out.println("asdf");
+					setButtonsEnabled(false);
+					currentDialog.setOptions("Some of your pets still have AP.", "Are you sure you want to end turn?", true);
+					
+					currentDialog.getButtonOk().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							endTurn();
+							setButtonsEnabled(true);
+						}
+					});
+					
+					currentDialog.getButtonCancel().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							setButtonsEnabled(true);
+						}
+					});
+					
+					currentDialog.setVisible(true);
+				}
+				else
+					endTurn();
 			}
 		});
 		buttonEndTurn.setBounds(608, 110, 90, 90);
 		buttonEndTurn.setToolTipText("End your turn.");
 		add(buttonEndTurn);
-		
 		buttonMenu = new JButton(new ImageIcon(Game.class.getResource("/images/menu.png")));
 		buttonMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -176,11 +210,14 @@ public class Game extends JPanel {
 		this.players = players;
 		this.numberOfDays = numberOfDays;
 		this.incomePerTurn = incomePerTurn;
-		dayLabel.setText("Day 1 of "+numberOfDays);
 		setTurn(0);
 	}
 	
 	public void setTurn(int playerIndex) {
+		if (playerIndex == 0) {
+			currentDay += 1;
+			dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
+		}
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn");
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
@@ -200,6 +237,20 @@ public class Game extends JPanel {
 	public void setPet(int petIndex) {
 		activePet = activePlayer.getPets()[petIndex];
 		petInteract.setPet(activePet);
+	}
+	
+	public void endTurn() {
+		activePlayer.changeMoney(incomePerTurn);
+		for (Pet pet: activePlayer.getPets())
+			activePlayer.changeScore(pet.finishTurn());
+		
+		int currentPlayerIndex = 0;
+		for (int i=0; i<players.length; i++)
+			if (players[i] == activePlayer)
+				currentPlayerIndex = i;
+		currentPlayerIndex = (currentPlayerIndex+1)%players.length;
+		
+		setTurn(currentPlayerIndex);
 	}
 	
 	public void setButtonsEnabled(boolean enabled) {

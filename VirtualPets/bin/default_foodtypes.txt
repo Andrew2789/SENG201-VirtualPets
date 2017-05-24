@@ -16,7 +16,7 @@ $Berries
 /Berries
 $Mushrooms
 	name="Mushrooms"
-	icon="/images/species/Cat.png"
+	icon="/images/food/Mushroom.png"
 	price=10
 	nutrition=20
 	tastiness=20
