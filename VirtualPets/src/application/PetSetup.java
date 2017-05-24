@@ -79,4 +79,9 @@ public class PetSetup extends JPanel {
 	public boolean fieldsFilled() {
 		return !petNameField.getText().isEmpty();
 	}
+	
+	public void setFieldsEnabled(boolean enabled) {
+		petNameField.setEnabled(enabled);
+		speciesChooser.setEnabled(enabled);
+	}
 }

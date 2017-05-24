@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 public class PlayerSetup extends JPanel {
 	private static final long serialVersionUID = -138517277103698226L;
 	private JTextField playerNameField;
+	private JComboBox<String> petAmountChooser;
 	private PetSetup[] petSetups;
 	private int numberOfPets = 1;
 
@@ -50,7 +51,7 @@ public class PlayerSetup extends JPanel {
 		petAmountLabel.setBounds(134, 10, 94, 15);
 		add(petAmountLabel);
 		
-		JComboBox<String> petAmountChooser = new JComboBox<String>();
+		petAmountChooser = new JComboBox<String>();
 		petAmountChooser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				numberOfPets = petAmountChooser.getSelectedIndex()+1;
@@ -90,5 +91,12 @@ public class PlayerSetup extends JPanel {
 			}
 		}
 		return filled;
+	}
+	
+	public void setFieldsEnabled(boolean enabled) {
+		playerNameField.setEnabled(enabled);
+		petAmountChooser.setEnabled(enabled);
+		for (PetSetup petSetup: petSetups)
+			petSetup.setFieldsEnabled(enabled);
 	}
 }

@@ -14,8 +14,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.Color;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import java.awt.Dimension;
+
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class GameSetup extends JPanel {
 	private static final long serialVersionUID = 1441493919925710008L;
@@ -28,6 +30,7 @@ public class GameSetup extends JPanel {
 	private JLabel fieldsEmptyLabel;
 	private JButton buttonDone;
 	private JButton buttonBack;
+	private boolean fieldsEnabled;
 
 	/**
 	 * Create the panel.
@@ -36,7 +39,27 @@ public class GameSetup extends JPanel {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
+
+		JPanel speciesDisplays = new JPanel();
+		speciesDisplays.setLayout(null);
+		speciesDisplays.setPreferredSize(new Dimension(598, (species.length+1)/2*118));
+		SpeciesDisplayer speciesDisplayer;
+		for (int i=0; i<species.length; i++) {
+			speciesDisplayer = new SpeciesDisplayer(species[i], boldFont, semiBoldFont);
+			if ((i & 1) == 0)
+				speciesDisplayer.setBounds(0, i/2*118, 300, 120);
+			else
+				speciesDisplayer.setBounds(298, i/2*118, 300, 120);
+			speciesDisplays.add(speciesDisplayer);
+		}
 		
+		JScrollPane speciesViewer = new JScrollPane(speciesDisplays);
+		speciesViewer.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		speciesViewer.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		speciesViewer.setBounds(92, 75, 616, 450);
+		speciesViewer.setVisible(false);
+		add(speciesViewer);
+
 		String[] speciesNames = new String[species.length];
 		for (int i=0; i<species.length; i++)
 			speciesNames[i] = species[i].getName();
@@ -155,7 +178,34 @@ public class GameSetup extends JPanel {
 		buttonBack.setBounds(638, 85, 70, 22);
 		add(buttonBack);
 		
+
+		JButton buttonCloseSpeciesViewer = new JButton("Close Species Viewer");
 		JButton buttonSpeciesInfo = new JButton("Species Info");
+		
+		fieldsEnabled = true;
+		ActionListener flipEnabled = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fieldsEnabled = !fieldsEnabled;
+				speciesViewer.setVisible(!fieldsEnabled);
+				buttonCloseSpeciesViewer.setVisible(!fieldsEnabled);
+				buttonSpeciesInfo.setVisible(fieldsEnabled);
+				buttonBack.setVisible(fieldsEnabled);
+				buttonDone.setVisible(fieldsEnabled);
+				numberOfPlayersChooser.setEnabled(fieldsEnabled);
+				numberOfDaysChooser.setEnabled(fieldsEnabled);
+				startingMoneyChooser.setEnabled(fieldsEnabled);
+				moneyPerTurnChooser.setEnabled(fieldsEnabled);
+				for (PlayerSetup playerSetup: playerSetups)
+					playerSetup.setFieldsEnabled(fieldsEnabled);
+			}
+		};
+		
+		buttonCloseSpeciesViewer.addActionListener(flipEnabled);
+		buttonCloseSpeciesViewer.setBounds(300, 535, 200, 45);
+		buttonCloseSpeciesViewer.setVisible(false);
+		add(buttonCloseSpeciesViewer);
+		
+		buttonSpeciesInfo.addActionListener(flipEnabled);
 		buttonSpeciesInfo.setFont(null);
 		buttonSpeciesInfo.setBounds(558, 110, 150, 22);
 		add(buttonSpeciesInfo);
