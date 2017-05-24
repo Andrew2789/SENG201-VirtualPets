@@ -7,7 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FoodInventoryItem extends JPanel {
+public class FoodInventoryIcon extends JPanel {
 	private static final long serialVersionUID = 2475277303480636218L;
 	private JButton clickDetector;
 	private JLabel foodIcon;
@@ -16,7 +16,7 @@ public class FoodInventoryItem extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public FoodInventoryItem(FoodType food, int quantity, Font semiBoldFont) {
+	public FoodInventoryIcon(FoodType food, int quantity, Font semiBoldFont) {
 		setLayout(null);
 		setOpaque(false);
 		
@@ -39,11 +39,11 @@ public class FoodInventoryItem extends JPanel {
 		clickDetector.setBounds(0, 0, 85, 85);
 		add(clickDetector);
 		
-		setFood(food);
+		setFoodIcon(food);
 		setQuantity(quantity);
 	}
 	
-	public void setFood(FoodType food) {
+	public void setFoodIcon(FoodType food) {
 		this.foodIcon.setIcon(food.getIcon());
 	}
 	

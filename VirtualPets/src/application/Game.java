@@ -44,7 +44,9 @@ public class Game extends JPanel {
 	private PetInteract petInteract;
 	
 	private JScrollPane foodInventoryScrollPane;
+	private JScrollPane toyInventoryScrollPane;
 	private JPanel foodInventory;
+	private JPanel toyInventory;
 	
 	private JLabel inventoryMoney;
 	private boolean selectingToy = false;
@@ -131,6 +133,12 @@ public class Game extends JPanel {
 		foodInventoryScrollPane.setBounds(510, 264, 286, 156);
 		foodInventoryScrollPane.setOpaque(false);
 		add(foodInventoryScrollPane);
+		
+		toyInventoryScrollPane = new JScrollPane();
+		toyInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		toyInventoryScrollPane.setBounds(510, 438, 286, 156);
+		toyInventoryScrollPane.setOpaque(false);
+		add(toyInventoryScrollPane);
 		
 		for (int i=0; i<3; i++) {
 			petTabs[i] = new PetTab(semiBoldFont);
@@ -383,6 +391,7 @@ public class Game extends JPanel {
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
 		refreshFoodInventory();
+		refreshToyInventory();
 		
 		for (int i=0; i<3; i++) {
 			if (i < activePlayer.getPets().length) {
@@ -420,6 +429,21 @@ public class Game extends JPanel {
 		foodInventoryScrollPane.setViewportView(foodInventory);
 	}
 		
+	public void refreshToyInventory() {
+		// DEBUG ONLY
+		activePlayer.addToy(new Toy(toyTypes[1]));
+		activePlayer.addToy(new Toy(toyTypes[2]));
+		activePlayer.addToy(new Toy(toyTypes[2]));
+		activePlayer.addToy(new Toy(toyTypes[2]));
+		activePlayer.addToy(new Toy(toyTypes[3]));
+		activePlayer.addToy(new Toy(toyTypes[4]));
+		activePlayer.addToy(new Toy(toyTypes[5]));
+		// END DEBUG
+		
+		toyInventory = new ToyInventory(activePlayer.getToys(), semiBoldFont);
+		toyInventory.setPreferredSize(new Dimension(269, ((activePlayer.getToys().size()+2)/3)*90));
+		toyInventoryScrollPane.setViewportView(toyInventory);
+	}
 	
 	public void setPet(int petIndex) {
 		activePet = activePlayer.getPets()[petIndex];
