@@ -392,6 +392,22 @@ public class Game extends JPanel {
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+		
+		// DEBUG ONLY
+		activePlayer.addFood(foodTypes[1]);
+		activePlayer.addFood(foodTypes[2]);
+		activePlayer.addFood(foodTypes[3]);
+		activePlayer.addFood(foodTypes[4]);
+		activePlayer.addFood(foodTypes[5]);
+		activePlayer.addToy(new Toy(toyTypes[1]));
+		activePlayer.addToy(new Toy(toyTypes[2]));
+		activePlayer.addToy(new Toy(toyTypes[2]));
+		activePlayer.addToy(new Toy(toyTypes[2]));
+		activePlayer.addToy(new Toy(toyTypes[3]));
+		activePlayer.addToy(new Toy(toyTypes[4]));
+		activePlayer.addToy(new Toy(toyTypes[5]));
+		// END DEBUG
+		
 		refreshFoodInventory();
 		refreshToyInventory();
 		
@@ -417,15 +433,7 @@ public class Game extends JPanel {
 			petInteract.setButtonsEnabled(false);
 	}
 	
-	public void refreshFoodInventory() {
-		// DEBUG ONLY
-		activePlayer.addFood(foodTypes[1]);
-		activePlayer.addFood(foodTypes[2]);
-		activePlayer.addFood(foodTypes[3]);
-		activePlayer.addFood(foodTypes[4]);
-		activePlayer.addFood(foodTypes[5]);
-		// END DEBUG
-		
+	public void refreshFoodInventory() {		
 		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
 		foodInventory.setPreferredSize(new Dimension(269, ((activePlayer.getFood().size()+2)/3)*90));
 		foodInventoryScrollPane.setViewportView(foodInventory);
@@ -445,17 +453,7 @@ public class Game extends JPanel {
 		}
 	}
 		
-	public void refreshToyInventory() {
-		// DEBUG ONLY
-		activePlayer.addToy(new Toy(toyTypes[1]));
-		activePlayer.addToy(new Toy(toyTypes[2]));
-		activePlayer.addToy(new Toy(toyTypes[2]));
-		activePlayer.addToy(new Toy(toyTypes[2]));
-		activePlayer.addToy(new Toy(toyTypes[3]));
-		activePlayer.addToy(new Toy(toyTypes[4]));
-		activePlayer.addToy(new Toy(toyTypes[5]));
-		// END DEBUG
-		
+	public void refreshToyInventory() {		
 		toyInventory = new ToyInventory(activePlayer.getToys(), semiBoldFont);
 		toyInventory.setPreferredSize(new Dimension(269, ((activePlayer.getToys().size()+2)/3)*90));
 		toyInventoryScrollPane.setViewportView(toyInventory);
