@@ -127,7 +127,7 @@ public class Game extends JPanel {
 		playerLabel.setForeground(Color.WHITE);
 		playerLabel.setFont(subtitleFont);
 		playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabel.setBounds(300, 60, 200, 30);
+		playerLabel.setBounds(200, 60, 400, 30);
 		add(playerLabel);
 		
 		petInteract = new PetInteract(boldFont, semiBoldFont);
@@ -137,7 +137,7 @@ public class Game extends JPanel {
 		petInteract.getButtonPlay().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setButtonsEnabled(false);
-				currentDialog.setOptions("Click a toy from your inventory", "to use to play with your pet", false);
+				currentDialog.setOptions("Click a toy from your inventory", "to use to play with your pet", false, true);
 				selectingToy = true;
 				
 				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
@@ -154,7 +154,7 @@ public class Game extends JPanel {
 		petInteract.getButtonFeed().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setButtonsEnabled(false);
-				currentDialog.setOptions("Click a food from your inventory", "to feed to your pet", false);
+				currentDialog.setOptions("Click a food from your inventory", "to feed to your pet", false, true);
 				selectingFood = true;
 				
 				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
@@ -192,9 +192,9 @@ public class Game extends JPanel {
 				}
 				else {
 					setButtonsEnabled(false);
-					currentDialog.setOptions("You do not have enough money", "to cure your pet", false);
+					currentDialog.setOptions("You do not have enough money", "to cure your pet", true, false);
 					
-					currentDialog.getButtonCancel().addActionListener(new ActionListener() {
+					currentDialog.getButtonOk().addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							setButtonsEnabled(true);
 						}
@@ -204,11 +204,34 @@ public class Game extends JPanel {
 				}
 			}
 		});
-		
+
 		petInteract.getButtonDiscipline().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				activePet.discipline();
 				refreshPetInfo();
+			}
+		});
+		
+		petInteract.getButtonRevive().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (activePlayer.getMoney() >= 100) {
+					activePet.revive();
+					activePlayer.changeMoney(-100);
+					inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+					refreshPetInfo();
+				}
+				else {
+					setButtonsEnabled(false);
+					currentDialog.setOptions("You do not have enough money", "to revive your pet", true, false);
+					
+					currentDialog.getButtonOk().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							setButtonsEnabled(true);
+						}
+					});
+					
+					currentDialog.setVisible(true);
+				}
 			}
 		});
 		
@@ -229,7 +252,7 @@ public class Game extends JPanel {
 				}
 				if (requiresPrompt) {
 					setButtonsEnabled(false);
-					currentDialog.setOptions("Some of your pets still have AP.", "Are you sure you want to end turn?", true);
+					currentDialog.setOptions("Some of your pets still have AP.", "Are you sure you want to end turn?", true, true);
 					
 					currentDialog.getButtonOk().addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
@@ -310,7 +333,7 @@ public class Game extends JPanel {
 			dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
 		}
 		activePlayer = players[playerIndex];
-		playerLabel.setText(activePlayer.getName()+"'s turn");
+		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
 		// DEBUG ONLY
 		activePlayer.addFood(foodTypes[0]);
@@ -322,10 +345,6 @@ public class Game extends JPanel {
 				petTabs[i].setBounds(tabLayouts[activePlayer.getPets().length-1][i], 100, 148, 155);
 				petTabs[i].setBorder(null);
 				petTabs[i].setPet(activePlayer.getPets()[i]);
-				if (activePlayer.getPets()[i].isAlive())
-					petTabs[i].setActionPoints(2);
-				else
-					petTabs[i].setActionPoints(0);
 				petTabs[i].setVisible(true);
 			}
 			else
@@ -337,7 +356,7 @@ public class Game extends JPanel {
 	
 	public void refreshPetInfo() {
 		for (int i=0; i<activePlayer.getPets().length; i++)
-			petTabs[i].setActionPoints(activePlayer.getPets()[i].getActionPoints());
+			petTabs[i].setPet(activePlayer.getPets()[i]);
 		petInteract.setPet(activePet);
 		if (activePet.getActionPoints() == 0)
 			petInteract.setButtonsEnabled(false);

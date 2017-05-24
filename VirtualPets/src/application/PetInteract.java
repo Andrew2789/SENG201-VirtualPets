@@ -33,6 +33,8 @@ public class PetInteract extends JPanel {
 	
 	private JPanel revivePrompt;
 	private JButton buttonRevive;
+	private JLabel reviveLabel;
+	private JLabel reviveLabel2;
 
 	/**
 	 * Create the panel.
@@ -49,14 +51,14 @@ public class PetInteract extends JPanel {
 		add(revivePrompt);
 		revivePrompt.setLayout(null);
 		
-		JLabel reviveLabel = new JLabel("This pet is dead but may be");
+		reviveLabel = new JLabel("");
 		reviveLabel.setForeground(Color.WHITE);
 		reviveLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		reviveLabel.setBounds(10, 11, 180, 25);
 		reviveLabel.setFont(boldFont);
 		revivePrompt.add(reviveLabel);
 		
-		JLabel reviveLabel2 = new JLabel("revived once. Costs $100.");
+		reviveLabel2 = new JLabel("");
 		reviveLabel2.setForeground(Color.WHITE);
 		reviveLabel2.setHorizontalAlignment(SwingConstants.CENTER);
 		reviveLabel2.setBounds(10, 34, 180, 25);
@@ -225,6 +227,16 @@ public class PetInteract extends JPanel {
 		favouriteFoodIcon.setIcon(activePet.getFavouriteFood().getIcon());
 		
 		revivePrompt.setVisible(!activePet.isAlive());
+		if (activePet.isRevivable()) {
+			reviveLabel.setText("This pet is dead but may be");
+			reviveLabel2.setText("revived once. Costs $100.");
+			buttonRevive.setEnabled(true);
+		}
+		else {
+			reviveLabel.setText("This pet has died again and");
+			reviveLabel2.setText("cannot be revived.");
+			buttonRevive.setEnabled(false);
+		}
 	}
 	
 	/**

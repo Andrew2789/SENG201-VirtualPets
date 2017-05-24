@@ -61,10 +61,7 @@ public class PetTab extends JPanel {
 		petNameLabel.setText(pet.getName());
 		petIcon.setIcon(pet.getSpecies().getIcon());
 		deadOverlay.setVisible(!pet.isAlive());
-	}
-	
-	public void setActionPoints(int amount) {
-		actionPointsLabel.setText("Action Points: "+amount);
+		actionPointsLabel.setText("Action Points: "+pet.getActionPoints());
 	}
 	
 	public JButton getClickDetector() {
