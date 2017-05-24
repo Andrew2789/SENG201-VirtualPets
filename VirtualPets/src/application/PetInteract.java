@@ -2,7 +2,6 @@ package application;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,6 +30,9 @@ public class PetInteract extends JPanel {
 	private JButton buttonFeed;
 	private JButton buttonRest;
 	private JButton buttonToilet;
+	
+	private JPanel revivePrompt;
+	private JButton buttonRevive;
 
 	/**
 	 * Create the panel.
@@ -39,6 +41,34 @@ public class PetInteract extends JPanel {
 		setOpaque(false);
 		setLayout(null);
 		
+		//JPanel to prompt user to revive the pet if they are dead
+		revivePrompt = new JPanel();
+		revivePrompt.setBackground(Color.GRAY);
+		revivePrompt.setBounds(150, 75, 200, 150);
+		revivePrompt.setVisible(false);
+		add(revivePrompt);
+		revivePrompt.setLayout(null);
+		
+		JLabel reviveLabel = new JLabel("This pet is dead but may be");
+		reviveLabel.setForeground(Color.WHITE);
+		reviveLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		reviveLabel.setBounds(10, 11, 180, 25);
+		reviveLabel.setFont(boldFont);
+		revivePrompt.add(reviveLabel);
+		
+		JLabel reviveLabel2 = new JLabel("revived once. Costs $100.");
+		reviveLabel2.setForeground(Color.WHITE);
+		reviveLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+		reviveLabel2.setBounds(10, 34, 180, 25);
+		reviveLabel2.setFont(boldFont);
+		revivePrompt.add(reviveLabel2);
+		
+		buttonRevive = new JButton("Revive");
+		buttonRevive.setBounds(38, 75, 124, 43);
+		buttonRevive.setFont(boldFont);
+		revivePrompt.add(buttonRevive);
+		
+		//Pet attribute displays
 		JLabel speciesTitle = new JLabel("Species");
 		speciesTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		speciesTitle.setFont(boldFont);
@@ -113,6 +143,7 @@ public class PetInteract extends JPanel {
 		favouriteFoodIcon.setBounds(151, 185, 75, 75);
 		add(favouriteFoodIcon);
 		
+		//Pet action buttons
 		buttonPlay = new JButton("Play");
 		buttonPlay.setToolTipText("Play with the selected pet. You will need to select a toy. This will use 1 action point.");
 		buttonPlay.setBounds(14, 298, 110, 35);
@@ -133,6 +164,7 @@ public class PetInteract extends JPanel {
 		buttonToilet.setBounds(378, 298, 110, 35);
 		add(buttonToilet);
 		
+		//Pet status sliders
 		hungerSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Hunger", new ImageIcon(Game.class.getResource("/images/sliders/hunger.png")), 
 				"How hungry this pet is. Once hunger reaches the orange region, the pet will begin to starve.", new Color(227, 66, 52), 0, 100, 0, 8);
 		hungerSlider.setBounds(257, 12, 232, 50);
@@ -153,11 +185,17 @@ public class PetInteract extends JPanel {
 		weightSlider.setBounds(257, 207, 232, 50);
 		add(weightSlider);
 		
+		//Semi-transparent background
 		JLabel petInfoBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/backs/petInteract.png")));
 		petInfoBackground.setBounds(0, 0, 500, 345);
 		add(petInfoBackground);
 	}
 
+	/**
+	 * Sets the pet to display information about
+	 * @param activePet
+	 * The pet to show info about
+	 */
 	public void setPet(Pet activePet) {
 		this.activePet = activePet;
 		speciesLabel.setText(activePet.getSpecies().getName());
@@ -185,8 +223,15 @@ public class PetInteract extends JPanel {
 
 		favouriteToyIcon.setIcon(activePet.getFavouriteToy().getIcon());
 		favouriteFoodIcon.setIcon(activePet.getFavouriteFood().getIcon());
+		
+		revivePrompt.setVisible(!activePet.isAlive());
 	}
 	
+	/**
+	 * Sets whether buttons can be pressed or not.
+	 * @param enabled
+	 * Whether the buttons may be pressed
+	 */
 	public void setButtonsEnabled(boolean enabled) {
 		buttonPlay.setEnabled(enabled);
 		buttonFeed.setEnabled(enabled);
@@ -204,6 +249,7 @@ public class PetInteract extends JPanel {
 		}
 	}
 	
+	//Getters
 	public JButton getButtonPlay() {
 		return buttonPlay;
 	}
@@ -227,4 +273,9 @@ public class PetInteract extends JPanel {
 	public JButton getButtonDiscipline() {
 		return buttonDiscipline;
 	}
+	
+	public JButton getButtonRevive() {
+		return buttonRevive;
+	}
+	//End Getters
 }

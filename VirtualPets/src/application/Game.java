@@ -86,14 +86,14 @@ public class Game extends JPanel {
 		closeMenu.setBounds(50, 222, 210, 50);
 		menu.add(closeMenu);
 		
+		currentDialog = new InternalDialog(boldFont);
+		currentDialog.setBounds(275, 200, 250, 100);
+		add(currentDialog);
+
 		foodInventoryScrollPane = new JScrollPane();
 		foodInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		foodInventoryScrollPane.setBounds(506, 264, 290, 156);
 		add(foodInventoryScrollPane);
-		
-		currentDialog = new InternalDialog(boldFont);
-		currentDialog.setBounds(275, 200, 250, 100);
-		add(currentDialog);
 		
 		for (int i=0; i<3; i++) {
 			petTabs[i] = new PetTab(semiBoldFont);

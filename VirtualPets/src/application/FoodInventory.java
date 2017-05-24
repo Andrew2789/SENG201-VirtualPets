@@ -17,12 +17,10 @@ public class FoodInventory extends JPanel {
 	public FoodInventory(HashMap<FoodType, Integer> playerFoods, Font semiBoldFont) {
 		setLayout(null);
 		
+		foodItems = new HashMap<FoodType, FoodInventoryItem>();
+		
 		int i = 1;
 		for (FoodType food : playerFoods.keySet()) {
-			// DEBUG ONLY
-			System.out.println(food);
-			System.out.println(semiBoldFont.toString());
-			// END DEBUG
 			foodItems.put(food, new FoodInventoryItem(food, playerFoods.get(food), semiBoldFont));
 			foodItems.get(food).setFood(food);
 			foodItems.get(food).setQuantity(playerFoods.get(food));
