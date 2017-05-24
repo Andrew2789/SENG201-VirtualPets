@@ -171,6 +171,36 @@ public class Game extends JPanel {
 			}
 		});
 		
+		petInteract.getButtonCure().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (activePlayer.getMoney() >= 50) {
+					activePet.cure();
+					activePlayer.changeMoney(-50);
+					inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+					refreshPetInfo();
+				}
+				else {
+					setButtonsEnabled(false);
+					currentDialog.setOptions("You do not have enough money", "to cure your pet", false);
+					
+					currentDialog.getButtonCancel().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							setButtonsEnabled(true);
+						}
+					});
+					
+					currentDialog.setVisible(true);
+				}
+			}
+		});
+		
+		petInteract.getButtonDiscipline().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				activePet.discipline();
+				refreshPetInfo();
+			}
+		});
+		
 		buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
 		buttonShop.setBounds(531, 123, 65, 65);
 		buttonShop.setToolTipText("Shop for food and toys for your pets.");
@@ -275,7 +305,10 @@ public class Game extends JPanel {
 				petTabs[i].setBounds(tabLayouts[activePlayer.getPets().length-1][i], 100, 148, 155);
 				petTabs[i].setBorder(null);
 				petTabs[i].setPet(activePlayer.getPets()[i]);
-				petTabs[i].setActionPoints(2);
+				if (activePlayer.getPets()[i].isAlive())
+					petTabs[i].setActionPoints(2);
+				else
+					petTabs[i].setActionPoints(0);
 				petTabs[i].setVisible(true);
 			}
 			else
@@ -301,8 +334,10 @@ public class Game extends JPanel {
 	
 	public void endTurn() {
 		activePlayer.changeMoney(incomePerTurn);
-		for (Pet pet: activePlayer.getPets())
+		for (Pet pet: activePlayer.getPets()) {
 			activePlayer.changeScore(pet.finishTurn());
+			pet.genRandomEvents();
+		}
 		
 		int currentPlayerIndex = 0;
 		for (int i=0; i<players.length; i++)

@@ -12,7 +12,6 @@ public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 5563328853841424713L;
 	private JButton buttonNewGame;
 	private JButton buttonLoadGame;
-	private JButton buttonScoreboard;
 	private JButton buttonCreateNewAsset;
 	private JButton buttonQuit;
 	private JLabel title;
@@ -38,7 +37,7 @@ public class MainMenu extends JPanel {
 			}
 		});
 		buttonNewGame.setEnabled(true);
-		buttonNewGame.setBounds(300, 150, 200, 50);
+		buttonNewGame.setBounds(300, 150, 200, 60);
 		add(buttonNewGame);
 		
 		buttonLoadGame = new JButton("Load Game");
@@ -48,18 +47,8 @@ public class MainMenu extends JPanel {
 			}
 		});
 		buttonLoadGame.setEnabled(true);
-		buttonLoadGame.setBounds(300, 212, 200, 50);
+		buttonLoadGame.setBounds(300, 221, 200, 60);
 		add(buttonLoadGame);
-		
-		buttonScoreboard = new JButton("Scoreboard");
-		buttonScoreboard.setFont(buttonFont);
-		buttonScoreboard.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		buttonScoreboard.setEnabled(true);
-		buttonScoreboard.setBounds(300, 274, 200, 50);
-		add(buttonScoreboard);
 		
 		buttonCreateNewAsset = new JButton("Create New Asset");
 		buttonCreateNewAsset.setFont(buttonFont);
@@ -68,7 +57,7 @@ public class MainMenu extends JPanel {
 			}
 		});
 		buttonCreateNewAsset.setEnabled(true);
-		buttonCreateNewAsset.setBounds(300, 336, 200, 50);
+		buttonCreateNewAsset.setBounds(300, 292, 200, 60);
 		add(buttonCreateNewAsset);
 		
 		JButton buttonHelp = new JButton("Help");
@@ -78,7 +67,7 @@ public class MainMenu extends JPanel {
 			}
 		});
 		buttonHelp.setEnabled(true);
-		buttonHelp.setBounds(300, 398, 200, 50);
+		buttonHelp.setBounds(300, 363, 200, 60);
 		add(buttonHelp);
 		
 		buttonQuit = new JButton("Quit");
@@ -88,7 +77,7 @@ public class MainMenu extends JPanel {
 			}
 		});
 		buttonQuit.setEnabled(true);
-		buttonQuit.setBounds(300, 460, 200, 50);
+		buttonQuit.setBounds(300, 434, 200, 60);
 		add(buttonQuit);
 		
 		JLabel backgroundImage = new JLabel("");

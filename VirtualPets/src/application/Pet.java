@@ -251,8 +251,8 @@ public class Pet {
 				chance += ((double)Math.abs(weight-optWeight) - optWeight/2)/(optWeight/6)*100;
 			if (ThreadLocalRandom.current().nextInt(0, 100) < chance) {
 				alive = false;
-				behaving = false;
-				healthy = false;
+				behaving = true;
+				healthy = true;
 				hunger = 0;
 				energy = 0;
 				happiness = 0;

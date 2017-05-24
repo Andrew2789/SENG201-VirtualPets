@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 public class PetTab extends JPanel {
 	private static final long serialVersionUID = -4840106067673959643L;
 	private JButton clickDetector;
+	private JLabel deadOverlay;
 	private JLabel petIcon;
 	private JLabel petNameLabel;
 	private JLabel actionPointsLabel;
@@ -21,6 +22,12 @@ public class PetTab extends JPanel {
 	public PetTab(Font semiBoldFont) {
 		setLayout(null);
 		setOpaque(false);
+		
+		deadOverlay = new JLabel("");
+		deadOverlay.setIcon(new ImageIcon(PetTab.class.getResource("/images/Dead.png")));
+		deadOverlay.setBounds(0, 0, 150, 149);
+		deadOverlay.setVisible(false);
+		add(deadOverlay);
 		
 		petIcon = new JLabel("");
 		petIcon.setBounds(24, 28, 100, 100);
@@ -53,6 +60,7 @@ public class PetTab extends JPanel {
 	public void setPet(Pet pet) {
 		petNameLabel.setText(pet.getName());
 		petIcon.setIcon(pet.getSpecies().getIcon());
+		deadOverlay.setVisible(!pet.isAlive());
 	}
 	
 	public void setActionPoints(int amount) {

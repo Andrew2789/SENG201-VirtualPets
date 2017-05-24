@@ -1,9 +1,9 @@
-$Proleteriat
-	name="Proleteriat"
-	icon="/images/species/Cat.png"
+$Branch
+	name="Branch"
+	icon="/images/toys/Branch.png"
 	price=-100
 	happinessGain=100
-/Proleteriat
+/Branch
 $Bell
 	name="Bell"
 	icon="/images/toys/Bell.png"
@@ -28,3 +28,9 @@ $Shell
 	price=25
 	happinessGain=50
 /Shell
+$Star
+	name="Star"
+	icon="/images/toys/Star.png"
+	price=25
+	happinessGain=50
+/Star

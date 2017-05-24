@@ -211,12 +211,20 @@ public class PetInteract extends JPanel {
 	public JButton getButtonFeed() {
 		return buttonFeed;
 	}
-	
+
 	public JButton getButtonRest() {
 		return buttonRest;
 	}
 	
 	public JButton getButtonToilet() {
 		return buttonToilet;
+	}
+	
+	public JButton getButtonCure() {
+		return buttonCure;
+	}
+	
+	public JButton getButtonDiscipline() {
+		return buttonDiscipline;
 	}
 }

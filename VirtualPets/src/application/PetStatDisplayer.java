@@ -75,8 +75,14 @@ public class PetStatDisplayer extends JPanel {
 		int scaledAmount = (amount-min)*188/(max-min);
 		sliderRect.setBounds(22, 19, scaledAmount, 8);
 		currentValueRect.setBounds(scaledAmount+20, 29, 2, 6);
-		currentValue.setBounds((amount-min)*188/(max-min)+12, 31, 18, 22);
-		currentValue.setText(Integer.toString(amount));
+		if (amount == min || amount == max) {
+			currentValue.setVisible(false);
+		}
+		else {
+			currentValue.setVisible(true);
+			currentValue.setBounds((amount-min)*188/(max-min)+12, 31, 18, 22);
+			currentValue.setText(Integer.toString(amount));
+		}
 	}
 	
 	public void setMinMax(int min, int max) {
