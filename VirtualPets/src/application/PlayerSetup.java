@@ -78,4 +78,17 @@ public class PlayerSetup extends JPanel {
 			pets[i] = petSetups[i].generatePet();
 		return new Player(playerNameField.getText(), pets, startingMoney);
 	}
+	
+	public boolean fieldsFilled() {
+		if (playerNameField.getText().isEmpty())
+			return false;
+		boolean filled = true;
+		for (int i=0; i<numberOfPets; i++) {
+			if (!petSetups[i].fieldsFilled()) {
+				filled = false;
+				break;
+			}
+		}
+		return filled;
+	}
 }

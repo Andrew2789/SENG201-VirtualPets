@@ -11,8 +11,6 @@ import javax.swing.SwingConstants;
 
 public class PetInteract extends JPanel {
 	private static final long serialVersionUID = 571759901412319640L;
-
-	private JLabel speciesTitle;
 	private JLabel speciesLabel;
 	private JLabel favouriteToyLabel;
 	private JLabel favouriteToyIcon;
@@ -34,7 +32,7 @@ public class PetInteract extends JPanel {
 		setOpaque(false);
 		setLayout(null);
 		
-		speciesTitle = new JLabel("Species");
+		JLabel speciesTitle = new JLabel("Species");
 		speciesTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		speciesTitle.setFont(boldFont);
 		speciesTitle.setBounds(12, 12, 232, 16);

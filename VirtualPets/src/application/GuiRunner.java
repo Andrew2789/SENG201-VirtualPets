@@ -120,10 +120,12 @@ public class GuiRunner {
 
 		gameSetup.getDoneButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				loadGame();
-				gameSetup.setGamePlayers(game);
-				gameSetup.setVisible(false);
-				game.setVisible(true);
+				if (gameSetup.fieldsFilled()) {
+					loadGame();
+					gameSetup.setGamePlayers(game);
+					gameSetup.setVisible(false);
+					game.setVisible(true);
+				}
 			}
 		});
 		

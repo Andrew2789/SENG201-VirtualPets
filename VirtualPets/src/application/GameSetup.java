@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.Color;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class GameSetup extends JPanel {
 	private static final long serialVersionUID = 1441493919925710008L;
@@ -23,6 +25,7 @@ public class GameSetup extends JPanel {
 	private int incomePerTurn = 35;
 	private PlayerSetup[] playerSetups;
 	
+	private JLabel fieldsEmptyLabel;
 	private JButton buttonDone;
 	private JButton buttonBack;
 
@@ -129,16 +132,26 @@ public class GameSetup extends JPanel {
 		add(moneyPerTurnChooser);
 		
 		buttonDone = new JButton("Done");
+		buttonDone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				fieldsEmptyLabel.setVisible(true);
+			}
+		});
+		
+		fieldsEmptyLabel = new JLabel("Please enter something in all fields before continuing.");
+		fieldsEmptyLabel.setForeground(Color.WHITE);
+		fieldsEmptyLabel.setFont(boldFont);
+		fieldsEmptyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		fieldsEmptyLabel.setBounds(50, 134, 468, 15);
+		fieldsEmptyLabel.setVisible(false);
+		add(fieldsEmptyLabel);
+		
 		buttonDone.setFont(boldFont);
 		buttonDone.setBounds(558, 85, 70, 22);
 		add(buttonDone);
 		
 		buttonBack = new JButton("Back");
 		buttonBack.setFont(boldFont);
-		buttonBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		buttonBack.setBounds(638, 85, 70, 22);
 		add(buttonBack);
 		
@@ -147,13 +160,9 @@ public class GameSetup extends JPanel {
 		buttonSpeciesInfo.setBounds(558, 110, 150, 22);
 		add(buttonSpeciesInfo);
 		
-		JLabel label = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/backs/settings.png")));
-		label.setBounds(40, 82, 493, 52);
-		add(label);
-		
-		JLabel label_1 = new JLabel("");
-		label_1.setBounds(543, 82, 181, 52);
-		add(label_1);
+		JLabel settingsBack = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/backs/settings.png")));
+		settingsBack.setBounds(40, 82, 493, 52);
+		add(settingsBack);
 		
 		JLabel backgroundImage = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/gameBackground.png")));
 		backgroundImage.setBounds(0, 0, 800, 600);
@@ -173,5 +182,16 @@ public class GameSetup extends JPanel {
 		for (int i=0; i<numberOfPlayers; i++)
 			players[i] = playerSetups[i].generatePlayer(startingMoney);
 		game.initialise(players, numberOfDays, incomePerTurn);
+	}
+	
+	public boolean fieldsFilled() {
+		boolean filled = true;
+		for (int i=0; i<numberOfPlayers; i++) {
+			if (!playerSetups[i].fieldsFilled()) {
+				filled = false;
+				break;
+			}
+		}
+		return filled;
 	}
 }

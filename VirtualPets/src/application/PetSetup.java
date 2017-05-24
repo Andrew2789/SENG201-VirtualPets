@@ -75,4 +75,8 @@ public class PetSetup extends JPanel {
 		FoodType favouriteFood = foodTypes[ThreadLocalRandom.current().nextInt(0, foodTypes.length)];
 		return new Pet(petNameField.getText(), species[speciesChooser.getSelectedIndex()], favouriteToy, favouriteFood); 
 	}
+	
+	public boolean fieldsFilled() {
+		return !petNameField.getText().isEmpty();
+	}
 }
