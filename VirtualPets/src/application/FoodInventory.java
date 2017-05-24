@@ -10,7 +10,7 @@ public class FoodInventory extends JPanel {
 	private static final int[] itemHorizontalPositions = {0, 90, 180};
 	private static final int itemVerticalDistance = 90;
 	
-	private HashMap<FoodType, FoodInventoryItem> foodItems;
+	private HashMap<FoodType, FoodInventoryIcon> foodItems;
 
 	/**
 	 * Create the panel.
@@ -18,13 +18,11 @@ public class FoodInventory extends JPanel {
 	public FoodInventory(HashMap<FoodType, Integer> playerFoods, Font semiBoldFont) {
 		setLayout(null);
 		
-		foodItems = new HashMap<FoodType, FoodInventoryItem>();
+		foodItems = new HashMap<FoodType, FoodInventoryIcon>();
 		
 		int i = 0;
 		for (FoodType food : new TreeSet<FoodType>(playerFoods.keySet())) {
-			foodItems.put(food, new FoodInventoryItem(food, playerFoods.get(food), semiBoldFont));
-			foodItems.get(food).setFood(food);
-			foodItems.get(food).setQuantity(playerFoods.get(food));
+			foodItems.put(food, new FoodInventoryIcon(food, playerFoods.get(food), semiBoldFont));
 			foodItems.get(food).setBounds(itemHorizontalPositions[i%3], 
 													i/3*itemVerticalDistance, 
 													85,85);
