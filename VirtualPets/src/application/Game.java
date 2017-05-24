@@ -34,9 +34,10 @@ public class Game extends JPanel {
 	private InternalDialog currentDialog;
 	
 	private JPanel menu;
-	private JButton saveGame;
-	private JButton exitToMainMenu;
-	private JButton exitToDesktop;
+	private JButton buttonSaveGame;
+	private JButton buttonExitToMainMenu;
+	private JButton buttonExitToDesktop;
+	private JButton buttonCloseMenu;
 	
 	private PetTab[] petTabs = new PetTab[3];
 	private int[][] tabLayouts = {{175, 0, 0}, {100, 250, 0}, {25, 175, 325}};
@@ -54,10 +55,15 @@ public class Game extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Game(ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font subtitleFont, Font boldFont, Font semiBoldFont, Font regularFont, RoundOverview roundOverview) {
+	public Game(ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font subtitleFont, Font boldFont, Font semiBoldFont, Font regularFont, 
+			RoundOverview roundOverview, ActionListener exitToMainMenu, ActionListener exitToDesktop) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
+
+		currentDialog = new InternalDialog(boldFont);
+		currentDialog.setBounds(275, 165, 250, 100);
+		add(currentDialog);
 		
 		menu = new JPanel();
 		menu.setBackground(Color.GRAY);
@@ -66,31 +72,59 @@ public class Game extends JPanel {
 		menu.setLayout(null);
 		add(menu);
 		
-		saveGame = new JButton("Save Game");
-		saveGame.setBounds(25, 36, 166, 50);
-		menu.add(saveGame);
+		buttonSaveGame = new JButton("Save Game");
+		buttonSaveGame.setBounds(25, 36, 166, 50);
+		menu.add(buttonSaveGame);
 		
-		exitToMainMenu = new JButton("Exit to Main Menu");
-		exitToMainMenu.setBounds(25, 98, 166, 50);
-		menu.add(exitToMainMenu);
+		buttonExitToMainMenu = new JButton("Exit to Main Menu");
+		buttonExitToMainMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setMenuButtonsEnabled(false);
+				currentDialog.setOptions("Are you sure? All unsaved", "progress will be lost.", true, true);
+
+				currentDialog.getButtonOk().addActionListener(exitToMainMenu);
+				
+				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setMenuButtonsEnabled(true);
+					}
+				});
+				
+				currentDialog.setVisible(true);
+			}
+		});
+		buttonExitToMainMenu.setBounds(25, 98, 166, 50);
+		menu.add(buttonExitToMainMenu);
 		
-		exitToDesktop = new JButton("Exit to Desktop");
-		exitToDesktop.setBounds(25, 160, 166, 50);
-		menu.add(exitToDesktop);
+		buttonExitToDesktop = new JButton("Exit to Desktop");
+		buttonExitToDesktop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setMenuButtonsEnabled(false);
+				currentDialog.setOptions("Are you sure? All unsaved", "progress will be lost.", true, true);
+
+				currentDialog.getButtonOk().addActionListener(exitToDesktop);
+				
+				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setMenuButtonsEnabled(true);
+					}
+				});
+				
+				currentDialog.setVisible(true);
+			}
+		});
+		buttonExitToDesktop.setBounds(25, 160, 166, 50);
+		menu.add(buttonExitToDesktop);
 		
-		JButton closeMenu = new JButton("Close Menu");
-		closeMenu.addActionListener(new ActionListener() {
+		buttonCloseMenu = new JButton("Close Menu");
+		buttonCloseMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				menu.setVisible(false);
 				setButtonsEnabled(true);
 			}
 		});
-		closeMenu.setBounds(25, 222, 166, 50);
-		menu.add(closeMenu);
-		
-		currentDialog = new InternalDialog(boldFont);
-		currentDialog.setBounds(275, 165, 250, 100);
-		add(currentDialog);
+		buttonCloseMenu.setBounds(25, 222, 166, 50);
+		menu.add(buttonCloseMenu);
 
 		foodInventoryScrollPane = new JScrollPane();
 		foodInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -279,6 +313,7 @@ public class Game extends JPanel {
 		buttonEndTurn.setBounds(608, 110, 90, 90);
 		buttonEndTurn.setToolTipText("End your turn.");
 		add(buttonEndTurn);
+		
 		buttonMenu = new JButton(new ImageIcon(Game.class.getResource("/images/menu.png")));
 		buttonMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -430,11 +465,22 @@ public class Game extends JPanel {
 			petTab.setButtonEnabled(enabled);
 	}
 	
+	public void setMenuButtonsEnabled(boolean enabled) {
+		buttonSaveGame.setEnabled(enabled);
+		buttonExitToMainMenu.setEnabled(enabled);
+		buttonExitToDesktop.setEnabled(enabled);
+		buttonCloseMenu.setEnabled(enabled);
+	}
+	
 	public JButton getExitToMainMenu() {
-		return exitToMainMenu;
+		return buttonExitToMainMenu;
 	}
 	
 	public JButton getExitToDesktop() {
-		return exitToDesktop;
+		return buttonExitToDesktop;
+	}
+	
+	public InternalDialog getCurrentDialog() {
+		return currentDialog;
 	}
 }
