@@ -24,6 +24,7 @@ public class Game extends JPanel {
 	private int currentDay = 0;
 	private Player activePlayer;
 	private Pet activePet;
+	private RoundOverview roundOverview;
 	
 	private JLabel dayLabel;
 	private JLabel playerLabel;
@@ -53,28 +54,28 @@ public class Game extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Game(ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font subtitleFont, Font boldFont, Font semiBoldFont, Font regularFont) {
+	public Game(ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font subtitleFont, Font boldFont, Font semiBoldFont, Font regularFont, RoundOverview roundOverview) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
-
+		
 		menu = new JPanel();
 		menu.setBackground(Color.GRAY);
-		menu.setBounds(245, 180, 310, 310);
+		menu.setBounds(292, 180, 216, 310);
 		menu.setVisible(false);
 		menu.setLayout(null);
 		add(menu);
 		
 		saveGame = new JButton("Save Game");
-		saveGame.setBounds(50, 36, 210, 50);
+		saveGame.setBounds(25, 36, 166, 50);
 		menu.add(saveGame);
 		
 		exitToMainMenu = new JButton("Exit to Main Menu");
-		exitToMainMenu.setBounds(50, 98, 210, 50);
+		exitToMainMenu.setBounds(25, 98, 166, 50);
 		menu.add(exitToMainMenu);
 		
 		exitToDesktop = new JButton("Exit to Desktop");
-		exitToDesktop.setBounds(50, 160, 210, 50);
+		exitToDesktop.setBounds(25, 160, 166, 50);
 		menu.add(exitToDesktop);
 		
 		JButton closeMenu = new JButton("Close Menu");
@@ -84,11 +85,11 @@ public class Game extends JPanel {
 				setButtonsEnabled(true);
 			}
 		});
-		closeMenu.setBounds(50, 222, 210, 50);
+		closeMenu.setBounds(25, 222, 166, 50);
 		menu.add(closeMenu);
 		
 		currentDialog = new InternalDialog(boldFont);
-		currentDialog.setBounds(275, 200, 250, 100);
+		currentDialog.setBounds(275, 165, 250, 100);
 		add(currentDialog);
 
 		foodInventoryScrollPane = new JScrollPane();
@@ -316,9 +317,17 @@ public class Game extends JPanel {
 		background.setBounds(0, 0, 800, 600);
 		add(background);
 
+		roundOverview.getButtonContinue().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(true);
+				roundOverview.setVisible(false);
+			}
+		});
+		
 		this.toyTypes = toyTypes;
 		this.foodTypes = foodTypes;
 		this.semiBoldFont = semiBoldFont;
+		this.roundOverview = roundOverview;
 	}
 	
 	public void initialise(Player[] players, int numberOfDays, int incomePerTurn) {
@@ -387,6 +396,11 @@ public class Game extends JPanel {
 			if (players[i] == activePlayer)
 				currentPlayerIndex = i;
 		currentPlayerIndex = (currentPlayerIndex+1)%players.length;
+		if (currentPlayerIndex == 0) {
+			roundOverview.displayEndOfRound(currentDay, players);
+			setVisible(false);
+			roundOverview.setVisible(true);
+		}
 		
 		setTurn(currentPlayerIndex);
 	}
