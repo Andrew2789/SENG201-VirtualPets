@@ -45,19 +45,8 @@ public class GuiRunner {
 	 */
 	public GuiRunner() {
 		species = SettingsLoader.loadCustomSpeciesFile("resources/default_species.txt");
-		
-		toyTypes = new ToyType[] {
-				new ToyType("Proleteriat", -100, 100),
-				new ToyType("Bell", 10, 15),
-				new ToyType("Mouse", 25, 50)
-		};
-		
-		foodTypes = new FoodType[] {
-				new FoodType("Lasagne", 20, 50, 25, 10),
-				new FoodType("Berries", 5, -10, -10, 5),
-				new FoodType("Mushrooms", 10, 20, 20, 5),
-				new FoodType("$2-Rice", 2, 5, 20, 5)
-		};
+		toyTypes = SettingsLoader.loadCustomToyTypesFile("resources/default_toyTypes.txt");
+		foodTypes = SettingsLoader.loadCustomFoodTypesFile("resources/default_foodTypes.txt");
 		
 		initialise();
 		loadMainMenu();
