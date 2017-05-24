@@ -62,4 +62,8 @@ public class PetTab extends JPanel {
 	public JButton getClickDetector() {
 		return clickDetector;
 	}
+	
+	public void setButtonEnabled(boolean enabled) {
+		clickDetector.setEnabled(enabled);
+	}
 }

@@ -122,9 +122,10 @@ public class GuiRunner {
 			public void actionPerformed(ActionEvent e) {
 				if (gameSetup.fieldsFilled()) {
 					loadGame();
-					gameSetup.setGamePlayers(game);
-					gameSetup.setVisible(false);
-					game.setVisible(true);
+					if (gameSetup.setGamePlayers(game)) {
+						gameSetup.setVisible(false);
+						game.setVisible(true);
+					}
 				}
 			}
 		});

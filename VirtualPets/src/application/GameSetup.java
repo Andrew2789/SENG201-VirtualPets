@@ -15,6 +15,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -27,7 +28,7 @@ public class GameSetup extends JPanel {
 	private int incomePerTurn = 35;
 	private PlayerSetup[] playerSetups;
 	
-	private JLabel fieldsEmptyLabel;
+	private JLabel errorLabel;
 	private JButton buttonDone;
 	private JButton buttonBack;
 	private boolean fieldsEnabled;
@@ -157,17 +158,20 @@ public class GameSetup extends JPanel {
 		buttonDone = new JButton("Done");
 		buttonDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fieldsEmptyLabel.setVisible(true);
+				if (!fieldsFilled()) {
+					errorLabel.setVisible(true);
+					errorLabel.setText("Please enter something in all fields before continuing.");
+				}
 			}
 		});
 		
-		fieldsEmptyLabel = new JLabel("Please enter something in all fields before continuing.");
-		fieldsEmptyLabel.setForeground(Color.WHITE);
-		fieldsEmptyLabel.setFont(boldFont);
-		fieldsEmptyLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		fieldsEmptyLabel.setBounds(50, 134, 468, 15);
-		fieldsEmptyLabel.setVisible(false);
-		add(fieldsEmptyLabel);
+		errorLabel = new JLabel("");
+		errorLabel.setForeground(Color.WHITE);
+		errorLabel.setFont(boldFont);
+		errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		errorLabel.setBounds(50, 134, 468, 15);
+		errorLabel.setVisible(false);
+		add(errorLabel);
 		
 		buttonDone.setFont(boldFont);
 		buttonDone.setBounds(558, 85, 70, 22);
@@ -227,11 +231,32 @@ public class GameSetup extends JPanel {
 		return buttonBack;
 	}
 	
-	public void setGamePlayers(Game game) {
+	public boolean setGamePlayers(Game game) {
 		Player[] players = new Player[numberOfPlayers];
 		for (int i=0; i<numberOfPlayers; i++)
 			players[i] = playerSetups[i].generatePlayer(startingMoney);
+		
+		//Check that there are no duplicate names
+		ArrayList<String> usedPlayerNames = new ArrayList<String>();
+		ArrayList<String> usedPetNames = new ArrayList<String>();
+		for (Player player: players) {
+			if (usedPlayerNames.contains(player.getName())) {
+				errorLabel.setText("Multiple players named "+player.getName()+". Please give all players and pets unique names.");
+				errorLabel.setVisible(true);
+				return false;
+			}
+			usedPlayerNames.add(player.getName());
+			for (Pet pet: player.getPets()) {
+				if (usedPetNames.contains(pet.getName())) {
+					errorLabel.setText("Multiple pets named "+pet.getName()+". Please give all players and pets unique names.");
+					errorLabel.setVisible(true);
+					return false;
+				}
+				usedPetNames.add(pet.getName());
+			}
+		}
 		game.initialise(players, numberOfDays, incomePerTurn);
+		return true;
 	}
 	
 	public boolean fieldsFilled() {

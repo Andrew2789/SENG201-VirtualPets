@@ -11,6 +11,8 @@ import javax.swing.SwingConstants;
 
 public class PetInteract extends JPanel {
 	private static final long serialVersionUID = 571759901412319640L;
+	private Pet activePet;
+	
 	private JLabel speciesLabel;
 	private JLabel favouriteToyLabel;
 	private JLabel favouriteToyIcon;
@@ -24,6 +26,11 @@ public class PetInteract extends JPanel {
 	private PetStatDisplayer energySlider;
 	private PetStatDisplayer happinessSlider;
 	private PetStatDisplayer weightSlider;
+	
+	private JButton buttonPlay;
+	private JButton buttonFeed;
+	private JButton buttonRest;
+	private JButton buttonToilet;
 
 	/**
 	 * Create the panel.
@@ -108,23 +115,23 @@ public class PetInteract extends JPanel {
 		favouriteFoodIcon.setBounds(142, 180, 94, 94);
 		add(favouriteFoodIcon);
 		
-		JButton buttonPlay = new JButton("Play");
+		buttonPlay = new JButton("Play");
 		buttonPlay.setToolTipText("Play with the selected pet. You will need to select a toy. This will use 1 action point.");
 		buttonPlay.setBounds(14, 298, 110, 35);
 		add(buttonPlay);
 		
-		JButton buttonFeed = new JButton("Feed");
+		buttonFeed = new JButton("Feed");
 		buttonFeed.setToolTipText("Feed the selected pet. You will need to select a food. This will use 1 action point.");
 		buttonFeed.setBounds(134, 298, 110, 35);
 		add(buttonFeed);
 		
-		JButton buttonRest = new JButton("Rest");
-		buttonRest.setToolTipText("Have the selected pet rest. This will use 1 action point.");
+		buttonRest = new JButton("Rest");
+		buttonRest.setToolTipText("Have the selected pet rest, giving +30 energy. This will use 1 action point.");
 		buttonRest.setBounds(256, 298, 110, 35);
 		add(buttonRest);
 		
-		JButton buttonToilet = new JButton("Toilet");
-		buttonToilet.setToolTipText("Send the selected pet to the toilet. This will use 1 action point.");
+		buttonToilet = new JButton("Toilet");
+		buttonToilet.setToolTipText("<html>Send the selected pet to the toilet, decreasing their weight by 1/6 of their optimum weight.<br>Pets cannot go below their optimum weight by going to the toilet. This will use 1 action point.</html>");
 		buttonToilet.setBounds(378, 298, 110, 35);
 		add(buttonToilet);
 		
@@ -135,17 +142,17 @@ public class PetInteract extends JPanel {
 		
 		energySlider = new PetStatDisplayer(boldFont, semiBoldFont, "Energy", new ImageIcon(Game.class.getResource("/images/sliders/energy.png")), 
 				"How much energy this pet has. Once energy reaches the red region, the pet will have a chance to die at the end of each turn.", new Color(30, 224, 220), 0, 100, 6, 0);
-		energySlider.setBounds(257, 72, 232, 50);
+		energySlider.setBounds(257, 77, 232, 50);
 		add(energySlider);
 		
 		happinessSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Happiness", new ImageIcon(Game.class.getResource("/images/sliders/happiness.png")), 
 				"How happy this pet is.", new Color(255, 180, 0), 0, 100, 3, 0);
-		happinessSlider.setBounds(257, 132, 232, 50);
+		happinessSlider.setBounds(257, 142, 232, 50);
 		add(happinessSlider);
 		
 		weightSlider = new PetStatDisplayer(boldFont, semiBoldFont, "Weight", new ImageIcon(Game.class.getResource("/images/sliders/weight.png")), 
 				"How much this pet weighs.", new Color(127, 127, 127), 0, 100, 6, 6);
-		weightSlider.setBounds(257, 192, 232, 50);
+		weightSlider.setBounds(257, 207, 232, 50);
 		add(weightSlider);
 		
 		JLabel petInfoBackground = new JLabel(new ImageIcon(Game.class.getResource("/images/backs/petInteract.png")));
@@ -154,6 +161,7 @@ public class PetInteract extends JPanel {
 	}
 
 	public void setPet(Pet activePet) {
+		this.activePet = activePet;
 		speciesLabel.setText(activePet.getSpecies().getName());
 		if (activePet.isHealthy())
 			healthyLabel.setText("This pet is healthy");
@@ -176,5 +184,22 @@ public class PetInteract extends JPanel {
 		
 		favouriteToyLabel.setText(activePet.getFavouriteToy().getName());
 		favouriteFoodLabel.setText(activePet.getFavouriteFood().getName());
+	}
+	
+	public void setButtonsEnabled(boolean enabled) {
+		buttonPlay.setEnabled(enabled);
+		buttonFeed.setEnabled(enabled);
+		buttonRest.setEnabled(enabled);
+		buttonToilet.setEnabled(enabled);
+		if (enabled) {
+			if (!activePet.isHealthy())
+				buttonCure.setEnabled(true);
+			if (!activePet.isBehaving())
+				buttonDiscipline.setEnabled(true);
+		}
+		else {
+			buttonCure.setEnabled(false);
+			buttonDiscipline.setEnabled(false);
+		}
 	}
 }

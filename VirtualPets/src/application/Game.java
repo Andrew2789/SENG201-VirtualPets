@@ -21,6 +21,10 @@ public class Game extends JPanel {
 	private JLabel dayLabel;
 	private JLabel playerLabel;
 	
+	private JButton buttonShop;
+	private JButton buttonEndTurn;
+	private JButton buttonMenu;
+	
 	private PetTab[] petTabs = new PetTab[3];
 	private int[][] tabLayouts = {{175, 0, 0},
 			  {100, 250, 0},
@@ -79,17 +83,22 @@ public class Game extends JPanel {
 		petInteract.setBounds(0, 255, 500, 345);
 		add(petInteract);
 		
-		JButton buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
+		buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
 		buttonShop.setBounds(531, 123, 65, 65);
 		buttonShop.setToolTipText("Shop for food and toys for your pets.");
 		add(buttonShop);
 		
-		JButton buttonEndTurn = new JButton(new ImageIcon(Game.class.getResource("/images/endTurn.png")));
+		buttonEndTurn = new JButton(new ImageIcon(Game.class.getResource("/images/endTurn.png")));
 		buttonEndTurn.setBounds(608, 110, 90, 90);
 		buttonEndTurn.setToolTipText("End your turn.");
 		add(buttonEndTurn);
 		
-		JButton buttonMenu = new JButton(new ImageIcon(Game.class.getResource("/images/menu.png")));
+		buttonMenu = new JButton(new ImageIcon(Game.class.getResource("/images/menu.png")));
+		buttonMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setButtonsEnabled(false);
+			}
+		});
 		buttonMenu.setBounds(710, 123, 65, 65);
 		buttonMenu.setToolTipText("Open the menu.");
 		add(buttonMenu);
@@ -154,5 +163,14 @@ public class Game extends JPanel {
 	public void setPet(int petIndex) {
 		activePet = activePlayer.getPets()[petIndex];
 		petInteract.setPet(activePet);
+	}
+	
+	public void setButtonsEnabled(boolean enabled) {
+		buttonShop.setEnabled(enabled);
+		buttonEndTurn.setEnabled(enabled);
+		buttonMenu.setEnabled(enabled);
+		petInteract.setButtonsEnabled(enabled);
+		for (PetTab petTab: petTabs)
+			petTab.setButtonEnabled(enabled);
 	}
 }
