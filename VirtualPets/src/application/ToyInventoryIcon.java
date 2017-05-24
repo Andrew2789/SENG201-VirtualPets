@@ -12,6 +12,7 @@ public class ToyInventoryIcon extends JPanel {
 	private JButton clickDetector;
 	private JLabel toyIcon;
 	private JLabel durabilityLabel;
+	private Toy specificToy;
 	
 	/**
 	 * Create the panel.
@@ -41,6 +42,7 @@ public class ToyInventoryIcon extends JPanel {
 		
 		setToyIcon(toy.getToyType());
 		setdurability(toy.getDurability());
+		this.specificToy = toy;
 	}
 	
 	public void setToyIcon(ToyType toyType) {
@@ -53,6 +55,10 @@ public class ToyInventoryIcon extends JPanel {
 	
 	public JButton getClickDetector() {
 		return clickDetector;
+	}
+	
+	public Toy getSpecificToy() {
+		return specificToy;
 	}
 	
 	public void setButtonEnabled(boolean enabled) {

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -45,8 +47,8 @@ public class Game extends JPanel {
 	
 	private JScrollPane foodInventoryScrollPane;
 	private JScrollPane toyInventoryScrollPane;
-	private JPanel foodInventory;
-	private JPanel toyInventory;
+	private FoodInventory foodInventory;
+	private ToyInventory toyInventory;
 	
 	private JLabel inventoryMoney;
 	private boolean selectingToy = false;
@@ -427,6 +429,20 @@ public class Game extends JPanel {
 		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
 		foodInventory.setPreferredSize(new Dimension(269, ((activePlayer.getFood().size()+2)/3)*90));
 		foodInventoryScrollPane.setViewportView(foodInventory);
+		
+		HashMap<FoodType, FoodInventoryIcon> foodIcons = foodInventory.getFoodIcons();
+		for (FoodType food : foodIcons.keySet()) {
+			foodIcons.get(food).getClickDetector().addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (selectingFood) {
+						activePlayer.feed(activePet, food);
+						selectingFood = false;
+						refreshFoodInventory();
+						refreshPetInfo();
+					}
+				}
+			});
+		}
 	}
 		
 	public void refreshToyInventory() {
@@ -443,6 +459,20 @@ public class Game extends JPanel {
 		toyInventory = new ToyInventory(activePlayer.getToys(), semiBoldFont);
 		toyInventory.setPreferredSize(new Dimension(269, ((activePlayer.getToys().size()+2)/3)*90));
 		toyInventoryScrollPane.setViewportView(toyInventory);
+		
+		ToyInventoryIcon[] toyIcons = toyInventory.getToyIcons();
+		for (ToyInventoryIcon icon : toyIcons) {
+			icon.getClickDetector().addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (selectingToy) {
+						activePlayer.playWith(activePet, icon.getSpecificToy());
+						selectingToy = false;
+						refreshToyInventory();
+						refreshPetInfo();
+					}
+				}
+			});
+		}
 	}
 	
 	public void setPet(int petIndex) {

@@ -28,4 +28,8 @@ public class ToyInventory extends JPanel {
 		}
 		
 	}
+	
+	public ToyInventoryIcon[] getToyIcons() {
+		return toyIcons;
+	}
 }
