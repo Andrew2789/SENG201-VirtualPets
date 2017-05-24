@@ -43,12 +43,17 @@ public class GuiRunner {
 	}
 
 	/**
-	 * Create the application.
+	 * Load fonts, species, toy types, and food types. Initialise the gui and load the main menu.
 	 */
 	public GuiRunner() {
 		species = SettingsLoader.loadCustomSpeciesFile("resources/default_species.txt");
 		toyTypes = SettingsLoader.loadCustomToyTypesFile("resources/default_toyTypes.txt");
 		foodTypes = SettingsLoader.loadCustomFoodTypesFile("resources/default_foodTypes.txt");
+
+		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
+		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
+		sourceSansProSemiBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Semibold.ttf"));
+		sourceSansProBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"));
 		
 		initialise();
 		loadMainMenu();
@@ -56,7 +61,7 @@ public class GuiRunner {
 	}
 
 	/**
-	 * Initialize the contents of the frame and load fonts.
+	 * Initialize the contents of the frame.
 	 */
 	private void initialise() {
 		frame = new JFrame();
@@ -65,13 +70,15 @@ public class GuiRunner {
 		frame.setResizable(false);
 		frame.getContentPane().setPreferredSize(new Dimension(800, 600));
 		frame.pack();
-		
-		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
-		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
-		sourceSansProSemiBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Semibold.ttf"));
-		sourceSansProBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"));
 	};
 	
+	/**
+	 * Load a font.
+	 * @param location
+	 * The classpath URL to the font
+	 * @return
+	 * The loaded font
+	 */
 	public Font loadFont(URL location) {
 		try {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, location.openStream());
@@ -140,6 +147,9 @@ public class GuiRunner {
 		frame.getContentPane().add(gameSetup);
 	}
 	
+	/**
+	 * Load the game screen and store it.
+	 */
 	private void loadGame() {
 		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), poppins.deriveFont(18f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
 
