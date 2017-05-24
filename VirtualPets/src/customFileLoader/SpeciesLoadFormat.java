@@ -1,12 +1,14 @@
-package application;
+package customFileLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
-public class FoodTypeLoadFormat implements LoadFormat {
-	private static String[] validAttributes = {"name", "icon", "price", "nutrition", 
-			"tastiness", "weight"};
+import application.Species;
+
+public class SpeciesLoadFormat implements LoadFormat {
+	private static String[] validAttributes = {"name", "icon", "optimumWeight", "hungerGain", 
+			"energyLoss", "happinessLoss", "minToyDamage", "maxToyDamage"};
 
 	@Override
 	public String[] getValidAttributes() {
@@ -18,16 +20,18 @@ public class FoodTypeLoadFormat implements LoadFormat {
 		try {
 			// Parse each attribute's given value to check if valid 
 			// and pass correct type to constructor.
-			FoodType newFoodType = new FoodType(
+			Species newSpecies = new Species(
 					attributes.get("name").substring(1, attributes.get("name").length() - 1),
 					new ImageIcon(SettingsLoader.class.getResource(
 							attributes.get("icon").substring(1, attributes.get("icon").length() - 1)
 							)),
-					Double.parseDouble(attributes.get("price")), 
-					Integer.parseInt(attributes.get("nutrition")),
-					Integer.parseInt(attributes.get("tastiness")), 
-					Integer.parseInt(attributes.get("weight")));
-			customObjects.add(newFoodType);
+					Integer.parseInt(attributes.get("optimumWeight")), 
+					Integer.parseInt(attributes.get("hungerGain")),
+					Integer.parseInt(attributes.get("energyLoss")), 
+					Integer.parseInt(attributes.get("happinessLoss")),
+					Integer.parseInt(attributes.get("minToyDamage")),
+					Integer.parseInt(attributes.get("maxToyDamage")));
+			customObjects.add(newSpecies);
 		}
 		catch (NumberFormatException e) {
 			System.err.println("Incorrect number format when parsing custom file.");

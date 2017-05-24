@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import javax.swing.JFrame;
 
+import customFileLoader.SettingsLoader;
+
 public class GuiRunner {
 	private Font poppins;
 	private Font sourceSansPro;

@@ -1,4 +1,4 @@
-package application;
+package customFileLoader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import application.FoodType;
+import application.Species;
+import application.ToyType;
 
 public class SettingsLoader
 {
