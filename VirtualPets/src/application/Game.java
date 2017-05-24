@@ -95,6 +95,7 @@ public class Game extends JPanel {
 		foodInventoryScrollPane = new JScrollPane();
 		foodInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		foodInventoryScrollPane.setBounds(510, 264, 286, 156);
+		foodInventoryScrollPane.setOpaque(false);
 		add(foodInventoryScrollPane);
 		
 		for (int i=0; i<3; i++) {
@@ -346,17 +347,8 @@ public class Game extends JPanel {
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+		refreshFoodInventory();
 		
-		// DEBUG ONLY
-		activePlayer.addFood(foodTypes[0]);
-		activePlayer.addFood(foodTypes[1]);
-		activePlayer.addFood(foodTypes[2]);
-		activePlayer.addFood(foodTypes[3]);
-		// END DEBUG
-		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
-		foodInventory.setPreferredSize(new Dimension(269, activePlayer.getFood().size()/3*90));
-		
-		foodInventoryScrollPane.setViewportView(foodInventory);
 		for (int i=0; i<3; i++) {
 			if (i < activePlayer.getPets().length) {
 				petTabs[i].setBounds(tabLayouts[activePlayer.getPets().length-1][i], 100, 148, 155);
@@ -378,6 +370,21 @@ public class Game extends JPanel {
 		if (activePet.getActionPoints() == 0)
 			petInteract.setButtonsEnabled(false);
 	}
+	
+	public void refreshFoodInventory() {
+		// DEBUG ONLY
+		activePlayer.addFood(foodTypes[1]);
+		activePlayer.addFood(foodTypes[2]);
+		activePlayer.addFood(foodTypes[3]);
+		activePlayer.addFood(foodTypes[4]);
+		activePlayer.addFood(foodTypes[5]);
+		// END DEBUG
+		
+		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
+		foodInventory.setPreferredSize(new Dimension(269, ((activePlayer.getFood().size()+2)/3)*90));
+		foodInventoryScrollPane.setViewportView(foodInventory);
+	}
+		
 	
 	public void setPet(int petIndex) {
 		activePet = activePlayer.getPets()[petIndex];
