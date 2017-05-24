@@ -64,6 +64,11 @@ public class InternalDialog extends JPanel {
 		promptLabel.setText(line1);
 		promptLabel2.setText(line2);
 		buttonOk.setVisible(okShown);
+		if (okShown)
+			buttonCancel.setBounds(12, 62, 85, 26);
+		else
+			buttonCancel.setBounds(82, 62, 85, 26);
+		
 		for (ActionListener al: buttonOk.getActionListeners())
 			buttonOk.removeActionListener(al);
 		buttonOk.addActionListener(new ActionListener() {

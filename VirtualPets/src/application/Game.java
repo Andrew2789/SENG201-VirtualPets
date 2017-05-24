@@ -39,6 +39,8 @@ public class Game extends JPanel {
 	private PetInteract petInteract;
 	
 	private JLabel inventoryMoney;
+	private boolean selectingToy = false;
+	private boolean selectingFood = false;
 	
 
 	/**
@@ -120,6 +122,40 @@ public class Game extends JPanel {
 		petInteract = new PetInteract(boldFont, semiBoldFont);
 		petInteract.setBounds(0, 255, 500, 345);
 		add(petInteract);
+
+		petInteract.getButtonPlay().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setButtonsEnabled(false);
+				currentDialog.setOptions("Click a toy from your inventory", "to use to play with your pet", false);
+				selectingToy = true;
+				
+				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setButtonsEnabled(true);
+						selectingToy = false;
+					}
+				});
+				
+				currentDialog.setVisible(true);
+			}
+		});
+		
+		petInteract.getButtonFeed().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setButtonsEnabled(false);
+				currentDialog.setOptions("Click a food from your inventory", "to feed to your pet", false);
+				selectingFood = true;
+				
+				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setButtonsEnabled(true);
+						selectingFood = false;
+					}
+				});
+				
+				currentDialog.setVisible(true);
+			}
+		});
 		
 		buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
 		buttonShop.setBounds(531, 123, 65, 65);
@@ -137,7 +173,6 @@ public class Game extends JPanel {
 					}
 				}
 				if (requiresPrompt) {
-					System.out.println("asdf");
 					setButtonsEnabled(false);
 					currentDialog.setOptions("Some of your pets still have AP.", "Are you sure you want to end turn?", true);
 					

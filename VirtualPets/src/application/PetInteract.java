@@ -202,4 +202,20 @@ public class PetInteract extends JPanel {
 			buttonDiscipline.setEnabled(false);
 		}
 	}
+	
+	public JButton getButtonPlay() {
+		return buttonPlay;
+	}
+	
+	public JButton getButtonFeed() {
+		return buttonFeed;
+	}
+	
+	public JButton getButtonRest() {
+		return buttonRest;
+	}
+	
+	public JButton getButtonToilet() {
+		return buttonToilet;
+	}
 }
