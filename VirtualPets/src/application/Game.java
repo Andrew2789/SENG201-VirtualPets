@@ -49,6 +49,8 @@ public class Game extends JPanel {
 	private JScrollPane toyInventoryScrollPane;
 	private FoodInventory foodInventory;
 	private ToyInventory toyInventory;
+	
+	private JPanel shopBase;
 	private ShopPanel shopPanel;
 	
 	private JLabel inventoryMoney;
@@ -133,6 +135,12 @@ public class Game extends JPanel {
 		buttonCloseMenu.setBounds(50, 222, 200, 50);
 		menu.add(buttonCloseMenu);
 
+		shopBase = new JPanel();
+		shopBase.setLayout(null);
+		shopBase.setVisible(false);
+		shopBase.setBounds(5, 145, 500, 450);
+		add(shopBase);
+		
 		foodInventoryScrollPane = new JScrollPane();
 		foodInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		foodInventoryScrollPane.setBounds(510, 264, 286, 156);
@@ -502,13 +510,13 @@ public class Game extends JPanel {
 	
 	public void displayShop() {
 		shopPanel = new ShopPanel(foodTypes, toyTypes, activePlayer.getMoney(), semiBoldFont, boldFont, regularFont);
-		shopPanel.setBounds(200, 100, 500, 450);
-		shopPanel.setVisible(true);
+		shopBase.add(shopPanel);
+		shopBase.setVisible(true);
 		setButtonsEnabled(false);
 		shopPanel.enablePossibleBuyButtons(activePlayer.getMoney());
 		shopPanel.getLeaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				shopPanel.setVisible(false);
+				shopBase.setVisible(false);
 				setButtonsEnabled(true);
 			}
 		});

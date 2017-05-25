@@ -25,21 +25,7 @@ public class ShopPanel extends JPanel {
 	 */
 	public ShopPanel(FoodType[] foodTypes, ToyType[] toyTypes, int money, Font semiBoldFont, Font boldFont, Font regularFont) {
 		setLayout(null);
-		setVisible(false);
-		
-		foodsForSale = new ShopFoodDisplayer[foodTypes.length];
-		for (int i=0; i<foodTypes.length; i++) {
-			foodsForSale[i] = new ShopFoodDisplayer(foodTypes[i], semiBoldFont, regularFont);
-			foodsForSale[i].setBounds(10, i*115, 235, 115);
-			add(foodsForSale[i]);
-		}
-		
-		toysForSale = new ShopToyDisplayer[toyTypes.length];
-		for (int i=0; i<toyTypes.length; i++) {
-			toysForSale[i] = new ShopToyDisplayer(toyTypes[i], semiBoldFont, regularFont);
-			toysForSale[i].setBounds(255, i*115, 235, 115);
-			add(toysForSale[i]);
-		}
+		setSize(500, 450);
 		
 		JLabel titleLabel = new JLabel("Welcome to the Shop!");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -64,6 +50,7 @@ public class ShopPanel extends JPanel {
 		add(toysLabel);
 		
 		buyFoodScrollPane = new JScrollPane();
+		buyFoodScrollPane.setLayout(null);
 		buyFoodScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		buyFoodScrollPane.setBounds(10, 130, 235, 310);
 		add(buyFoodScrollPane);
@@ -74,6 +61,7 @@ public class ShopPanel extends JPanel {
 		buyFoodScrollPane.setViewportView(buyFoodPanel);
 		
 		buyToysScrollPane = new JScrollPane();
+		buyToysScrollPane.setLayout(null);
 		buyToysScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		buyToysScrollPane.setBounds(255, 130, 235, 310);
 		add(buyToysScrollPane);
@@ -86,6 +74,26 @@ public class ShopPanel extends JPanel {
 		leaveButton = new JButton("Leave Shop");
 		leaveButton.setBounds(255, 15, 235, 25);
 		add(leaveButton);
+		
+		foodsForSale = new ShopFoodDisplayer[foodTypes.length];
+		for (int i=0; i<foodTypes.length; i++) {
+			foodsForSale[i] = new ShopFoodDisplayer(foodTypes[i], semiBoldFont, regularFont);
+			foodsForSale[i].setBounds(10, i*115, 235, 115);
+			// DEBUG
+			System.out.println(foodsForSale[i]);
+			// END DEBUG
+			buyFoodPanel.add(foodsForSale[i]);
+		}
+		
+		toysForSale = new ShopToyDisplayer[toyTypes.length];
+		for (int i=0; i<toyTypes.length; i++) {
+			toysForSale[i] = new ShopToyDisplayer(toyTypes[i], semiBoldFont, regularFont);
+			toysForSale[i].setBounds(255, i*115, 235, 115);
+			// DEBUG
+			System.out.println(toysForSale[i]);
+			// END DEBUG
+			buyToysPanel.add(toysForSale[i]);
+		}
 		
 		enablePossibleBuyButtons(money);
 	}
