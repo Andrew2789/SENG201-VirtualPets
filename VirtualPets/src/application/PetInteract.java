@@ -8,36 +8,29 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * @author Andrew Davidson (ada130)
+ * Displays pet statistics and allows the player to interact with the pet.
+ */
 public class PetInteract extends JPanel {
 	private static final long serialVersionUID = 571759901412319640L;
 	private Pet activePet;
-	
-	private JLabel speciesLabel;
-	private JLabel favouriteToyLabel;
-	private JLabel favouriteToyIcon;
-	private JLabel favouriteFoodLabel;
-	private JLabel favouriteFoodIcon;
-	private JLabel healthyLabel;
-	private JButton buttonCure;
-	private JLabel behavingLabel;
-	private JButton buttonDiscipline;
-	private PetStatDisplayer hungerSlider;
-	private PetStatDisplayer energySlider;
-	private PetStatDisplayer happinessSlider;
-	private PetStatDisplayer weightSlider;
-	
-	private JButton buttonPlay;
-	private JButton buttonFeed;
-	private JButton buttonRest;
-	private JButton buttonToilet;
+	private JLabel speciesLabel, favouriteToyLabel, favouriteToyIcon, favouriteFoodLabel, favouriteFoodIcon;
+	private JLabel behavingLabel, healthyLabel;
+	private JButton buttonCure, buttonDiscipline;
+	private PetStatDisplayer hungerSlider, energySlider, happinessSlider, weightSlider;
+	private JButton buttonPlay, buttonFeed, buttonRest, buttonToilet;
 	
 	private JPanel revivePrompt;
 	private JButton buttonRevive;
-	private JLabel reviveLabel;
-	private JLabel reviveLabel2;
-
+	private JLabel reviveLabel, reviveLabel2;
+	
 	/**
-	 * Create the panel.
+	 * Create the panel - initialise all components but do not set values until setPet is called. Players must be able to view all pet statistics.
+	 * @param boldFont
+	 * The font to use for headings
+	 * @param semiBoldFont
+	 * The font to use for inputs and less significant labels
 	 */
 	public PetInteract(Font boldFont, Font semiBoldFont) {
 		setOpaque(false);
@@ -193,6 +186,36 @@ public class PetInteract extends JPanel {
 		add(petInfoBackground);
 	}
 
+	//Getters
+	public JButton getButtonPlay() {
+		return buttonPlay;
+	}
+	
+	public JButton getButtonFeed() {
+		return buttonFeed;
+	}
+
+	public JButton getButtonRest() {
+		return buttonRest;
+	}
+	
+	public JButton getButtonToilet() {
+		return buttonToilet;
+	}
+	
+	public JButton getButtonCure() {
+		return buttonCure;
+	}
+	
+	public JButton getButtonDiscipline() {
+		return buttonDiscipline;
+	}
+	
+	public JButton getButtonRevive() {
+		return buttonRevive;
+	}
+	//End Getters
+	
 	/**
 	 * Sets the pet to display information about
 	 * @param activePet
@@ -261,33 +284,4 @@ public class PetInteract extends JPanel {
 		}
 	}
 	
-	//Getters
-	public JButton getButtonPlay() {
-		return buttonPlay;
-	}
-	
-	public JButton getButtonFeed() {
-		return buttonFeed;
-	}
-
-	public JButton getButtonRest() {
-		return buttonRest;
-	}
-	
-	public JButton getButtonToilet() {
-		return buttonToilet;
-	}
-	
-	public JButton getButtonCure() {
-		return buttonCure;
-	}
-	
-	public JButton getButtonDiscipline() {
-		return buttonDiscipline;
-	}
-	
-	public JButton getButtonRevive() {
-		return buttonRevive;
-	}
-	//End Getters
 }

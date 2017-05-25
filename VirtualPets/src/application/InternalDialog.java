@@ -12,19 +12,20 @@ import java.awt.event.ActionEvent;
 
 public class InternalDialog extends JPanel {
 	private static final long serialVersionUID = 8843581086428980769L;
-	private JLabel promptLabel;
-	private JLabel promptLabel2;
-	private JButton buttonOk;
-	private JButton buttonCancel;
+	private JLabel promptLabel, promptLabel2;
+	private JButton buttonOk, buttonCancel;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - a small internal dialog box which can have instantiators add actionListeners to its buttons.
+	 * @param boldFont
+	 * The font to use for all text in the dialog box
 	 */
 	public InternalDialog(Font boldFont) {
 		setBackground(Color.GRAY);
 		setVisible(false);
 		setLayout(null);
 		
+		//Two lines to display a notification on
 		promptLabel = new JLabel("");
 		promptLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		promptLabel.setFont(boldFont);
@@ -39,6 +40,7 @@ public class InternalDialog extends JPanel {
 		promptLabel2.setBounds(12, 25, 228, 21);
 		add(promptLabel2);
 		
+		//Ok and Cancel buttons, can be set to shown or false and can have actionListeners added
 		buttonOk = new JButton("Ok");
 		buttonOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -59,7 +61,28 @@ public class InternalDialog extends JPanel {
 		buttonCancel.setFont(boldFont);
 		add(buttonCancel);
 	}
+
+	//Getters
+	public JButton getButtonOk() {
+		return buttonOk;
+	}
 	
+	public JButton getButtonCancel() {
+		return buttonCancel;
+	}
+	//End getters
+	
+	/**
+	 * Set the dialog box contents. Clean out old actionListeners and make it hide on either button click.
+	 * @param line1
+	 * The first notification liine
+	 * @param line2
+	 * The second notification line
+	 * @param okShown
+	 * Whether the Ok button should be shown
+	 * @param cancelShown
+	 * Whether the Cancel button should be shown
+	 */
 	public void setOptions(String line1, String line2, boolean okShown, boolean cancelShown) {
 		promptLabel.setText(line1);
 		promptLabel2.setText(line2);
@@ -89,14 +112,6 @@ public class InternalDialog extends JPanel {
 				setVisible(false);
 			}
 		});
-	}
-
-	public JButton getButtonOk() {
-		return buttonOk;
-	}
-	
-	public JButton getButtonCancel() {
-		return buttonCancel;
 	}
 
 }
