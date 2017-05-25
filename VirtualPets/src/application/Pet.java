@@ -147,17 +147,22 @@ public class Pet {
 	/**
 	 * Changes the weight of the pet.
 	 * @param amount
-	 * An integer amount to change the weight by (negative or positive). Weight cannot go below 1,
-	 * this function will change out of bound values to be on the relevant boundary.
+	 * An integer amount to change the weight by (negative or positive). Weight cannot go below optimum
+	 * apart from by starvation, and weight must always be between 1/3 optimum and 5/3 optimum
+	 * @param starving
+	 * This is true for starvation induced weight changes, allows them to decrease weight below optimum
 	 */
 	private void changeWeight(int amount, boolean starving) {
 		if (starving) {
 			weight += amount;
-			if (weight < 1)
-				weight = 1;
+			if (weight < species.getOptimumWeight()*1/3)
+				weight = species.getOptimumWeight()*1/3;
 		}
-		else if (amount > 0)
+		else if (amount > 0) {
 			weight += amount;
+			if (weight > species.getOptimumWeight()*5/3)
+				weight = species.getOptimumWeight()*5/3;
+		}
 		else if (weight > species.getOptimumWeight()) {
 			weight += amount;
 			if (weight < species.getOptimumWeight())
@@ -205,7 +210,7 @@ public class Pet {
 	 * Makes the pet go to the toilet. Decreases the pet's weight.
 	 */
 	public void goToToilet() {
-		changeWeight(-species.getOptimumWeight()/6, false);
+		changeWeight(-(int)Math.round(((double)species.getOptimumWeight()/6)), false);
 		actionPoints -= 1;
 	}
 	
@@ -253,11 +258,14 @@ public class Pet {
 	// End pet actions
 	
 	/**
-	 * Run at the end of each turn on each pet. The pet has a change to become unhealthy or begin 
-	 * misbehave to depending on relevant statistics (energy, happiness, weight, and hunger). The
-	 * pet only has a change to start misbehaving or become unhealthy if it is alive and does not
-	 * die as a result of the randomly generated events in this function call. If the pet's hunger
-	 * is critical, it starves.
+	 * Calculates score based on pet's stats.
+	 * 
+	 * Generates random events - the pet has a chance to become sick, start misbehaving, or die.
+	 * 
+	 * Increments hunger by the pet's species hunger gain stat and decrements energy and happiness by the 
+	 * species energy loss and happiness loss stats respectively. Resets action points.
+	 * 
+	 * Decerements stats if the pet is unhealthy, misbehaving, or starving.
 	 * 
 	 * Chance to become unhealthy:
 	 * +0-100% for hunger 65-85
@@ -273,11 +281,7 @@ public class Pet {
 	 * +0-100% for energy 10-0
 	 * 
 	 * Starts starving when hunger >= 90
-	 */
-	
-	/**
-	 * Increments hunger by the pet's species hunger gain stat and decrements energy and happiness by the 
-	 * species energy loss and happiness loss stats respectively. Resets action points.
+	 * 
 	 * @return
 	 * The score for this pet
 	 */
