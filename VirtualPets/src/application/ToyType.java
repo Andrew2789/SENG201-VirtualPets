@@ -38,7 +38,7 @@ public class ToyType {
 		return icon;
 	}
 	
-	public double getPrice() {
+	public int getPrice() {
 		return this.price;
 	}
 	

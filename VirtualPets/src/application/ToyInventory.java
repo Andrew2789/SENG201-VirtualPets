@@ -26,7 +26,6 @@ public class ToyInventory extends JPanel {
 										 85,85);
 			add(toyIcons[i]);
 		}
-		
 	}
 	
 	public ToyInventoryIcon[] getToyIcons() {
