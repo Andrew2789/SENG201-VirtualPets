@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -581,12 +582,13 @@ public class Game extends JPanel {
 						activePlayer.addFood(foodDisplay.getFoodType());
 						inventoryMoney.setText("Money: $"+activePlayer.getMoney());
 						
-						int buyFoodScrollPosition = shopPanel.getBuyFoodScrollPane().getVerticalScrollBar().getValue();
-						int buyToysScrollPosition = shopPanel.getBuyToysScrollPane().getVerticalScrollBar().getValue();
+						Point buyFoodScrollPosition = shopPanel.getBuyFoodScrollPane().getViewport().getViewPosition();
+						Point buyToysScrollPosition = shopPanel.getBuyToysScrollPane().getViewport().getViewPosition();
 						shopBase.setVisible(false);
 						displayShop();
-						shopPanel.getBuyFoodScrollPane().getVerticalScrollBar().setValue(buyFoodScrollPosition);
-						shopPanel.getBuyToysScrollPane().getVerticalScrollBar().setValue(buyToysScrollPosition);
+
+						shopPanel.getBuyFoodScrollPane().getViewport().setViewPosition(buyFoodScrollPosition);
+						shopPanel.getBuyToysScrollPane().getViewport().setViewPosition(buyToysScrollPosition);
 						refreshFoodInventory();
 					}
 				}
@@ -600,8 +602,14 @@ public class Game extends JPanel {
 						activePlayer.changeMoney(-toyDisplay.getToyType().getPrice());
 						activePlayer.addToy(new Toy(toyDisplay.getToyType()));
 						inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+						
+						Point buyFoodScrollPosition = shopPanel.getBuyFoodScrollPane().getViewport().getViewPosition();
+						Point buyToysScrollPosition = shopPanel.getBuyToysScrollPane().getViewport().getViewPosition();
 						shopBase.setVisible(false);
 						displayShop();
+						
+						shopPanel.getBuyFoodScrollPane().getViewport().setViewPosition(buyFoodScrollPosition);
+						shopPanel.getBuyToysScrollPane().getViewport().setViewPosition(buyToysScrollPosition);
 						refreshToyInventory();
 					}
 				}

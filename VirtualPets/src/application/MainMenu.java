@@ -133,6 +133,10 @@ public class MainMenu extends JPanel {
 	public JButton getNewGameButton() {
 		return buttonNewGame;
 	}
+	
+	public JButton getLoadGameButton() {
+		return buttonLoadGame;
+	}
 
 	public JButton getCreateNewAssetButton() {
 		return buttonCreateNewAsset;

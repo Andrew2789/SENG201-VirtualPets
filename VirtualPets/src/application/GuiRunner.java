@@ -109,6 +109,17 @@ public class GuiRunner {
 				gameSetup.setVisible(true);
 				mainMenu.setVisible(false);
 			}
+		});	
+		
+		//Load a game if load game is clicked
+		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				//Get some things
+				loadGame();
+				game.resume(players, currentDay, currentPlayerIndex, numberOfDays, incomePerTurn, previousScores);
+				game.setVisible(true);
+				mainMenu.setVisible(false);
+			}
 		});
 		
 		//Switch to AssetCreator if create new asset is clicked
