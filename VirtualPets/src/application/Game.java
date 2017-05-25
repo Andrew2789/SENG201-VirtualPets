@@ -423,21 +423,6 @@ public class Game extends JPanel {
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
 		
-		// DEBUG ONLY
-		activePlayer.addFood(foodTypes[1]);
-		activePlayer.addFood(foodTypes[2]);
-		activePlayer.addFood(foodTypes[3]);
-		activePlayer.addFood(foodTypes[4]);
-		activePlayer.addFood(foodTypes[5]);
-		activePlayer.addToy(new Toy(toyTypes[1]));
-		activePlayer.addToy(new Toy(toyTypes[2]));
-		activePlayer.addToy(new Toy(toyTypes[2]));
-		activePlayer.addToy(new Toy(toyTypes[2]));
-		activePlayer.addToy(new Toy(toyTypes[3]));
-		activePlayer.addToy(new Toy(toyTypes[4]));
-		activePlayer.addToy(new Toy(toyTypes[5]));
-		// END DEBUG
-		
 		refreshFoodInventory();
 		refreshToyInventory();
 		
