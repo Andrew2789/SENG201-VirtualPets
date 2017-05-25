@@ -47,8 +47,8 @@ public class GuiRunner {
 	 */
 	public GuiRunner() {
 		species = SettingsLoader.loadCustomSpeciesFile("resources/default_species.txt");
-		toyTypes = SettingsLoader.loadCustomToyTypesFile("resources/default_toyTypes.txt");
-		foodTypes = SettingsLoader.loadCustomFoodTypesFile("resources/default_foodTypes.txt");
+		toyTypes = SettingsLoader.loadCustomToyTypesFile("resources/default_toytypes.txt");
+		foodTypes = SettingsLoader.loadCustomFoodTypesFile("resources/default_foodtypes.txt");
 		
 		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
