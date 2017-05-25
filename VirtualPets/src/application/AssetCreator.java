@@ -127,6 +127,13 @@ public class AssetCreator extends JPanel {
 		JLabel speciesIconPreview = new JLabel("");
 		speciesIconPreview.setBounds(222, 173, 100, 100);
 		speciesPanel.add(speciesIconPreview);
+
+		JLabel speciesErrorLabel = new JLabel("Please enter a name and choose an icon");
+		speciesErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		speciesErrorLabel.setForeground(Color.WHITE);
+		speciesErrorLabel.setBounds(239, 277, 249, 25);
+		speciesErrorLabel.setVisible(false);
+		speciesPanel.add(speciesErrorLabel);
 		
 		JButton buttonSpeciesDone = new JButton("Done");
 		buttonSpeciesDone.addActionListener(new ActionListener() {
@@ -142,6 +149,8 @@ public class AssetCreator extends JPanel {
 							(int)minToyDamageChooser.getValue(), 
 							(int)maxToyDamageChooser.getValue());
 				}
+				else
+					speciesErrorLabel.setVisible(true);
 			}
 		});
 		buttonSpeciesDone.setBounds(371, 313, 117, 25);
@@ -202,6 +211,13 @@ public class AssetCreator extends JPanel {
 		toyIconPreview.setBounds(202, 71, 75, 75);
 		toyPanel.add(toyIconPreview);
 
+		JLabel toyErrorLabel = new JLabel("Please enter a name and choose an icon");
+		toyErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		toyErrorLabel.setForeground(Color.WHITE);
+		toyErrorLabel.setBounds(239, 277, 249, 25);
+		toyErrorLabel.setVisible(false);
+		toyPanel.add(toyErrorLabel);
+		
 		JButton buttonToyDone = new JButton("Done");
 		buttonToyDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -212,6 +228,8 @@ public class AssetCreator extends JPanel {
 							(int)toyPriceChooser.getValue(), 
 							(int)happinessGainChooser.getValue());
 				}
+				else
+					toyErrorLabel.setVisible(true);
 			}
 		});
 		buttonToyDone.setBounds(371, 313, 117, 25);
@@ -291,6 +309,13 @@ public class AssetCreator extends JPanel {
 		JLabel foodIconPreview = new JLabel("");
 		foodIconPreview.setBounds(202, 113, 75, 75);
 		foodPanel.add(foodIconPreview);
+
+		JLabel foodErrorLabel = new JLabel("Please enter a name and choose an icon");
+		foodErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		foodErrorLabel.setForeground(Color.WHITE);
+		foodErrorLabel.setBounds(239, 277, 249, 25);
+		foodErrorLabel.setVisible(false);
+		foodPanel.add(foodErrorLabel);
 		
 		JButton buttonFoodDone = new JButton("Done");
 		buttonFoodDone.setBounds(371, 313, 117, 25);
@@ -305,6 +330,8 @@ public class AssetCreator extends JPanel {
 							(int)tastinessChooser.getValue(), 
 							(int)weightChooser.getValue());
 				}
+				else
+					foodErrorLabel.setVisible(true);
 			}
 		});
 		foodPanel.add(buttonFoodDone);
@@ -323,6 +350,7 @@ public class AssetCreator extends JPanel {
 				minToyDamageChooser.setValue(30);
 				maxToyDamageChooser.setValue(60);
 				speciesIconPreview.setIcon(null);
+				speciesErrorLabel.setVisible(false);
 				
 				speciesPanel.setVisible(true);
 				setButtonsEnabled(false);
@@ -337,6 +365,7 @@ public class AssetCreator extends JPanel {
 				toyPriceChooser.setValue(50);
 				happinessGainChooser.setValue(35);
 				toyIconPreview.setIcon(null);
+				toyErrorLabel.setVisible(false);
 				
 				toyPanel.setVisible(true);
 				setButtonsEnabled(false);
@@ -355,6 +384,7 @@ public class AssetCreator extends JPanel {
 				tastinessChooser.setValue(20);
 				weightChooser.setValue(8);
 				foodIconPreview.setIcon(null);
+				foodErrorLabel.setVisible(false);
 				
 				foodPanel.setVisible(true);
 				setButtonsEnabled(false);
