@@ -11,10 +11,8 @@ import javax.swing.JButton;
 
 public class ShopPanel extends JPanel {
 	private static final long serialVersionUID = -3713119219367796726L;
-	private JScrollPane buyFoodScrollPane;
-	private JScrollPane buyToysScrollPane;
-	private JPanel buyFoodPanel;
-	private JPanel buyToysPanel;
+	private JScrollPane buyFoodScrollPane, buyToysScrollPane;
+	private JPanel buyFoodPanel, buyToysPanel;
 	private JButton leaveButton;
 	
 	private ShopFoodDisplayer[] foodsForSale;

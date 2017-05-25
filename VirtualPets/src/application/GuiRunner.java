@@ -6,6 +6,7 @@ import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import javax.swing.JFrame;
 
@@ -51,16 +52,16 @@ public class GuiRunner {
 		toyTypes = Loader.loadCustomToyTypesFile("resources/default_toytypes.txt");
 		foodTypes = Loader.loadCustomFoodTypesFile("resources/default_foodtypes.txt");
 		
-		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
-		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
-		sourceSansProSemibold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-semibold.ttf"));
-		sourceSansProBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"));
+		poppins = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Poppins/Poppins-Regular.ttf"));
+		sourceSansPro = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
+		sourceSansProSemibold = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Source_Sans_Pro/SourceSansPro-semibold.ttf"));
+		sourceSansProBold = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"));
 		
 		initialise();
 		loadMainMenu();
 		mainMenu.setVisible(true);
 	}
-
+	
 	/**
 	 * Initialises the frame at the correct size with nothing in it.
 	 */
@@ -80,9 +81,9 @@ public class GuiRunner {
 	 * @return
 	 * The loaded font
 	 */
-	public Font loadFont(URL location) {
+	public Font loadFont(InputStream file) {
 		try {
-			Font font = Font.createFont(Font.TRUETYPE_FONT, location.openStream());
+			Font font = Font.createFont(Font.TRUETYPE_FONT, file);
 			return font;
 		}
 		catch (FontFormatException e) {
