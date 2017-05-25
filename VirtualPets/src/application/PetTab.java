@@ -11,10 +11,8 @@ import javax.swing.SwingConstants;
 public class PetTab extends JPanel {
 	private static final long serialVersionUID = -4840106067673959643L;
 	private JButton clickDetector;
-	private JLabel deadOverlay;
-	private JLabel petIcon;
-	private JLabel petNameLabel;
-	private JLabel actionPointsLabel;
+	private JLabel deadOverlay, sickIcon, misbehavingIcon, starvingIcon;
+	private JLabel petNameLabel, petIcon, actionPointsLabel;
 
 	/**
 	 * Create the panel.
@@ -28,6 +26,24 @@ public class PetTab extends JPanel {
 		deadOverlay.setBounds(0, 0, 150, 149);
 		deadOverlay.setVisible(false);
 		add(deadOverlay);
+		
+		sickIcon = new JLabel("");
+		sickIcon.setToolTipText("This pet is sick.");
+		sickIcon.setIcon(new ImageIcon(PetTab.class.getResource("/images/statuses/Sick.png")));
+		sickIcon.setBounds(120, 36, 20, 20);
+		add(sickIcon);
+		
+		misbehavingIcon = new JLabel("");
+		misbehavingIcon.setToolTipText("This pet is misbehaving.");
+		misbehavingIcon.setIcon(new ImageIcon(PetTab.class.getResource("/images/statuses/Misbehaving.png")));
+		misbehavingIcon.setBounds(120, 60, 20, 20);
+		add(misbehavingIcon);
+		
+		starvingIcon = new JLabel("");
+		starvingIcon.setToolTipText("This pet is starving!");
+		starvingIcon.setIcon(new ImageIcon(PetTab.class.getResource("/images/statuses/Starving.png")));
+		starvingIcon.setBounds(120, 84, 20, 20);
+		add(starvingIcon);
 		
 		petIcon = new JLabel("");
 		petIcon.setBounds(24, 28, 100, 100);
@@ -61,6 +77,9 @@ public class PetTab extends JPanel {
 		petNameLabel.setText(pet.getName());
 		petIcon.setIcon(pet.getSpecies().getIcon());
 		deadOverlay.setVisible(!pet.isAlive());
+		sickIcon.setVisible(!pet.isHealthy());
+		misbehavingIcon.setVisible(!pet.isBehaving());
+		starvingIcon.setVisible((pet.getHunger() >= 90));
 		actionPointsLabel.setText("Action Points: "+pet.getActionPoints());
 	}
 	
