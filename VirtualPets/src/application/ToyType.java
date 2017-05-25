@@ -28,15 +28,7 @@ public class ToyType {
 		this.price = price;
 		this.happinessGain = happinessGain;
 	}
-	
-	// DELETE ME ONCE ICONS HAVE BEEN ADDED FOR TOY TYPES
-	public ToyType(String name, int price, int happinessGain) {
-		this.name = name;
-		this.price = price;
-		this.happinessGain = happinessGain;
-	}
-	// END OF DELETE ME
-	
+
 	// Getters
 	public String getName() {
 		return this.name;

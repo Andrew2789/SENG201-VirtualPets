@@ -23,7 +23,7 @@ public class Game extends JPanel {
 	private int numberOfDays;
 	private int incomePerTurn;
 	
-	private int currentDay = 0;
+	private int currentDay;
 	private Player activePlayer;
 	private Pet activePet;
 	private RoundOverview roundOverview;
@@ -385,14 +385,21 @@ public class Game extends JPanel {
 		this.players = players;
 		this.numberOfDays = numberOfDays;
 		this.incomePerTurn = incomePerTurn;
+		currentDay = 1;
+		dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
 		setTurn(0);
 	}
 	
+	public void resume(Player[] players, int currentDay, int currentPlayerIndex, int numberOfDays, int incomePerTurn) {
+		this.players = players;
+		this.numberOfDays = numberOfDays;
+		this.incomePerTurn = incomePerTurn;
+		this.currentDay = currentDay;
+		dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
+		setTurn(currentPlayerIndex);
+	}
+	
 	public void setTurn(int playerIndex) {
-		if (playerIndex == 0) {
-			currentDay += 1;
-			dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
-		}
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
@@ -511,6 +518,8 @@ public class Game extends JPanel {
 				roundOverview.displayEndOfRound(currentDay, players);
 				setVisible(false);
 				roundOverview.setVisible(true);
+				currentDay += 1;
+				dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
 			}
 		}
 		

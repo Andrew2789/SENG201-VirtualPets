@@ -35,16 +35,6 @@ public class FoodType implements Comparable<FoodType> {
 		this.weight = weight;
 	}
 	
-	// DELETE ME ONCE ICONS HAVE BEEN ADDED FOR FOOD TYPES
-	public FoodType(String name, int price, int nutrition, int tastiness, int weight) {
-		this.name = name;
-		this.price = price;
-		this.nutrition = nutrition;
-		this.tastiness = tastiness;
-		this.weight = weight;
-	}
-	// END OF DELETE ME
-	
 	// Getters
 	public String getName() {
 		return name;
