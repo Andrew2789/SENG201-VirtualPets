@@ -409,12 +409,13 @@ public class Game extends JPanel {
 		setTurn(0);
 	}
 	
-	public void resume(Player[] players, int currentDay, int currentPlayerIndex, int numberOfDays, int incomePerTurn) {
+	public void resume(Player[] players, int currentDay, int currentPlayerIndex, int numberOfDays, int incomePerTurn, int[] previousScores) {
 		this.players = players;
 		this.numberOfDays = numberOfDays;
 		this.incomePerTurn = incomePerTurn;
 		this.currentDay = currentDay;
 		dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
+		roundOverview.setPreviousRoundScores(previousScores);
 		setTurn(currentPlayerIndex);
 	}
 	
