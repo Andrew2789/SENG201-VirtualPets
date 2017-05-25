@@ -1,5 +1,6 @@
 package application;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -509,6 +510,9 @@ public class Game extends JPanel {
 	}
 	
 	public void displayShop() {
+		for (Component comp : shopBase.getComponents()) {
+			shopBase.remove(comp);
+		}
 		shopPanel = new ShopPanel(foodTypes, toyTypes, activePlayer.getMoney(), semiBoldFont, boldFont, regularFont);
 		shopBase.add(shopPanel);
 		shopBase.setVisible(true);
@@ -520,6 +524,36 @@ public class Game extends JPanel {
 				setButtonsEnabled(true);
 			}
 		});
+		
+		for (ShopFoodDisplayer foodDisplay : shopPanel.getFoodsForSale()) {
+			foodDisplay.getBuyButton().addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (activePlayer.getMoney() >= foodDisplay.getFoodType().getPrice()) {
+						activePlayer.changeMoney(-foodDisplay.getFoodType().getPrice());
+						activePlayer.addFood(foodDisplay.getFoodType());
+						inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+						shopBase.setVisible(false);
+						displayShop();
+						refreshFoodInventory();
+					}
+				}
+			});
+		}
+		
+		for (ShopToyDisplayer toyDisplay : shopPanel.getToysForSale()) {
+			toyDisplay.getBuyButton().addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (activePlayer.getMoney() >= toyDisplay.getToyType().getPrice()) {
+						activePlayer.changeMoney(-toyDisplay.getToyType().getPrice());
+						activePlayer.addToy(new Toy(toyDisplay.getToyType()));
+						inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+						shopBase.setVisible(false);
+						displayShop();
+						refreshToyInventory();
+					}
+				}
+			});
+		}
 	}
 	
 	public void setPet(int petIndex) {

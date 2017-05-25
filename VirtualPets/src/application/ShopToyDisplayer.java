@@ -43,11 +43,15 @@ public class ShopToyDisplayer extends JPanel {
 		this.toyType = toy;
 	}
 	
-	public void enableBuyButton(boolean enabled) {
-		buyButton.setEnabled(enabled);
-	}
-	
 	public ToyType getToyType() {
 		return toyType;
+	}
+	
+	public JButton getBuyButton() {
+		return buyButton;
+	}
+	
+	public void enableBuyButton(boolean enabled) {
+		buyButton.setEnabled(enabled);
 	}
 }

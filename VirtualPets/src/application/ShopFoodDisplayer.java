@@ -53,11 +53,15 @@ public class ShopFoodDisplayer extends JPanel {
 		this.foodType = food;
 	}
 	
-	public void enableBuyButton(boolean enabled) {
-		buyButton.setEnabled(enabled);
-	}
-	
 	public FoodType getFoodType() {
 		return foodType;
+	}
+	
+	public JButton getBuyButton() {
+		return buyButton;
+	}
+	
+	public void enableBuyButton(boolean enabled) {
+		buyButton.setEnabled(enabled);
 	}
 }

@@ -49,49 +49,41 @@ public class ShopPanel extends JPanel {
 		toysLabel.setBounds(255, 95, 235, 25);
 		add(toysLabel);
 		
-		buyFoodScrollPane = new JScrollPane();
-		buyFoodScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		buyFoodScrollPane.setBounds(10, 130, 235, 310);
-		add(buyFoodScrollPane);
-		
 		buyFoodPanel = new JPanel();
 		buyFoodPanel.setLayout(null);
-		buyFoodPanel.setPreferredSize(new Dimension(235, foodTypes.length*115));
-		buyFoodScrollPane.setViewportView(buyFoodPanel);
-		
-		buyToysScrollPane = new JScrollPane();
-		buyToysScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		buyToysScrollPane.setBounds(255, 130, 235, 310);
-		add(buyToysScrollPane);
-		
-		buyToysPanel = new JPanel();
-		buyToysPanel.setLayout(null);
-		buyToysPanel.setPreferredSize(new Dimension(235, toyTypes.length*115));
-		buyToysScrollPane.setViewportView(buyToysPanel);
-		
-		leaveButton = new JButton("Leave Shop");
-		leaveButton.setBounds(255, 15, 235, 25);
-		add(leaveButton);
+		buyFoodPanel.setPreferredSize(new Dimension(235, (foodTypes.length)*115));
 		
 		foodsForSale = new ShopFoodDisplayer[foodTypes.length];
 		for (int i=0; i<foodTypes.length; i++) {
 			foodsForSale[i] = new ShopFoodDisplayer(foodTypes[i], semiBoldFont, regularFont);
-			foodsForSale[i].setBounds(10, i*115, 235, 115);
-			// DEBUG
-			System.out.println(foodsForSale[i]);
-			// END DEBUG
+			foodsForSale[i].setBounds(0, i*115, 235, 115);
 			buyFoodPanel.add(foodsForSale[i]);
 		}
+		
+		buyFoodScrollPane = new JScrollPane(buyFoodPanel);
+		buyFoodScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		buyFoodScrollPane.setBounds(10, 130, 235, 310);
+		add(buyFoodScrollPane);
+		
+		buyToysPanel = new JPanel();
+		buyToysPanel.setLayout(null);
+		buyToysPanel.setPreferredSize(new Dimension(235, (toyTypes.length)*115));
 		
 		toysForSale = new ShopToyDisplayer[toyTypes.length];
 		for (int i=0; i<toyTypes.length; i++) {
 			toysForSale[i] = new ShopToyDisplayer(toyTypes[i], semiBoldFont, regularFont);
-			toysForSale[i].setBounds(255, i*115, 235, 115);
-			// DEBUG
-			System.out.println(toysForSale[i]);
-			// END DEBUG
+			toysForSale[i].setBounds(0, i*115, 235, 115);
 			buyToysPanel.add(toysForSale[i]);
 		}
+		
+		buyToysScrollPane = new JScrollPane(buyToysPanel);
+		buyToysScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		buyToysScrollPane.setBounds(255, 130, 235, 310);
+		add(buyToysScrollPane);
+		
+		leaveButton = new JButton("Leave Shop");
+		leaveButton.setBounds(255, 15, 235, 25);
+		add(leaveButton);
 		
 		enablePossibleBuyButtons(money);
 	}
@@ -109,9 +101,11 @@ public class ShopPanel extends JPanel {
 	}
 	
 	public void enablePossibleBuyButtons(int money) {
-		for (ShopFoodDisplayer foodDisplay : foodsForSale) {
+		for (ShopFoodDisplayer foodDisplay : foodsForSale)
 			if (foodDisplay.getFoodType().getPrice() <= money)
 				foodDisplay.enableBuyButton(true);
-		}
+		for (ShopToyDisplayer toyDisplay: toysForSale)
+			if (toyDisplay.getToyType().getPrice() <= money)
+				toyDisplay.enableBuyButton(true);
 	}
 }
