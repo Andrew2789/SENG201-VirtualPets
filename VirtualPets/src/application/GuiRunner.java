@@ -24,6 +24,7 @@ public class GuiRunner {
 	private JFrame frame;
 	private MainMenu mainMenu;
 	private GameSetup gameSetup;
+	private AssetCreator assetCreator;
 	private Game game;
 
 	/**
@@ -100,12 +101,20 @@ public class GuiRunner {
 	 */
 	private void loadMainMenu() {
 		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemiBold.deriveFont(16f), sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
-		
+
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				loadGameSetup();
-				mainMenu.setVisible(false);
 				gameSetup.setVisible(true);
+				mainMenu.setVisible(false);
+			}
+		});
+		
+		mainMenu.getCreateNewAssetButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				loadAssetCreator();
+				assetCreator.setVisible(true);
+				mainMenu.setVisible(false);
 			}
 		});
 		
@@ -145,6 +154,12 @@ public class GuiRunner {
 		});
 		
 		frame.getContentPane().add(gameSetup);
+	}
+	
+	private void loadAssetCreator() {
+		assetCreator = new AssetCreator(poppins.deriveFont(72f));
+		
+		frame.getContentPane().add(assetCreator);
 	}
 	
 	/**

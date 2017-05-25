@@ -1,6 +1,7 @@
 package application;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -127,6 +128,10 @@ public class MainMenu extends JPanel {
 	
 	public JButton getNewGameButton() {
 		return buttonNewGame;
+	}
+
+	public JButton getCreateNewAssetButton() {
+		return buttonCreateNewAsset;
 	}
 	
 	public JButton getQuitButton() {
