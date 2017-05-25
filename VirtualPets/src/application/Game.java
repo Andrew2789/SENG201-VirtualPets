@@ -49,12 +49,15 @@ public class Game extends JPanel {
 	private JScrollPane toyInventoryScrollPane;
 	private FoodInventory foodInventory;
 	private ToyInventory toyInventory;
+	private ShopPanel shopPanel;
 	
 	private JLabel inventoryMoney;
 	private boolean selectingToy = false;
 	private boolean selectingFood = false;
 	
 	private Font semiBoldFont;
+	private Font boldFont;
+	private Font regularFont;
 
 	/**
 	 * Create the panel.
@@ -287,6 +290,11 @@ public class Game extends JPanel {
 		});
 		
 		buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
+		buttonShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayShop();
+			}
+		});
 		buttonShop.setBounds(531, 123, 65, 65);
 		buttonShop.setToolTipText("Shop for food and toys for your pets.");
 		add(buttonShop);
@@ -378,6 +386,8 @@ public class Game extends JPanel {
 		this.toyTypes = toyTypes;
 		this.foodTypes = foodTypes;
 		this.semiBoldFont = semiBoldFont;
+		this.boldFont = boldFont;
+		this.regularFont = regularFont;
 		this.roundOverview = roundOverview;
 	}
 	
@@ -444,7 +454,7 @@ public class Game extends JPanel {
 			petInteract.setButtonsEnabled(false);
 	}
 	
-	public void refreshFoodInventory() {		
+	public void refreshFoodInventory() {
 		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
 		foodInventory.setPreferredSize(new Dimension(269, ((activePlayer.getFood().size()+2)/3)*90));
 		foodInventoryScrollPane.setViewportView(foodInventory);
@@ -467,7 +477,7 @@ public class Game extends JPanel {
 		}
 	}
 		
-	public void refreshToyInventory() {		
+	public void refreshToyInventory() {
 		toyInventory = new ToyInventory(activePlayer.getToys(), semiBoldFont);
 		toyInventory.setPreferredSize(new Dimension(269, ((activePlayer.getToys().size()+2)/3)*90));
 		toyInventoryScrollPane.setViewportView(toyInventory);
@@ -488,6 +498,20 @@ public class Game extends JPanel {
 				}
 			});
 		}
+	}
+	
+	public void displayShop() {
+		shopPanel = new ShopPanel(foodTypes, toyTypes, activePlayer.getMoney(), semiBoldFont, boldFont, regularFont);
+		shopPanel.setBounds(200, 100, 500, 450);
+		shopPanel.setVisible(true);
+		setButtonsEnabled(false);
+		shopPanel.enablePossibleBuyButtons(activePlayer.getMoney());
+		shopPanel.getLeaveButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				shopPanel.setVisible(false);
+				setButtonsEnabled(true);
+			}
+		});
 	}
 	
 	public void setPet(int petIndex) {

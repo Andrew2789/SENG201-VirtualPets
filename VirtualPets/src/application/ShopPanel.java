@@ -7,6 +7,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JButton;
 
 public class ShopPanel extends JPanel {
 	private static final long serialVersionUID = -3713119219367796726L;
@@ -14,6 +15,7 @@ public class ShopPanel extends JPanel {
 	private JScrollPane buyToysScrollPane;
 	private JPanel buyFoodPanel;
 	private JPanel buyToysPanel;
+	private JButton leaveButton;
 	
 	private ShopFoodDisplayer[] foodsForSale;
 	private ShopToyDisplayer[] toysForSale;
@@ -21,7 +23,7 @@ public class ShopPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ShopPanel(FoodType[] foodTypes, ToyType[] toyTypes, Font semiBoldFont, Font boldFont, Font regularFont) {
+	public ShopPanel(FoodType[] foodTypes, ToyType[] toyTypes, int money, Font semiBoldFont, Font boldFont, Font regularFont) {
 		setLayout(null);
 		setVisible(false);
 		
@@ -42,13 +44,13 @@ public class ShopPanel extends JPanel {
 		JLabel titleLabel = new JLabel("Welcome to the Shop!");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(boldFont);
-		titleLabel.setBounds(10, 15, 480, 25);
+		titleLabel.setBounds(10, 15, 235, 25);
 		add(titleLabel);
 		
-		JLabel moneyLabel = new JLabel(String.format("You have: $%d"), 50);
+		JLabel moneyLabel = new JLabel(String.format("You have: $%d", money));
 		moneyLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		moneyLabel.setFont(semiBoldFont);
-		moneyLabel.setBounds(10, 50, 480, 25);
+		moneyLabel.setBounds(10, 55, 480, 25);
 		add(moneyLabel);
 		
 		JLabel foodLabel = new JLabel("Food for Sale", SwingConstants.CENTER);
@@ -80,6 +82,30 @@ public class ShopPanel extends JPanel {
 		buyToysPanel.setLayout(null);
 		buyToysPanel.setPreferredSize(new Dimension(235, (toyTypes.length+1)/2*115));
 		buyToysScrollPane.setViewportView(buyToysPanel);
-
+		
+		leaveButton = new JButton("Leave Shop");
+		leaveButton.setBounds(255, 15, 235, 25);
+		add(leaveButton);
+		
+		enablePossibleBuyButtons(money);
+	}
+	
+	public JButton getLeaveButton() {
+		return leaveButton;
+	}
+	
+	public ShopFoodDisplayer[] getFoodsForSale() {
+		return foodsForSale;
+	}
+	
+	public ShopToyDisplayer[] getToysForSale() {
+		return toysForSale;
+	}
+	
+	public void enablePossibleBuyButtons(int money) {
+		for (ShopFoodDisplayer foodDisplay : foodsForSale) {
+			if (foodDisplay.getFoodType().getPrice() <= money)
+				foodDisplay.enableBuyButton(true);
+		}
 	}
 }

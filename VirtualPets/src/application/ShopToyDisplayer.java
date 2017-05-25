@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 
 public class ShopToyDisplayer extends JPanel {
 	private static final long serialVersionUID = -7801211551735059571L;
+	private ToyType toyType;
 	private JButton buyButton;
 
 	/**
@@ -35,7 +36,18 @@ public class ShopToyDisplayer extends JPanel {
 		add(nutritionLabel);
 		
 		buyButton = new JButton("Buy");
+		buyButton.setEnabled(false);
 		buyButton.setBounds(10, 85, 75, 20);
 		add(buyButton);
+		
+		this.toyType = toy;
+	}
+	
+	public void enableBuyButton(boolean enabled) {
+		buyButton.setEnabled(enabled);
+	}
+	
+	public ToyType getToyType() {
+		return toyType;
 	}
 }

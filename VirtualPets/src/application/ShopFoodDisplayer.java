@@ -7,6 +7,7 @@ import javax.swing.JButton;
 
 public class ShopFoodDisplayer extends JPanel {
 	private static final long serialVersionUID = -506971370002352550L;
+	private FoodType foodType;
 	private JButton buyButton;
 
 	/**
@@ -45,7 +46,18 @@ public class ShopFoodDisplayer extends JPanel {
 		add(weightLabel);
 		
 		buyButton = new JButton("Buy");
+		buyButton.setEnabled(false);
 		buyButton.setBounds(10, 85, 75, 20);
 		add(buyButton);
+		
+		this.foodType = food;
+	}
+	
+	public void enableBuyButton(boolean enabled) {
+		buyButton.setEnabled(enabled);
+	}
+	
+	public FoodType getFoodType() {
+		return foodType;
 	}
 }
