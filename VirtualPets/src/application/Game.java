@@ -445,6 +445,9 @@ public class Game extends JPanel {
 					if (selectingFood) {
 						activePlayer.feed(activePet, food);
 						selectingFood = false;
+						setButtonsEnabled(true);
+						currentDialog.setVisible(false);
+						
 						refreshFoodInventory();
 						refreshPetInfo();
 					}
@@ -465,6 +468,9 @@ public class Game extends JPanel {
 					if (selectingToy) {
 						activePlayer.playWith(activePet, icon.getSpecificToy());
 						selectingToy = false;
+						setButtonsEnabled(true);
+						currentDialog.setVisible(false);
+						
 						refreshToyInventory();
 						refreshPetInfo();
 					}

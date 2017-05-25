@@ -119,23 +119,6 @@ public class Player {
 	 * The player plays with a pet using a toy. The toy is damaged and possibly broken by this.
 	 * @param pet
 	 * The pet to be played with
-	 * @param toyIndex
-	 * The index of the toy to use for playing
-	 * @return
-	 * True if the toy does not break, false otherwise
-	 */
-	public boolean playWith(Pet pet, int toyIndex) {
-		pet.play(toys.get(toyIndex));
-		if (toys.get(toyIndex).getDurability() <= 0) {
-			toys.remove(toyIndex);
-			return false;
-		}
-		return true;
-	}
-	/**
-	 * The player plays with a pet using a toy. The toy is damaged and possibly broken by this.
-	 * @param pet
-	 * The pet to be played with
 	 * @param toy
 	 * The toy object to use for playing
 	 * @return
