@@ -61,6 +61,9 @@ public class FoodType implements Comparable<FoodType> {
 	}
 	// End Getters
 	
+	/**
+	 * Facilitates ordering of FoodTypes based on alphabetical order of name.
+	 */
 	public int compareTo(FoodType other) {
 		return this.name.compareTo(other.name);
 	}
