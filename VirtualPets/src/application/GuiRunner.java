@@ -14,7 +14,7 @@ import customFileLoader.Loader;
 public class GuiRunner {
 	private Font poppins;
 	private Font sourceSansPro;
-	private Font sourceSansProSemiBold;
+	private Font sourceSansProsemibold;
 	private Font sourceSansProBold;
 	
 	private Species[] species;
@@ -53,7 +53,7 @@ public class GuiRunner {
 		
 		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
-		sourceSansProSemiBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Semibold.ttf"));
+		sourceSansProsemibold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-semibold.ttf"));
 		sourceSansProBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"));
 		
 		initialise();
@@ -100,7 +100,7 @@ public class GuiRunner {
 	 * Load the main menu screen and store it.
 	 */
 	private void loadMainMenu() {
-		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemiBold.deriveFont(16f), sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
+		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProsemibold.deriveFont(16f), sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
 
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +132,7 @@ public class GuiRunner {
 	 * Load the game setup screen and store it.
 	 */
 	private void loadGameSetup() {
-		gameSetup = new GameSetup(species, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+		gameSetup = new GameSetup(species, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProsemibold.deriveFont(14f), sourceSansPro.deriveFont(14f));
 
 		gameSetup.getDoneButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -157,7 +157,14 @@ public class GuiRunner {
 	}
 	
 	private void loadAssetCreator() {
-		assetCreator = new AssetCreator(poppins.deriveFont(72f));
+		assetCreator = new AssetCreator(poppins.deriveFont(72f), sourceSansProsemibold.deriveFont(14f));
+		
+		assetCreator.getBackButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				assetCreator.setVisible(false);
+				mainMenu.setVisible(true);
+			}
+		});
 		
 		frame.getContentPane().add(assetCreator);
 	}
@@ -192,7 +199,7 @@ public class GuiRunner {
 		};
 		
 		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), poppins.deriveFont(18f), sourceSansProBold.deriveFont(14f), 
-				sourceSansProSemiBold.deriveFont(14f), sourceSansPro.deriveFont(14f), roundOverview, exitToMainMenu, exitToDesktop);
+				sourceSansProsemibold.deriveFont(14f), sourceSansPro.deriveFont(14f), roundOverview, exitToMainMenu, exitToDesktop);
 		
 		frame.getContentPane().add(game);
 	}
