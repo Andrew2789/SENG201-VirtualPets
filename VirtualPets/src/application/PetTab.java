@@ -21,6 +21,8 @@ public class PetTab extends JPanel {
 
 	/**
 	 * Create the pet tab panel - the button, the status overlays, the name/action points labels, and the pet's icon.
+	 * @param semiBoldFont
+	 * The font to use for all text in the pet tab
 	 */
 	public PetTab(Font semiBoldFont) {
 		setLayout(null);

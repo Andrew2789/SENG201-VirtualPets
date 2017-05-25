@@ -6,11 +6,21 @@ import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import java.awt.Font;
 
+/**
+ * @author Andrew Davidson (ada130)
+ * A box that displays all information about a certain species.
+ */
 public class SpeciesDisplayer extends JPanel {
 	private static final long serialVersionUID = 2326573558020329538L;
 
 	/**
-	 * Create the panel.
+	 * Create the species displayer for a specified species, displaying all of its attributes and its icon.
+	 * @param species
+	 * The species to display
+	 * @param boldFont
+	 * The font to use for the name heading
+	 * @param semiBoldFont
+	 * The font to use for attributes
 	 */
 	public SpeciesDisplayer(Species species, Font boldFont, Font semiBoldFont) {
 		setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));

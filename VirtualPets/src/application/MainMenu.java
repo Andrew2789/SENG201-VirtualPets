@@ -22,6 +22,14 @@ public class MainMenu extends JPanel {
 
 	/**
 	 * Create the main menu panel: title label, menu buttons, help screen popup with close button.
+	 * @param titleFont
+	 * The font to use for the title
+	 * @param buttonFont
+	 * The font to use for the buttons
+	 * @param boldFont
+	 * The font to use for the help screen's example slider
+	 * @param helpFont
+	 * The font to use for the text in the help screen
 	 */
 	public MainMenu(Font titleFont, Font buttonFont, Font boldFont, Font helpFont) {
 		setLayout(null);

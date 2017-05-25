@@ -41,8 +41,4 @@ public class Toy {
 	public void changeDurability(int value) {
 		durability += value;
 	}
-	
-	public String toString() {
-		return String.format("%s (%d%%)", toyType.getName(), durability);
-	}
 }
