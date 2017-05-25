@@ -43,6 +43,7 @@ public class GameSetup extends JPanel {
 
 		JPanel speciesDisplays = new JPanel();
 		speciesDisplays.setLayout(null);
+		speciesDisplays.setBackground(new Color(240, 255, 255));
 		speciesDisplays.setPreferredSize(new Dimension(598, (species.length+1)/2*118));
 		SpeciesDisplayer speciesDisplayer;
 		for (int i=0; i<species.length; i++) {
@@ -57,7 +58,7 @@ public class GameSetup extends JPanel {
 		JScrollPane speciesViewer = new JScrollPane(speciesDisplays);
 		speciesViewer.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		speciesViewer.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		speciesViewer.setBounds(92, 75, 616, 450);
+		speciesViewer.setBounds(92, 125, 616, 358);
 		speciesViewer.setVisible(false);
 		add(speciesViewer);
 

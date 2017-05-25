@@ -50,25 +50,23 @@ public class ShopPanel extends JPanel {
 		add(toysLabel);
 		
 		buyFoodScrollPane = new JScrollPane();
-		buyFoodScrollPane.setLayout(null);
 		buyFoodScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		buyFoodScrollPane.setBounds(10, 130, 235, 310);
 		add(buyFoodScrollPane);
 		
 		buyFoodPanel = new JPanel();
 		buyFoodPanel.setLayout(null);
-		buyFoodPanel.setPreferredSize(new Dimension(235, (foodTypes.length+1)/2*115));
+		buyFoodPanel.setPreferredSize(new Dimension(235, foodTypes.length*115));
 		buyFoodScrollPane.setViewportView(buyFoodPanel);
 		
 		buyToysScrollPane = new JScrollPane();
-		buyToysScrollPane.setLayout(null);
 		buyToysScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		buyToysScrollPane.setBounds(255, 130, 235, 310);
 		add(buyToysScrollPane);
 		
 		buyToysPanel = new JPanel();
 		buyToysPanel.setLayout(null);
-		buyToysPanel.setPreferredSize(new Dimension(235, (toyTypes.length+1)/2*115));
+		buyToysPanel.setPreferredSize(new Dimension(235, toyTypes.length*115));
 		buyToysScrollPane.setViewportView(buyToysPanel);
 		
 		leaveButton = new JButton("Leave Shop");

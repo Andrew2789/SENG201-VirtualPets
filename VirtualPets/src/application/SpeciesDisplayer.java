@@ -15,6 +15,7 @@ public class SpeciesDisplayer extends JPanel {
 	public SpeciesDisplayer(Species species, Font boldFont, Font semiBoldFont) {
 		setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		setLayout(null);
+		setOpaque(false);
 		
 		JLabel icon = new JLabel(species.getIcon());
 		icon.setBounds(10, 10, 100, 100);

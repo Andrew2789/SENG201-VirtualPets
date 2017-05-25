@@ -420,6 +420,7 @@ public class AssetCreator extends JPanel {
 		buttonSpecies.setEnabled(enabled);
 		buttonToy.setEnabled(enabled);
 		buttonFood.setEnabled(enabled);
+		buttonBack.setEnabled(enabled);
 	}
 	
 	public JButton getBackButton() {
