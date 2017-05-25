@@ -129,23 +129,4 @@ public class Loader
 				FoodType[].class);
 	}
 	
-	// DEBUG MAIN
-	/*
-	public static void main(String[] args) {
-		Species[] custom_species_array = loadCustomSpeciesFile("sample_species.txt");
-		
-		for (Species species : custom_species_array) {
-			System.out.println(species.getName());
-			System.out.println(species.getOptimumWeight());
-			System.out.println(species.getEnergyLoss());
-			System.out.println(species.getHungerGain());
-			System.out.println(species.getHappinessLoss());
-			System.out.println(species.getMinToyDamage());
-			System.out.println(species.getMaxToyDamage());
-			System.out.println();
-		}
-	}
-	*/
-	
-	
 }

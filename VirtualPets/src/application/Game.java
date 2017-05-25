@@ -580,8 +580,13 @@ public class Game extends JPanel {
 						activePlayer.changeMoney(-foodDisplay.getFoodType().getPrice());
 						activePlayer.addFood(foodDisplay.getFoodType());
 						inventoryMoney.setText("Money: $"+activePlayer.getMoney());
+						
+						int buyFoodScrollPosition = shopPanel.getBuyFoodScrollPane().getVerticalScrollBar().getValue();
+						int buyToysScrollPosition = shopPanel.getBuyToysScrollPane().getVerticalScrollBar().getValue();
 						shopBase.setVisible(false);
 						displayShop();
+						shopPanel.getBuyFoodScrollPane().getVerticalScrollBar().setValue(buyFoodScrollPosition);
+						shopPanel.getBuyToysScrollPane().getVerticalScrollBar().setValue(buyToysScrollPosition);
 						refreshFoodInventory();
 					}
 				}

@@ -88,6 +88,14 @@ public class ShopPanel extends JPanel {
 		enablePossibleBuyButtons(money);
 	}
 	
+	public JScrollPane getBuyFoodScrollPane() {
+		return buyFoodScrollPane;
+	}
+	
+	public JScrollPane getBuyToysScrollPane() {
+		return buyToysScrollPane;
+	}
+	
 	public JButton getLeaveButton() {
 		return leaveButton;
 	}
