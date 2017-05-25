@@ -186,11 +186,13 @@ public class Game extends JPanel {
 				setButtonsEnabled(false);
 				currentDialog.setOptions("Click a toy from your inventory", "to use to play with your pet", false, true);
 				selectingToy = true;
+				toyInventory.setToyIconsEnabled(true);
 				
 				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setButtonsEnabled(true);
 						selectingToy = false;
+						toyInventory.setToyIconsEnabled(false);
 					}
 				});
 				
@@ -203,11 +205,13 @@ public class Game extends JPanel {
 				setButtonsEnabled(false);
 				currentDialog.setOptions("Click a food from your inventory", "to feed to your pet", false, true);
 				selectingFood = true;
+				foodInventory.setFoodIconsEnabled(true);
 				
 				currentDialog.getButtonCancel().addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						setButtonsEnabled(true);
 						selectingFood = false;
+						foodInventory.setFoodIconsEnabled(false);
 					}
 				});
 				

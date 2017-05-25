@@ -32,4 +32,9 @@ public class ToyInventory extends JPanel {
 	public ToyInventoryIcon[] getToyIcons() {
 		return toyIcons;
 	}
+	
+	public void setToyIconsEnabled(boolean enabled) {
+		for (ToyInventoryIcon icon : toyIcons)
+			icon.setButtonEnabled(enabled);
+	}
 }

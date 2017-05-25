@@ -43,6 +43,10 @@ public class ToyInventoryIcon extends JPanel {
 		setToyIcon(toy.getToyType());
 		setdurability(toy.getDurability());
 		this.specificToy = toy;
+		
+		durabilityLabel.setEnabled(false);
+		toyIcon.setEnabled(false);
+		clickDetector.setEnabled(false);
 	}
 	
 	public void setToyIcon(ToyType toyType) {
@@ -62,6 +66,8 @@ public class ToyInventoryIcon extends JPanel {
 	}
 	
 	public void setButtonEnabled(boolean enabled) {
-		this.clickDetector.setEnabled(enabled);
+		clickDetector.setEnabled(enabled);
+		toyIcon.setEnabled(enabled);
+		durabilityLabel.setEnabled(enabled);
 	}
 }

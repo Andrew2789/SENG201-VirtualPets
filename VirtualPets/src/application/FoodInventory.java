@@ -35,4 +35,9 @@ public class FoodInventory extends JPanel {
 	public HashMap<FoodType, FoodInventoryIcon> getFoodIcons() {
 		return foodIcons;
 	}
+	
+	public void setFoodIconsEnabled(boolean enabled) {
+		for (FoodInventoryIcon icon : foodIcons.values())
+			icon.setButtonEnabled(enabled);
+	}
 }

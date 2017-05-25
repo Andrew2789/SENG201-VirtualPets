@@ -39,16 +39,12 @@ public class FoodInventoryIcon extends JPanel {
 		clickDetector.setBounds(0, 0, 85, 85);
 		add(clickDetector);
 		
-		setFoodIcon(food);
-		setQuantity(quantity);
-	}
-	
-	public void setFoodIcon(FoodType food) {
 		this.foodIcon.setIcon(food.getIcon());
-	}
-	
-	public void setQuantity(int quantity) {
 		this.quantityLabel.setText(String.format("%dx", quantity));
+		
+		quantityLabel.setEnabled(false);
+		foodIcon.setEnabled(false);
+		clickDetector.setEnabled(false);
 	}
 	
 	public JButton getClickDetector() {
@@ -56,6 +52,8 @@ public class FoodInventoryIcon extends JPanel {
 	}
 	
 	public void setButtonEnabled(boolean enabled) {
-		this.clickDetector.setEnabled(enabled);
+		clickDetector.setEnabled(enabled);
+		foodIcon.setEnabled(enabled);
+		quantityLabel.setEnabled(enabled);
 	}
 }
