@@ -1,36 +1,36 @@
 $Branch
 	name="Branch"
 	icon="/images/toys/Branch.png"
-	price=-100
-	happinessGain=100
+	price=10
+	happinessGain=8
 /Branch
 $Bell
 	name="Bell"
 	icon="/images/toys/Bell.png"
-	price=10
-	happinessGain=15
+	price=50
+	happinessGain=40
 /Bell
 $Mouse
 	name="Mouse"
 	icon="/images/toys/Mouse.png"
 	price=25
-	happinessGain=50
+	happinessGain=20
 /Mouse
 $Ball
 	name="Ball"
 	icon="/images/toys/Ball.png"
-	price=25
-	happinessGain=50
+	price=15
+	happinessGain=12
 /Ball
 $Shell
 	name="Shell"
 	icon="/images/toys/Shell.png"
-	price=25
-	happinessGain=50
+	price=35
+	happinessGain=30
 /Shell
 $Star
 	name="Star"
 	icon="/images/toys/Star.png"
-	price=25
-	happinessGain=50
+	price=100
+	happinessGain=80
 /Star

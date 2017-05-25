@@ -24,7 +24,7 @@ public class GameSetup extends JPanel {
 	private static final long serialVersionUID = 1441493919925710008L;
 	private int numberOfPlayers = 1;
 	private int numberOfDays = 5;
-	private int startingMoney = 250;
+	private int startingMoney = 150;
 	private int incomePerTurn = 35;
 	private PlayerSetup[] playerSetups;
 	
@@ -154,7 +154,7 @@ public class GameSetup extends JPanel {
 			}
 		});
 		startingMoneyChooser.setFont(regularFont);
-		startingMoneyChooser.setModel(new SpinnerNumberModel(250, 0, 500, 10));
+		startingMoneyChooser.setModel(new SpinnerNumberModel(150, 0, 500, 10));
 		startingMoneyChooser.setBounds(330, 103, 47, 22);
 		add(startingMoneyChooser);
 		
