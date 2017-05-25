@@ -2,8 +2,6 @@ package application;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * TODO: reorganise methods, comment stuff
- * 
  * @author Andrew Davidson (ada130)
  * Instances of this class represent a pet. The pet has a species and name, and has attributes
  * that must be maintained (hunger, energy, happiness, and weight). The pet may become unhealthy,
@@ -101,7 +99,6 @@ public class Pet {
 	public FoodType getFavouriteFood() {
 		return favouriteFood;
 	}
-	
 	// End Getters
 	
 	// Private variable modifiers
@@ -169,13 +166,15 @@ public class Pet {
 	}
 	// End private variable modifiers
 	
+	
+	// Pet actions
+	
 	/**
 	 * Makes the pet eat a food of the specified food type. Increases happiness and decreases hunger.
 	 * Happiness increases more if the food type is the pet's favourite food type.
 	 * @param food
 	 * The type of the food to be eaten.
 	 */
-	
 	public void eat(FoodType food) {
 		changeHappiness(food.getTastiness());
 		changeHunger(-food.getNutrition());
@@ -219,10 +218,46 @@ public class Pet {
 	}
 	
 	/**
-	 * Run at the end of each turn on each pet. The pet has a change to become unhealthy, begin to
-	 * misbehave, or die depending on relevant statistics (energy, happiness, weight, and hunger).
-	 * The pet only has a change to start misbehaving or become unhealthy if it is alive and does
-	 * not die as a result of the randomly generated events in this function call.
+	 * Cures the pet, making it happy and curing its sickness. The player should have some money
+	 * deducted.
+	 */
+	public void cure() {
+		healthy = true;
+		changeHappiness(20);
+		actionPoints -= 1;
+	}
+	
+	/**
+	 * Disciplines the pet, making it sad but also making it stop misbehaving.
+	 */
+	public void discipline() {
+		behaving = true;
+		changeHappiness(-30);
+		actionPoints -= 1;
+	}
+	
+	/**
+	 * Revives the pet, setting it to reasonably healthy stats and setting attributes such that
+	 * the pet cannot be revived again.
+	 */
+	public void revive() {
+		revivable = false;
+		hunger = 35;
+		energy = 65;
+		happiness = 65;
+		weight = species.getOptimumWeight()*9/10;
+		healthy = true;
+		behaving = true;
+		alive = true;
+	}
+	// End pet actions
+	
+	/**
+	 * Run at the end of each turn on each pet. The pet has a change to become unhealthy or begin 
+	 * misbehave to depending on relevant statistics (energy, happiness, weight, and hunger). The
+	 * pet only has a change to start misbehaving or become unhealthy if it is alive and does not
+	 * die as a result of the randomly generated events in this function call. If the pet's hunger
+	 * is critical, it starves.
 	 * 
 	 * Chance to become unhealthy:
 	 * +0-100% for hunger 65-85
@@ -236,15 +271,30 @@ public class Pet {
 	 * Chance to die:
 	 * +0-100% for hunger 90-100
 	 * +0-100% for energy 10-0
-	 * +0-100% for weight deviation 3/6-4/6
+	 * 
+	 * Starts starving when hunger >= 90
 	 */
-	public boolean[] genRandomEvents() {
-		boolean[] statusEffectsSet = new boolean[3];
-		
+	
+	/**
+	 * Increments hunger by the pet's species hunger gain stat and decrements energy and happiness by the 
+	 * species energy loss and happiness loss stats respectively. Resets action points.
+	 * @return
+	 * The score for this pet
+	 */
+	public int finishTurn() {
 		if (alive) {
-			double optWeight = species.getOptimumWeight();
+			//Generate score for this round based on stats before adjusting them and generating random events
+			int score = happiness + energy + (100-hunger) + Math.abs(weight-species.getOptimumWeight())*2;
+			if (!healthy)
+				score -= 50;
+			if (!behaving)
+				score -= 50;
 			
+			//Generate random events - if stats are sufficiently low, pet may get sick, start to misbehave, or die
+			double optWeight = species.getOptimumWeight();
 			int chance = 0;
+			
+			//Chance to die
 			if (energy < 10)
 				chance += (10-energy)*10;
 			if (Math.abs(weight-optWeight) > optWeight/2)
@@ -258,10 +308,10 @@ public class Pet {
 				happiness = 0;
 				weight = 0;
 				actionPoints = 0;
-				statusEffectsSet[2] = true;
 			}
-			
+			//Only continue if the pet did not die
 			else {
+				//Chance to get sick
 				if (healthy) {
 					chance = 0;
 					if (hunger > 65)
@@ -272,10 +322,10 @@ public class Pet {
 						chance += ((double)Math.abs(weight-optWeight) - optWeight/3)/(optWeight/6)*100;
 					if (ThreadLocalRandom.current().nextInt(0, 100) < chance) {
 						healthy = false;
-						statusEffectsSet[0] = true;
 					}
 				}
 				
+				//Chance to start misbehaving
 				if (behaving) {
 					chance = 0;
 					if (hunger > 70)
@@ -284,70 +334,36 @@ public class Pet {
 						chance += (40-happiness)*5;
 					if (ThreadLocalRandom.current().nextInt(0, 100) < chance) {
 						behaving = false;
-						statusEffectsSet[1] = true;
 					}
 				}
 				
+				//Change stats by attribute values
+				changeHunger(species.getHungerGain());
+				changeEnergy(-species.getEnergyLoss());
+				changeHappiness(-species.getHappinessLoss());
+				actionPoints = 2;
+				
+				//If the pet is starving, sharply decrease stats
 				if (hunger >= 90) {
 					changeWeight(-species.getOptimumWeight()/3, true);
 					changeEnergy(-25);
 					changeHappiness(-35);
 				}
+				
+				//If pet is sick, decrease energy and happiness
+				if (!healthy) {
+					changeEnergy(-10);
+					changeHappiness(-10);
+				}
+				
+				//If pet is misbehaving, decrease happiness
+				if (!behaving)
+					changeHappiness(-20);
 			}
-		}
-		if (!healthy) {
-			changeEnergy(-10);
-			changeHappiness(-10);
-		}
-		if (!behaving)
-			changeHappiness(-20);
-		return statusEffectsSet;
-	}
-	
-	/**
-	 * Increments hunger by the pet's species hunger gain stat and decrements energy and happiness by the 
-	 * species energy loss and happiness loss stats respectively. Resets action points.
-	 * @return
-	 * The score for this pet
-	 */
-	public int finishTurn() {
-		if (alive) {
-			int score = happiness + energy + (100-hunger) + Math.abs(weight-species.getOptimumWeight())*2 + actionPoints*20;
-			if (!healthy)
-				score -= 50;
-			if (!behaving)
-				score -= 50;
-			
-			changeHunger(species.getHungerGain());
-			changeEnergy(-species.getEnergyLoss());
-			changeHappiness(-species.getHappinessLoss());
-			actionPoints = 2;
 			return score;
 		}
+		//Dead pets generate no score
 		else
 			return 0;
-	}
-	
-	public void revive() {
-		revivable = false;
-		hunger = 35;
-		energy = 65;
-		happiness = 65;
-		weight = species.getOptimumWeight()*9/10;
-		healthy = true;
-		behaving = true;
-		alive = true;
-	}
-	
-	public void cure() {
-		healthy = true;
-		changeHappiness(20);
-		actionPoints -= 1;
-	}
-	
-	public void discipline() {
-		behaving = true;
-		changeHappiness(-30);
-		actionPoints -= 1;
 	}
 }

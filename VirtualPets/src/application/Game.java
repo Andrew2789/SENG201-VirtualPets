@@ -564,10 +564,8 @@ public class Game extends JPanel {
 	
 	public void endTurn() {
 		activePlayer.changeMoney(incomePerTurn);
-		for (Pet pet: activePlayer.getPets()) {
+		for (Pet pet: activePlayer.getPets())
 			activePlayer.changeScore(pet.finishTurn());
-			pet.genRandomEvents();
-		}
 		
 		int currentPlayerIndex = 0;
 		for (int i=0; i<players.length; i++)

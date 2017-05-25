@@ -1,7 +1,6 @@
 package application;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -11,30 +10,32 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JTextArea;
 
+/**
+ * @author Andrew Davidson (ada130)
+ * A panel that takes up the entire screen, showing a main menu. From the main menu, the user can start a new game, 
+ * load a game, create new assets, read about how to play the game, and quit.
+ */
 public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 5563328853841424713L;
-	private JButton buttonNewGame;
-	private JButton buttonLoadGame;
-	private JButton buttonCreateNewAsset;
-	private JButton buttonHelp;
-	private JButton buttonQuit;
+	private JButton buttonNewGame, buttonLoadGame, buttonCreateNewAsset, buttonHelp, buttonQuit;
 	private JPanel helpPanel;
-	
+
 	/**
-	 * Create the main menu panel.
+	 * Create the main menu panel: title label, menu buttons, help screen popup with close button.
 	 */
 	public MainMenu(Font titleFont, Font buttonFont, Font boldFont, Font helpFont) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
-		
+
+		// Help panel and subcomponents
 		helpPanel = new JPanel();
 		helpPanel.setOpaque(false);
 		helpPanel.setBounds(0, 0, 800, 600);
 		helpPanel.setVisible(false);
-		add(helpPanel);
 		helpPanel.setLayout(null);
-		
+		add(helpPanel);
+
 		JButton buttonClose = new JButton("Close");
 		buttonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -69,7 +70,9 @@ public class MainMenu extends JPanel {
 		helpBackground.setIcon(new ImageIcon(MainMenu.class.getResource("/images/backs/helpBack.png")));
 		helpBackground.setBounds(0, 0, 800, 600);
 		helpPanel.add(helpBackground);
+		// End help panel
 		
+		//Main menu title, buttons, and background
 		JLabel title = new JLabel("Virtual Pets");
 		title.setFont(titleFont);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,14 +121,7 @@ public class MainMenu extends JPanel {
 		add(backgroundImage);
 	}
 	
-	public void setButtonsVisible(boolean enabled) {
-		buttonNewGame.setVisible(enabled);
-		buttonLoadGame.setVisible(enabled);
-		buttonCreateNewAsset.setVisible(enabled);
-		buttonHelp.setVisible(enabled);
-		buttonQuit.setVisible(enabled);
-	}
-	
+	// Getters (GuiRunner must be able to access these buttons to add relevant ActionListeners to them)
 	public JButton getNewGameButton() {
 		return buttonNewGame;
 	}
@@ -136,5 +132,20 @@ public class MainMenu extends JPanel {
 	
 	public JButton getQuitButton() {
 		return buttonQuit;
+	}
+	// End Getters	
+	
+	/**
+	 * Sets whether the menu buttons are visible. Used when displaying the help screen so that the buttons do not draw in
+	 * front of the help panel at all.
+	 * @param enabled
+	 * Whether the buttons will be set to be visible
+	 */
+	public void setButtonsVisible(boolean enabled) {
+		buttonNewGame.setVisible(enabled);
+		buttonLoadGame.setVisible(enabled);
+		buttonCreateNewAsset.setVisible(enabled);
+		buttonHelp.setVisible(enabled);
+		buttonQuit.setVisible(enabled);
 	}
 }
