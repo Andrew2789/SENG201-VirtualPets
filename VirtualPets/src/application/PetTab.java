@@ -8,6 +8,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+/**
+ * @author Andrew Davidson (ada130)
+ * A clickable tab which will switch the selected pet to the pet represented in this tab, the tab also displays
+ * status effects and action points of the pet.
+ */
 public class PetTab extends JPanel {
 	private static final long serialVersionUID = -4840106067673959643L;
 	private JButton clickDetector;
@@ -15,12 +20,13 @@ public class PetTab extends JPanel {
 	private JLabel petNameLabel, petIcon, actionPointsLabel;
 
 	/**
-	 * Create the panel.
+	 * Create the pet tab panel - the button, the status overlays, the name/action points labels, and the pet's icon.
 	 */
 	public PetTab(Font semiBoldFont) {
 		setLayout(null);
 		setOpaque(false);
 		
+		//Status effect icons
 		deadOverlay = new JLabel("");
 		deadOverlay.setIcon(new ImageIcon(PetTab.class.getResource("/images/Dead.png")));
 		deadOverlay.setBounds(0, 0, 150, 149);
@@ -44,7 +50,9 @@ public class PetTab extends JPanel {
 		starvingIcon.setIcon(new ImageIcon(PetTab.class.getResource("/images/statuses/Starving.png")));
 		starvingIcon.setBounds(120, 84, 20, 20);
 		add(starvingIcon);
+		//End status effect icons
 		
+		//Pet name, icon, action points
 		petIcon = new JLabel("");
 		petIcon.setBounds(24, 28, 100, 100);
 		add(petIcon);
@@ -60,8 +68,9 @@ public class PetTab extends JPanel {
 		actionPointsLabel.setFont(semiBoldFont);
 		actionPointsLabel.setBounds(10, 131, 130, 18);
 		add(actionPointsLabel);
+		//End pet info
 		
-		
+		//Button to detect clicks on this tab
 		clickDetector = new JButton(new ImageIcon(PetTab.class.getResource("/images/backs/petTab.png")));
 		clickDetector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -73,6 +82,21 @@ public class PetTab extends JPanel {
 		add(clickDetector);
 	}
 	
+	//Getters and setters
+	public JButton getClickDetector() {
+		return clickDetector;
+	}
+	
+	public void setButtonEnabled(boolean enabled) {
+		clickDetector.setEnabled(enabled);
+	}
+	//End getters and setters
+	
+	/**
+	 * Set this tab to display information about a specified pet.
+	 * @param pet
+	 * The pet to display info about
+	 */
 	public void setPet(Pet pet) {
 		petNameLabel.setText(pet.getName());
 		petIcon.setIcon(pet.getSpecies().getIcon());
@@ -81,13 +105,5 @@ public class PetTab extends JPanel {
 		misbehavingIcon.setVisible(!pet.isBehaving());
 		starvingIcon.setVisible((pet.getHunger() >= 90));
 		actionPointsLabel.setText("Action Points: "+pet.getActionPoints());
-	}
-	
-	public JButton getClickDetector() {
-		return clickDetector;
-	}
-	
-	public void setButtonEnabled(boolean enabled) {
-		clickDetector.setEnabled(enabled);
 	}
 }

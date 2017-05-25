@@ -32,7 +32,7 @@ public class RoundOverview extends JPanel {
 		dayLabel.setForeground(Color.WHITE);
 		dayLabel.setFont(titleFont);
 		dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		dayLabel.setBounds(150, 10, 500, 50);
+		dayLabel.setBounds(100, 10, 600, 50);
 		add(dayLabel);
 		
 		playerLabels[0][0] = new JLabel("");
