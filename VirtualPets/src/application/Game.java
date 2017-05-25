@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -21,33 +20,25 @@ public class Game extends JPanel {
 	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
 	private Player[] players;
-	private int numberOfDays;
-	private int incomePerTurn;
+	private int numberOfDays, incomePerTurn;
 	
 	private int currentDay;
 	private Player activePlayer;
 	private Pet activePet;
 	private RoundOverview roundOverview;
 	
-	private JLabel dayLabel;
-	private JLabel playerLabel;
-	private JButton buttonShop;
-	private JButton buttonEndTurn;
-	private JButton buttonMenu;
+	private JLabel dayLabel, playerLabel;
+	private JButton buttonShop, buttonEndTurn, buttonMenu;
 	private InternalDialog currentDialog;
 	
 	private JPanel menu;
-	private JButton buttonSaveGame;
-	private JButton buttonExitToMainMenu;
-	private JButton buttonExitToDesktop;
-	private JButton buttonCloseMenu;
+	private JButton buttonSaveGame, buttonExitToMainMenu, buttonExitToDesktop, buttonCloseMenu;
 	
 	private PetTab[] petTabs = new PetTab[3];
 	private int[][] tabLayouts = {{175, 0, 0}, {100, 250, 0}, {25, 175, 325}};
 	private PetInteract petInteract;
 	
-	private JScrollPane foodInventoryScrollPane;
-	private JScrollPane toyInventoryScrollPane;
+	private JScrollPane foodInventoryScrollPane, toyInventoryScrollPane;
 	private FoodInventory foodInventory;
 	private ToyInventory toyInventory;
 	
@@ -58,9 +49,7 @@ public class Game extends JPanel {
 	private boolean selectingToy = false;
 	private boolean selectingFood = false;
 	
-	private Font semiBoldFont;
-	private Font boldFont;
-	private Font regularFont;
+	private Font semiBoldFont, boldFont, regularFont;
 
 	/**
 	 * Create the panel.

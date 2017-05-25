@@ -13,6 +13,11 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * @author Andrew Davidson (ada130)
+ * @author Alex Tompkins (ato47)
+ * Allows the user to create and save custom species, toyTypes, and foodTypes.
+ */
 public class AssetCreator extends JPanel {
 	private static final long serialVersionUID = 5455584120587343044L;
 	private JButton buttonSpeciesSetIcon, buttonFoodSetIcon, buttonToySetIcon;
@@ -20,7 +25,11 @@ public class AssetCreator extends JPanel {
 	private JButton buttonBack;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - has a setup box openable for new species, toyType, or foodType.
+	 * @param titleFont
+	 * The font to use for the title
+	 * @param labelFont
+	 * The font to use for other labels
 	 */
 	public AssetCreator(Font titleFont, Font labelFont) {
 		setLayout(null);
@@ -33,6 +42,7 @@ public class AssetCreator extends JPanel {
 		title.setBounds(150, 40, 500, 80);
 		add(title);
 		
+		//A panel to allow creation of a new species, with all the relevant fields and spinners. Also allows the user to select an icon from their device.
 		JPanel speciesPanel = new JPanel();
 		speciesPanel.setBackground(Color.DARK_GRAY);
 		speciesPanel.setBounds(150, 160, 500, 350);
@@ -128,6 +138,7 @@ public class AssetCreator extends JPanel {
 		speciesIconPreview.setBounds(222, 173, 100, 100);
 		speciesPanel.add(speciesIconPreview);
 
+		//Error label if the user tries to create the species with missing inputs
 		JLabel speciesErrorLabel = new JLabel("Please enter a name and choose an icon");
 		speciesErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		speciesErrorLabel.setForeground(Color.WHITE);
@@ -135,6 +146,7 @@ public class AssetCreator extends JPanel {
 		speciesErrorLabel.setVisible(false);
 		speciesPanel.add(speciesErrorLabel);
 		
+		//Create and save the new species if inputs are valid, display error otherwise
 		JButton buttonSpeciesDone = new JButton("Done");
 		buttonSpeciesDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -155,6 +167,8 @@ public class AssetCreator extends JPanel {
 		});
 		buttonSpeciesDone.setBounds(371, 313, 117, 25);
 		speciesPanel.add(buttonSpeciesDone);
+		
+		//Panel to allow the user to create new toyTypes
 		
 		JPanel toyPanel = new JPanel();
 		toyPanel.setBounds(150, 160, 500, 350);
@@ -211,6 +225,7 @@ public class AssetCreator extends JPanel {
 		toyIconPreview.setBounds(202, 71, 75, 75);
 		toyPanel.add(toyIconPreview);
 
+		//Error label if the user tries to create the toyType with missing inputs
 		JLabel toyErrorLabel = new JLabel("Please enter a name and choose an icon");
 		toyErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		toyErrorLabel.setForeground(Color.WHITE);
@@ -218,6 +233,7 @@ public class AssetCreator extends JPanel {
 		toyErrorLabel.setVisible(false);
 		toyPanel.add(toyErrorLabel);
 		
+		//Create and save the new toyType if inputs are valid, display error otherwise
 		JButton buttonToyDone = new JButton("Done");
 		buttonToyDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -234,6 +250,8 @@ public class AssetCreator extends JPanel {
 		});
 		buttonToyDone.setBounds(371, 313, 117, 25);
 		toyPanel.add(buttonToyDone);
+		
+		//Panel to allow the user to create new foodTypes
 		
 		JPanel foodPanel = new JPanel();
 		foodPanel.setBounds(150, 160, 500, 350);
@@ -310,6 +328,7 @@ public class AssetCreator extends JPanel {
 		foodIconPreview.setBounds(202, 113, 75, 75);
 		foodPanel.add(foodIconPreview);
 
+		//Error label if the user tries to create the foodType with missing inputs
 		JLabel foodErrorLabel = new JLabel("Please enter a name and choose an icon");
 		foodErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		foodErrorLabel.setForeground(Color.WHITE);
@@ -317,6 +336,7 @@ public class AssetCreator extends JPanel {
 		foodErrorLabel.setVisible(false);
 		foodPanel.add(foodErrorLabel);
 		
+		//Create and save the new foodType if inputs are valid, display error otherwise
 		JButton buttonFoodDone = new JButton("Done");
 		buttonFoodDone.setBounds(371, 313, 117, 25);
 		buttonFoodDone.addActionListener(new ActionListener() {
@@ -416,14 +436,20 @@ public class AssetCreator extends JPanel {
 			comp.setFont(labelFont);
 	}
 	
+	//Getter
+	public JButton getBackButton() {
+		return buttonBack;
+	}
+	
+	/**
+	 * Set whether non-asset-creator buttons are enabled
+	 * @param enabled
+	 * Whether these buttons are enabled
+	 */
 	private void setButtonsEnabled(boolean enabled) {
 		buttonSpecies.setEnabled(enabled);
 		buttonToy.setEnabled(enabled);
 		buttonFood.setEnabled(enabled);
 		buttonBack.setEnabled(enabled);
-	}
-	
-	public JButton getBackButton() {
-		return buttonBack;
 	}
 }
