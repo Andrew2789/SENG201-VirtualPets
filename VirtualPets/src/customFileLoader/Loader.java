@@ -1,7 +1,8 @@
 package customFileLoader;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,14 +16,14 @@ import application.ToyType;
 
 public class Loader
 {
-	private static String[] readAllLines(String file_path)
+	private static String[] readAllLines(InputStream inputStream)
 	{
 		BufferedReader buffer;
 		ArrayList<String> lines = new ArrayList<String>();
 
 		try
 		{
-			buffer = new BufferedReader(new FileReader(file_path));
+			buffer = new BufferedReader(new InputStreamReader(inputStream));
 			String line = buffer.readLine();
 			while (line != null)
 			{
@@ -101,8 +102,8 @@ public class Loader
 		return customObjects.toArray(new Object[customObjects.size()]);
 	}
 	
-	public static Species[] loadCustomSpeciesFile(String file_path) {
-		final String[] lines = readAllLines(file_path);
+	public static Species[] loadCustomSpeciesFile(InputStream inputStream) {
+		final String[] lines = readAllLines(inputStream);
 		Object[] custom_objects = loadCustomBlocks(lines, new SpeciesLoadFormat());
 		return Arrays.copyOf(
 				custom_objects, 
@@ -110,8 +111,8 @@ public class Loader
 				Species[].class);
 	}
 	
-	public static ToyType[] loadCustomToyTypesFile(String file_path) {
-		final String[] lines = readAllLines(file_path);
+	public static ToyType[] loadCustomToyTypesFile(InputStream inputStream) {
+		final String[] lines = readAllLines(inputStream);
 		Object[] custom_objects = loadCustomBlocks(lines, new ToyTypeLoadFormat());
 		return Arrays.copyOf(
 				custom_objects, 
@@ -119,8 +120,8 @@ public class Loader
 				ToyType[].class);
 	}
 	
-	public static FoodType[] loadCustomFoodTypesFile(String file_path) {
-		final String[] lines = readAllLines(file_path);
+	public static FoodType[] loadCustomFoodTypesFile(InputStream inputStream) {
+		final String[] lines = readAllLines(inputStream);
 		Object[] custom_objects = loadCustomBlocks(lines, new FoodTypeLoadFormat());
 		return Arrays.copyOf(
 				custom_objects, 

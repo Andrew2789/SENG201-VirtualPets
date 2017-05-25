@@ -48,9 +48,9 @@ public class GuiRunner {
 	 * Load fonts, species, toy types, and food types. Initialises the gui and loads the main menu.
 	 */
 	public GuiRunner() {
-		species = Loader.loadCustomSpeciesFile("resources/default_species.txt");
-		toyTypes = Loader.loadCustomToyTypesFile("resources/default_toytypes.txt");
-		foodTypes = Loader.loadCustomFoodTypesFile("resources/default_foodtypes.txt");
+		species = Loader.loadCustomSpeciesFile(GuiRunner.class.getResourceAsStream("/default_species.txt"));
+		toyTypes = Loader.loadCustomToyTypesFile(GuiRunner.class.getResourceAsStream("/default_toytypes.txt"));
+		foodTypes = Loader.loadCustomFoodTypesFile(GuiRunner.class.getResourceAsStream("/default_foodtypes.txt"));
 		
 		poppins = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
