@@ -16,7 +16,7 @@ import customFileLoader.Loader;
  * A controller and viewer for the application. Loads and shows the various game panels.
  */
 public class GuiRunner {
-	private Font poppins, sourceSansPro, sourceSansProsemibold, sourceSansProBold;
+	private Font poppins, sourceSansPro, sourceSansProSemibold, sourceSansProBold;
 	private Species[] species;
 	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
@@ -53,7 +53,7 @@ public class GuiRunner {
 		
 		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
-		sourceSansProsemibold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-semibold.ttf"));
+		sourceSansProSemibold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-semibold.ttf"));
 		sourceSansProBold = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf"));
 		
 		initialise();
@@ -100,7 +100,7 @@ public class GuiRunner {
 	 * Load the main menu screen and store it.
 	 */
 	private void loadMainMenu() {
-		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProsemibold.deriveFont(16f), sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
+		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemibold.deriveFont(16f), sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
 
 		//Switch to gameSetup if new game is clicked
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
@@ -135,7 +135,7 @@ public class GuiRunner {
 	 * Load the game setup screen and store it.
 	 */
 	private void loadGameSetup() {
-		gameSetup = new GameSetup(species, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProsemibold.deriveFont(14f), sourceSansPro.deriveFont(14f));
+		gameSetup = new GameSetup(species, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemibold.deriveFont(14f), sourceSansPro.deriveFont(14f));
 
 		//If all fields are filled, use the inputs to create and start a new game
 		gameSetup.getDoneButton().addActionListener(new ActionListener(){
@@ -162,7 +162,7 @@ public class GuiRunner {
 	}
 	
 	private void loadAssetCreator() {
-		assetCreator = new AssetCreator(poppins.deriveFont(72f), sourceSansProsemibold.deriveFont(14f));
+		assetCreator = new AssetCreator(poppins.deriveFont(72f), sourceSansProSemibold.deriveFont(14f));
 		
 		//Go back to the main menu when back is pressed
 		assetCreator.getBackButton().addActionListener(new ActionListener(){
@@ -208,7 +208,7 @@ public class GuiRunner {
 		};
 		
 		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), poppins.deriveFont(18f), sourceSansProBold.deriveFont(14f), 
-				sourceSansProsemibold.deriveFont(14f), sourceSansPro.deriveFont(14f), roundOverview, exitToMainMenu, exitToDesktop);
+				sourceSansProSemibold.deriveFont(14f), sourceSansPro.deriveFont(14f), roundOverview, exitToMainMenu, exitToDesktop);
 		
 		frame.getContentPane().add(game);
 	}

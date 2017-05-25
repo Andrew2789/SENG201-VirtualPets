@@ -20,34 +20,30 @@ public class Game extends JPanel {
 	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
 	private Player[] players;
-	private int numberOfDays, incomePerTurn;
+	private RoundOverview roundOverview;
+	private InternalDialog currentDialog;
+	private PetInteract petInteract;
+	private int numberOfDays, incomePerTurn, currentDay;
+	private PetTab[] petTabs = new PetTab[3];
+	private final int[][] tabLayouts = {{175, 0, 0}, {100, 250, 0}, {25, 175, 325}};
 	
-	private int currentDay;
 	private Player activePlayer;
 	private Pet activePet;
-	private RoundOverview roundOverview;
 	
 	private JLabel dayLabel, playerLabel;
 	private JButton buttonShop, buttonEndTurn, buttonMenu;
-	private InternalDialog currentDialog;
-	
 	private JPanel menu;
 	private JButton buttonSaveGame, buttonExitToMainMenu, buttonExitToDesktop, buttonCloseMenu;
-	
-	private PetTab[] petTabs = new PetTab[3];
-	private int[][] tabLayouts = {{175, 0, 0}, {100, 250, 0}, {25, 175, 325}};
-	private PetInteract petInteract;
-	
+
+	private JLabel inventoryMoney;
+	private boolean selectingToy = false;
+	private boolean selectingFood = false;
 	private JScrollPane foodInventoryScrollPane, toyInventoryScrollPane;
 	private FoodInventory foodInventory;
 	private ToyInventory toyInventory;
 	
 	private JPanel shopBase;
 	private ShopPanel shopPanel;
-	
-	private JLabel inventoryMoney;
-	private boolean selectingToy = false;
-	private boolean selectingFood = false;
 	
 	private Font semiBoldFont, boldFont, regularFont;
 
@@ -389,6 +385,18 @@ public class Game extends JPanel {
 		this.roundOverview = roundOverview;
 	}
 	
+	public JButton getExitToMainMenu() {
+		return buttonExitToMainMenu;
+	}
+	
+	public JButton getExitToDesktop() {
+		return buttonExitToDesktop;
+	}
+	
+	public InternalDialog getCurrentDialog() {
+		return currentDialog;
+	}
+	
 	public void initialise(Player[] players, int numberOfDays, int incomePerTurn) {
 		this.players = players;
 		this.numberOfDays = numberOfDays;
@@ -408,7 +416,7 @@ public class Game extends JPanel {
 		setTurn(currentPlayerIndex);
 	}
 	
-	public void setTurn(int playerIndex) {
+	private void setTurn(int playerIndex) {
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
 		inventoryMoney.setText("Money: $"+activePlayer.getMoney());
@@ -429,8 +437,42 @@ public class Game extends JPanel {
 		setPet(0);
 		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, Color.WHITE));
 	}
+
+	private void setPet(int petIndex) {
+		activePet = activePlayer.getPets()[petIndex];
+		petInteract.setPet(activePet);
+		petInteract.setButtonsEnabled(activePet.getActionPoints() > 0);
+	}
 	
-	public void refreshPetInfo() {
+	private void endTurn() {
+		activePlayer.changeMoney(incomePerTurn);
+		for (Pet pet: activePlayer.getPets())
+			activePlayer.changeScore(pet.finishTurn());
+		
+		int currentPlayerIndex = 0;
+		for (int i=0; i<players.length; i++)
+			if (players[i] == activePlayer)
+				currentPlayerIndex = i;
+		currentPlayerIndex = (currentPlayerIndex+1)%players.length;
+		if (currentPlayerIndex == 0) {
+			if (currentDay == numberOfDays) {
+				roundOverview.displayEndOfGame(currentDay, players);
+				setVisible(false);
+				roundOverview.setVisible(true);
+			}
+			else {
+				roundOverview.displayEndOfRound(currentDay, players);
+				setVisible(false);
+				roundOverview.setVisible(true);
+				currentDay += 1;
+				dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
+			}
+		}
+		
+		setTurn(currentPlayerIndex);
+	}
+	
+	private void refreshPetInfo() {
 		for (int i=0; i<activePlayer.getPets().length; i++)
 			petTabs[i].setPet(activePlayer.getPets()[i]);
 		petInteract.setPet(activePet);
@@ -438,7 +480,7 @@ public class Game extends JPanel {
 			petInteract.setButtonsEnabled(false);
 	}
 	
-	public void refreshFoodInventory() {
+	private void refreshFoodInventory() {
 		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
 		foodInventory.setPreferredSize(new Dimension(269, ((activePlayer.getFood().size()+2)/3)*90));
 		foodInventoryScrollPane.setViewportView(foodInventory);
@@ -461,7 +503,7 @@ public class Game extends JPanel {
 		}
 	}
 		
-	public void refreshToyInventory() {
+	private void refreshToyInventory() {
 		toyInventory = new ToyInventory(activePlayer.getToys(), semiBoldFont);
 		toyInventory.setPreferredSize(new Dimension(269, ((activePlayer.getToys().size()+2)/3)*90));
 		toyInventoryScrollPane.setViewportView(toyInventory);
@@ -484,7 +526,7 @@ public class Game extends JPanel {
 		}
 	}
 	
-	public void displayShop() {
+	private void displayShop() {
 		for (Component comp : shopBase.getComponents()) {
 			shopBase.remove(comp);
 		}
@@ -531,41 +573,7 @@ public class Game extends JPanel {
 		}
 	}
 	
-	public void setPet(int petIndex) {
-		activePet = activePlayer.getPets()[petIndex];
-		petInteract.setPet(activePet);
-		petInteract.setButtonsEnabled(activePet.getActionPoints() > 0);
-	}
-	
-	public void endTurn() {
-		activePlayer.changeMoney(incomePerTurn);
-		for (Pet pet: activePlayer.getPets())
-			activePlayer.changeScore(pet.finishTurn());
-		
-		int currentPlayerIndex = 0;
-		for (int i=0; i<players.length; i++)
-			if (players[i] == activePlayer)
-				currentPlayerIndex = i;
-		currentPlayerIndex = (currentPlayerIndex+1)%players.length;
-		if (currentPlayerIndex == 0) {
-			if (currentDay == numberOfDays) {
-				roundOverview.displayEndOfGame(currentDay, players);
-				setVisible(false);
-				roundOverview.setVisible(true);
-			}
-			else {
-				roundOverview.displayEndOfRound(currentDay, players);
-				setVisible(false);
-				roundOverview.setVisible(true);
-				currentDay += 1;
-				dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
-			}
-		}
-		
-		setTurn(currentPlayerIndex);
-	}
-	
-	public void setButtonsEnabled(boolean enabled) {
+	private void setButtonsEnabled(boolean enabled) {
 		buttonShop.setEnabled(enabled);
 		buttonEndTurn.setEnabled(enabled);
 		buttonMenu.setEnabled(enabled);
@@ -575,22 +583,10 @@ public class Game extends JPanel {
 			petTab.setButtonEnabled(enabled);
 	}
 	
-	public void setMenuButtonsEnabled(boolean enabled) {
+	private void setMenuButtonsEnabled(boolean enabled) {
 		buttonSaveGame.setEnabled(enabled);
 		buttonExitToMainMenu.setEnabled(enabled);
 		buttonExitToDesktop.setEnabled(enabled);
 		buttonCloseMenu.setEnabled(enabled);
-	}
-	
-	public JButton getExitToMainMenu() {
-		return buttonExitToMainMenu;
-	}
-	
-	public JButton getExitToDesktop() {
-		return buttonExitToDesktop;
-	}
-	
-	public InternalDialog getCurrentDialog() {
-		return currentDialog;
 	}
 }

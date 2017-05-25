@@ -5,9 +5,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Andrew Davidson (ada130)
  * Instances of this class represent a pet. The pet has a species and name, and has attributes
  * that must be maintained (hunger, energy, happiness, and weight). The pet may become unhealthy,
- * misbehave, or die. The pet also has a single favourite and food. Pets are interacted with 
- * through a set of actions: eat, play, go to toilet, and generate random events (called at the
- * end of each turn).
+ * misbehave, or die. The pet also has a single favourite toy and food. Pets are interacted with 
+ * through a set of actions: eat, play, rest, go to toilet, be cured, be disciplined, get revived.
  */
 public class Pet {
 	private String name;
