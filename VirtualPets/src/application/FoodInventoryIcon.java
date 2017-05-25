@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FoodInventoryIcon extends JPanel {
 	private static final long serialVersionUID = 2475277303480636218L;
@@ -30,11 +28,8 @@ public class FoodInventoryIcon extends JPanel {
 		add(foodIcon);
 		
 		clickDetector = new JButton();
-		clickDetector.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		clickDetector.setContentAreaFilled(false);
+		clickDetector.setToolTipText(String.format("<html>%s<br>Nutrition: %d<br>Tastiness: %d<br>Weight: %s<br></html>", food.getName(), food.getNutrition(), food.getTastiness(), food.getWeight()));
 		clickDetector.setBorderPainted(false);
 		clickDetector.setBounds(0, 0, 85, 85);
 		add(clickDetector);
