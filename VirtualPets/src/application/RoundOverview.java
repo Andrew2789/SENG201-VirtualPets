@@ -94,6 +94,10 @@ public class RoundOverview extends JPanel {
 		return buttonEndGame;
 	}
 	
+	public int[] getPreviousScores() {
+		return this.previousScores;
+	}
+	
 	public void setPreviousRoundScores(int[] previousScores) {
 		this.previousScores = previousScores;
 	}

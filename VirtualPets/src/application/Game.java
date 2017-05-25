@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -68,6 +70,33 @@ public class Game extends JPanel {
 		add(menu);
 		
 		buttonSaveGame = new JButton("Save Game");
+		buttonSaveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser saveFile = new JFileChooser();
+				int response = saveFile.showSaveDialog(null);
+				switch (response) {
+					case JFileChooser.APPROVE_OPTION:
+						ArrayList<Species> speciesList = new ArrayList<Species>();
+						for (Player player : players)
+							for (Pet pet : player.getPets())
+								if (!speciesList.contains(pet.getSpecies()))
+									speciesList.add(pet.getSpecies());
+						Species[] species = speciesList.toArray(new Species[speciesList.size()]);
+						
+						int currentPlayerIndex = 0;
+						for (int i=0; i<players.length; i++)
+							if (players[i] == activePlayer)
+								currentPlayerIndex = i;
+						
+						GameSaver.saveGame(saveFile.getSelectedFile(), species, foodTypes, toyTypes, players, 
+								numberOfDays, incomePerTurn, currentDay, currentPlayerIndex, roundOverview.getPreviousScores());
+					case JFileChooser.CANCEL_OPTION:
+						;
+					case JFileChooser.ERROR_OPTION:
+						;
+				}
+			}
+		});
 		buttonSaveGame.setBounds(50, 36, 200, 50);
 		menu.add(buttonSaveGame);
 		
