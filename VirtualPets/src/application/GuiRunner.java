@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import javax.swing.JFrame;
 
-import customFileLoader.SettingsLoader;
+import customFileLoader.Loader;
 
 public class GuiRunner {
 	private Font poppins;
@@ -46,9 +46,9 @@ public class GuiRunner {
 	 * Load fonts, species, toy types, and food types. Initialise the gui and load the main menu.
 	 */
 	public GuiRunner() {
-		species = SettingsLoader.loadCustomSpeciesFile("resources/default_species.txt");
-		toyTypes = SettingsLoader.loadCustomToyTypesFile("resources/default_toytypes.txt");
-		foodTypes = SettingsLoader.loadCustomFoodTypesFile("resources/default_foodtypes.txt");
+		species = Loader.loadCustomSpeciesFile("resources/default_species.txt");
+		toyTypes = Loader.loadCustomToyTypesFile("resources/default_toytypes.txt");
+		foodTypes = Loader.loadCustomFoodTypesFile("resources/default_foodtypes.txt");
 		
 		poppins = loadFont(GuiRunner.class.getResource("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResource("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));

@@ -13,7 +13,7 @@ import application.FoodType;
 import application.Species;
 import application.ToyType;
 
-public class SettingsLoader
+public class Loader
 {
 	private static String[] readAllLines(String file_path)
 	{
@@ -60,10 +60,9 @@ public class SettingsLoader
 		return attributes;
 	}
 
-	private static Object[] loadCustomFile(String file_path, LoadFormat loadFormat)
+	private static Object[] loadCustomBlocks(String[] lines, LoadFormat loadFormat)
 	{
 		ArrayList<Object> customObjects = new ArrayList<Object>();
-		final String[] lines = readAllLines(file_path);
 
 		int i = 0;
 		while (i < lines.length)
@@ -103,7 +102,8 @@ public class SettingsLoader
 	}
 	
 	public static Species[] loadCustomSpeciesFile(String file_path) {
-		Object[] custom_objects = loadCustomFile(file_path, new SpeciesLoadFormat());
+		final String[] lines = readAllLines(file_path);
+		Object[] custom_objects = loadCustomBlocks(lines, new SpeciesLoadFormat());
 		return Arrays.copyOf(
 				custom_objects, 
 				custom_objects.length, 
@@ -111,7 +111,8 @@ public class SettingsLoader
 	}
 	
 	public static ToyType[] loadCustomToyTypesFile(String file_path) {
-		Object[] custom_objects = loadCustomFile(file_path, new ToyTypeLoadFormat());
+		final String[] lines = readAllLines(file_path);
+		Object[] custom_objects = loadCustomBlocks(lines, new ToyTypeLoadFormat());
 		return Arrays.copyOf(
 				custom_objects, 
 				custom_objects.length, 
@@ -119,7 +120,8 @@ public class SettingsLoader
 	}
 	
 	public static FoodType[] loadCustomFoodTypesFile(String file_path) {
-		Object[] custom_objects = loadCustomFile(file_path, new FoodTypeLoadFormat());
+		final String[] lines = readAllLines(file_path);
+		Object[] custom_objects = loadCustomBlocks(lines, new FoodTypeLoadFormat());
 		return Arrays.copyOf(
 				custom_objects, 
 				custom_objects.length, 

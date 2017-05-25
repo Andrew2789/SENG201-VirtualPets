@@ -22,7 +22,7 @@ public class SpeciesLoadFormat implements LoadFormat {
 			// and pass correct type to constructor.
 			Species newSpecies = new Species(
 					attributes.get("name").substring(1, attributes.get("name").length() - 1),
-					new ImageIcon(SettingsLoader.class.getResource(
+					new ImageIcon(this.getClass().getResource(
 							attributes.get("icon").substring(1, attributes.get("icon").length() - 1)
 							)),
 					Integer.parseInt(attributes.get("optimumWeight")), 
