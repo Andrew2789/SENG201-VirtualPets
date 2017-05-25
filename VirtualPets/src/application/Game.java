@@ -71,13 +71,13 @@ public class Game extends JPanel {
 		
 		menu = new JPanel();
 		menu.setBackground(Color.GRAY);
-		menu.setBounds(292, 180, 216, 310);
+		menu.setBounds(250, 180, 300, 310);
 		menu.setVisible(false);
 		menu.setLayout(null);
 		add(menu);
 		
 		buttonSaveGame = new JButton("Save Game");
-		buttonSaveGame.setBounds(25, 36, 166, 50);
+		buttonSaveGame.setBounds(50, 36, 200, 50);
 		menu.add(buttonSaveGame);
 		
 		buttonExitToMainMenu = new JButton("Exit to Main Menu");
@@ -97,7 +97,7 @@ public class Game extends JPanel {
 				currentDialog.setVisible(true);
 			}
 		});
-		buttonExitToMainMenu.setBounds(25, 98, 166, 50);
+		buttonExitToMainMenu.setBounds(50, 98, 200, 50);
 		menu.add(buttonExitToMainMenu);
 		
 		buttonExitToDesktop = new JButton("Exit to Desktop");
@@ -117,7 +117,7 @@ public class Game extends JPanel {
 				currentDialog.setVisible(true);
 			}
 		});
-		buttonExitToDesktop.setBounds(25, 160, 166, 50);
+		buttonExitToDesktop.setBounds(50, 160, 200, 50);
 		menu.add(buttonExitToDesktop);
 		
 		buttonCloseMenu = new JButton("Close Menu");
@@ -127,7 +127,7 @@ public class Game extends JPanel {
 				setButtonsEnabled(true);
 			}
 		});
-		buttonCloseMenu.setBounds(25, 222, 166, 50);
+		buttonCloseMenu.setBounds(50, 222, 200, 50);
 		menu.add(buttonCloseMenu);
 
 		foodInventoryScrollPane = new JScrollPane();
