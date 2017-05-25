@@ -44,7 +44,7 @@ public class FoodType implements Comparable<FoodType> {
 		return icon;
 	}
 	
-	public double getPrice() {
+	public int getPrice() {
 		return price;
 	}
 	
