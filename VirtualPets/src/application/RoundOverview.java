@@ -10,73 +10,52 @@ import javax.swing.JButton;
 
 public class RoundOverview extends JPanel {
 	private static final long serialVersionUID = -3308469502655225114L;
-	private JLabel dayLabel;
+	private JLabel dayLabel, winnerLabel;
 	private JLabel[][] playerLabels;
-	private JButton buttonContinue;
-	private JButton buttonEndGame;
+	private JButton buttonContinue, buttonEndGame;
 	private int[] previousScores;
-	private JLabel winnerLabel;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - a panel to display statistics about player scores at the end of rounds and end of game.
+	 * @param titleFont
+	 * The font to use for the title
+	 * @param subtitleFont
+	 * The font to use for player names
+	 * @param boldFont
+	 * The font to use for score information
 	 */
 	public RoundOverview(Font titleFont, Font subtitleFont, Font boldFont) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
 
-		playerLabels = new JLabel[3][2];
 		previousScores = new int[3];
 		
+		//Create a title label
 		dayLabel = new JLabel("");
 		dayLabel.setForeground(Color.WHITE);
 		dayLabel.setFont(titleFont);
 		dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		dayLabel.setBounds(100, 10, 600, 50);
 		add(dayLabel);
+
+		//Create two JLabels for each possible player, one for their name, and another for their score
+		playerLabels = new JLabel[3][2];
+		for (int i=0; i<3; i++) {
+			for (int j=0; j<2; j++) {
+				playerLabels[i][j] = new JLabel("");
+				playerLabels[i][j].setForeground(Color.WHITE);
+				if (j == 0)
+					playerLabels[i][j].setFont(subtitleFont);
+				else
+					playerLabels[i][j].setFont(boldFont);
+				playerLabels[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+				playerLabels[i][j].setBounds(200, 100 + 105*i + j*31, 400, 30);
+				add(playerLabels[i][j]);
+			}
+		}
 		
-		playerLabels[0][0] = new JLabel("");
-		playerLabels[0][0].setForeground(Color.WHITE);
-		playerLabels[0][0].setFont(subtitleFont);
-		playerLabels[0][0].setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabels[0][0].setBounds(200, 100, 400, 30);
-		add(playerLabels[0][0]);
-		
-		playerLabels[0][1] = new JLabel("");
-		playerLabels[0][1].setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabels[0][1].setForeground(Color.WHITE);
-		playerLabels[0][1].setFont(boldFont);
-		playerLabels[0][1].setBounds(200, 131, 400, 30);
-		add(playerLabels[0][1]);
-		
-		playerLabels[1][0] = new JLabel("");
-		playerLabels[1][0].setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabels[1][0].setForeground(Color.WHITE);
-		playerLabels[1][0].setFont(subtitleFont);
-		playerLabels[1][0].setBounds(200, 205, 400, 30);
-		add(playerLabels[1][0]);
-		
-		playerLabels[1][1] = new JLabel("");
-		playerLabels[1][1].setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabels[1][1].setForeground(Color.WHITE);
-		playerLabels[1][1].setFont(boldFont);
-		playerLabels[1][1].setBounds(200, 236, 400, 30);
-		add(playerLabels[1][1]);
-		
-		playerLabels[2][0] = new JLabel("");
-		playerLabels[2][0].setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabels[2][0].setForeground(Color.WHITE);
-		playerLabels[2][0].setFont(subtitleFont);
-		playerLabels[2][0].setBounds(200, 311, 400, 30);
-		add(playerLabels[2][0]);
-		
-		playerLabels[2][1] = new JLabel("");
-		playerLabels[2][1].setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabels[2][1].setForeground(Color.WHITE);
-		playerLabels[2][1].setFont(boldFont);
-		playerLabels[2][1].setBounds(200, 342, 400, 30);
-		add(playerLabels[2][1]);
-		
+		//A label to display the winner at the end of the game
 		winnerLabel = new JLabel("");
 		winnerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		winnerLabel.setForeground(Color.WHITE);
@@ -84,27 +63,54 @@ public class RoundOverview extends JPanel {
 		winnerLabel.setBounds(200, 380, 400, 40);
 		add(winnerLabel);
 		
+		//Continue to next round
 		buttonContinue = new JButton("Continue");
 		buttonContinue.setBounds(300, 450, 200, 50);
 		buttonContinue.setFont(boldFont);
 		add(buttonContinue);
 		
+		//Finish the game
 		buttonEndGame = new JButton("End Game");
 		buttonEndGame.setBounds(300, 450, 200, 50);
 		buttonEndGame.setFont(boldFont);
 		add(buttonEndGame);
 		
+		//An image background
 		JLabel background = new JLabel(new ImageIcon(Game.class.getResource("/images/gameBackground.png")));
 		background.setBounds(0, 0, 800, 600);
 		add(background);
 	}
 
+	//Getters and setters
+	public JButton getButtonContinue() {
+		return buttonContinue;
+	}
+	
+	public JButton getButtonEndGame() {
+		return buttonEndGame;
+	}
+	
+	public void setPreviousRoundScores(int[] previousScores) {
+		this.previousScores = previousScores;
+	}
+	//End getters and setters
+	
+	/**
+	 * Initialise the RoundOverview for a game by showing only relevant buttons.
+	 */
 	public void initialise() {
 		winnerLabel.setText("");
 		buttonContinue.setVisible(true);
 		buttonEndGame.setVisible(false);
 	}
 	
+	/**
+	 * Display statistics about the score at the end of a round.
+	 * @param dayNumber
+	 * The number of the day to display score information about
+	 * @param players
+	 * The players to display information about
+	 */
 	public void displayEndOfRound(int dayNumber, Player[] players) {
 		dayLabel.setText("Score Summary for Day "+dayNumber);
 		for (int i=0; i<3; i++) {
@@ -120,6 +126,13 @@ public class RoundOverview extends JPanel {
 		}
 	}
 	
+	/**
+	 * Display score statistics for the end of a game, and the winner.
+	 * @param dayNumber
+	 * The number of days played for
+	 * @param players
+	 * The players to display score for and decide a winner from
+	 */
 	public void displayEndOfGame(int dayNumber, Player[] players) {
 		dayLabel.setText("Game Finished After "+dayNumber+" Days");
 		buttonContinue.setVisible(false);
@@ -143,13 +156,5 @@ public class RoundOverview extends JPanel {
 			}
 		
 		winnerLabel.setText(winner.getName()+" wins!");
-	}
-
-	public JButton getButtonContinue() {
-		return buttonContinue;
-	}
-	
-	public JButton getButtonEndGame() {
-		return buttonEndGame;
 	}
 }
