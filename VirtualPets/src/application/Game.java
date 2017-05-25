@@ -160,12 +160,14 @@ public class Game extends JPanel {
 		foodInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		foodInventoryScrollPane.setBounds(510, 264, 286, 156);
 		foodInventoryScrollPane.setOpaque(false);
+		foodInventoryScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		add(foodInventoryScrollPane);
 		
 		toyInventoryScrollPane = new JScrollPane();
 		toyInventoryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		toyInventoryScrollPane.setBounds(510, 438, 286, 156);
 		toyInventoryScrollPane.setOpaque(false);
+		toyInventoryScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		add(toyInventoryScrollPane);
 		
 		for (int i=0; i<3; i++) {

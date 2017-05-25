@@ -74,6 +74,7 @@ public class GameSetup extends JPanel {
 		speciesViewer.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		speciesViewer.setBounds(92, 125, 616, 358);
 		speciesViewer.setVisible(false);
+		speciesViewer.getVerticalScrollBar().setUnitIncrement(16);
 		add(speciesViewer);
 
 		String[] speciesNames = new String[species.length];

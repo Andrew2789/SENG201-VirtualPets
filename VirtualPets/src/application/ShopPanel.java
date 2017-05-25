@@ -61,6 +61,7 @@ public class ShopPanel extends JPanel {
 		buyFoodScrollPane = new JScrollPane(buyFoodPanel);
 		buyFoodScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		buyFoodScrollPane.setBounds(10, 130, 235, 310);
+		buyFoodScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		add(buyFoodScrollPane);
 		
 		buyToysPanel = new JPanel();
@@ -77,6 +78,7 @@ public class ShopPanel extends JPanel {
 		buyToysScrollPane = new JScrollPane(buyToysPanel);
 		buyToysScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		buyToysScrollPane.setBounds(255, 130, 235, 310);
+		buyToysScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		add(buyToysScrollPane);
 		
 		leaveButton = new JButton("Leave Shop");
