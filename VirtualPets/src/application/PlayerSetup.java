@@ -10,20 +10,39 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
+/**
+ * @author Andrew Davidson (ada130)
+ * Allows the user to set up a player, giving it a name and pets. Can generate a player. GameSetup should use multiple PlayerSetups.
+ */
 public class PlayerSetup extends JPanel {
 	private static final long serialVersionUID = -138517277103698226L;
 	private JTextField playerNameField;
 	private JComboBox<String> petAmountChooser;
 	private PetSetup[] petSetups;
 	private int numberOfPets = 1;
-
+	
 	/**
-	 * Create the panel.
+	 * Create the panel - a name entry field, a number of pets spinner, and PetSetups.
+	 * @param species
+	 * All of the species currently loaded in the game, passed to PetSetups
+	 * @param speciesNames
+	 * The names of all of the species currently loaded in the game, passed to PetSetups
+	 * @param toyTypes
+	 * All of the toy types currently laoded in the game, passed to PetSetups
+	 * @param foodTypes
+	 * All of the food types currently loaded in the game, passed to PetSetups
+	 * @param semiBoldFont
+	 * The font to use for headings
+	 * @param regularFont
+	 * The font to use for fields and combo boxes
+	 * @param playerNumber
+	 * The number of this player, used for display purposes only
 	 */
 	public PlayerSetup(Species[] species, String[] speciesNames, ToyType[] toyTypes, FoodType[] foodTypes, Font semiBoldFont, Font regularFont, int playerNumber) {
 		setLayout(null);
 		setOpaque(false);
 		
+		//Create 3 pet setups, but only show 1 by default
 		petSetups = new PetSetup[3];
 		for (int i=0; i<3; i++) {
 			petSetups[i] = new PetSetup(species, speciesNames, toyTypes, foodTypes, semiBoldFont, regularFont, i+1);
@@ -33,6 +52,7 @@ public class PlayerSetup extends JPanel {
 		}
 		petSetups[0].setVisible(true);
 		
+		//Player name input field and label
 		JLabel playerNameLabel = new JLabel("Player "+playerNumber+"'s Name");
 		playerNameLabel.setFont(semiBoldFont);
 		playerNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -45,6 +65,7 @@ public class PlayerSetup extends JPanel {
 		add(playerNameField);
 		playerNameField.setColumns(10);
 		
+		//Pet amount combo box and label
 		JLabel petAmountLabel = new JLabel("Number of Pets");
 		petAmountLabel.setFont(semiBoldFont);
 		petAmountLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -68,11 +89,19 @@ public class PlayerSetup extends JPanel {
 		petAmountChooser.setBounds(134, 27, 40, 21);
 		add(petAmountChooser);
 		
+		//A semi-transparent background
 		JLabel label = new JLabel(new ImageIcon(PlayerSetup.class.getResource("/images/backs/playerSetup.png")));
 		label.setBounds(0, 0, 235, 58);
 		add(label);
 	}
 	
+	/**
+	 * Generates a new player based on user inputs.
+	 * @param startingMoney
+	 * The amount of money this player should be initialised with
+	 * @return
+	 * The new player
+	 */
 	public Player generatePlayer(int startingMoney) {
 		Pet[] pets = new Pet[numberOfPets];
 		for (int i=0; i<numberOfPets; i++)
@@ -80,6 +109,11 @@ public class PlayerSetup extends JPanel {
 		return new Player(playerNameField.getText(), pets, startingMoney);
 	}
 	
+	/**
+	 * Check if all fields have some input, and check the same for all shown PetSetups.
+	 * @return
+	 * Whether all fields have some input in them
+	 */
 	public boolean fieldsFilled() {
 		if (playerNameField.getText().isEmpty())
 			return false;
@@ -93,6 +127,11 @@ public class PlayerSetup extends JPanel {
 		return filled;
 	}
 	
+	/**
+	 * Set whether all fields and combo boxes are enabled, and the same for all PetSetups.
+	 * @param enabled
+	 * Whether to set fields and combo boxes active or inactive
+	 */
 	public void setFieldsEnabled(boolean enabled) {
 		playerNameField.setEnabled(enabled);
 		petAmountChooser.setEnabled(enabled);

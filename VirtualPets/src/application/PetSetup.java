@@ -80,6 +80,7 @@ public class PetSetup extends JPanel {
 		speciesIcon.setBounds(130, 4, 100, 100);
 		add(speciesIcon);
 		
+		//A semi-transparent background
 		JLabel background = new JLabel(new ImageIcon(PetSetup.class.getResource("/images/backs/petSetup.png")));
 		background.setVerticalAlignment(SwingConstants.TOP);
 		background.setBounds(0, 0, 235, 108);

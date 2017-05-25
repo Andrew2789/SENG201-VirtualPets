@@ -29,18 +29,32 @@ public class GameSetup extends JPanel {
 	private PlayerSetup[] playerSetups;
 	
 	private JLabel errorLabel;
-	private JButton buttonDone;
-	private JButton buttonBack;
+	private JButton buttonDone, buttonBack;
 	private boolean fieldsEnabled;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - spinners for numeric inputs and a number of PlayerSetups depending on user input into a combo box and an information panel displaying all species info to the user.
+	 * @param species
+	 * All of the species loaded, passed to PlayerSetups so that their pets can initialise
+	 * @param toyTypes
+	 * All of the toy types loaded, passed to PlayerSetups so that their pets can initialise
+	 * @param foodTypes
+	 * All of the food types loaded, passed to PlayerSetups so that their pets can initialise
+	 * @param titleFont
+	 * The font for the title
+	 * @param boldFont
+	 * The font for headings
+	 * @param semiBoldFont
+	 * The font for subheadings
+	 * @param regularFont
+	 * The font for field and input text
 	 */
 	public GameSetup(Species[] species, ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font boldFont, Font semiBoldFont, Font regularFont) {
 		setLayout(null);
 		setSize(800, 600);
 		setVisible(false);
 
+		//Create species info panel
 		JPanel speciesDisplays = new JPanel();
 		speciesDisplays.setLayout(null);
 		speciesDisplays.setBackground(new Color(240, 255, 255));
@@ -66,6 +80,7 @@ public class GameSetup extends JPanel {
 		for (int i=0; i<species.length; i++)
 			speciesNames[i] = species[i].getName();
 		
+		//Create 3 PlayerSetups, but only show 1 by default
 		playerSetups = new PlayerSetup[3];
 		for (int i=0; i<3; i++) {
 			playerSetups[i] = new PlayerSetup(species, speciesNames, toyTypes, foodTypes, semiBoldFont, regularFont, i+1);
@@ -75,6 +90,7 @@ public class GameSetup extends JPanel {
 		}
 		playerSetups[0].setVisible(true);
 		
+		//The window title
 		JLabel title = new JLabel("Game Setup");
 		title.setForeground(Color.WHITE);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -82,6 +98,7 @@ public class GameSetup extends JPanel {
 		title.setBounds(240, 20, 320, 50);
 		add(title);
 		
+		//Label and combo box to set number of players, changing number of PlayerSetups shown
 		JLabel numberOfPlayersLabel = new JLabel("Number of Players");
 		numberOfPlayersLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		numberOfPlayersLabel.setFont(boldFont);
@@ -105,6 +122,7 @@ public class GameSetup extends JPanel {
 		numberOfPlayersChooser.setBounds(87, 103, 40, 22);
 		add(numberOfPlayersChooser);
 		
+		//Spinners and labels to let user input number of days, starting money, and income per turn
 		JLabel numberOfDaysLabel = new JLabel("Number of Days");
 		numberOfDaysLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		numberOfDaysLabel.setFont(boldFont);
@@ -156,6 +174,7 @@ public class GameSetup extends JPanel {
 		moneyPerTurnChooser.setBounds(445, 103, 47, 22);
 		add(moneyPerTurnChooser);
 		
+		//Buttons to let the user advance or go back, and an error label to notify the user if their inputs are invalid
 		buttonDone = new JButton("Done");
 		buttonDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -183,7 +202,7 @@ public class GameSetup extends JPanel {
 		buttonBack.setBounds(638, 85, 70, 22);
 		add(buttonBack);
 		
-
+		//Buttons to open and close species info, and a generic ActionListener which they both use.
 		JButton buttonCloseSpeciesViewer = new JButton("Close Species Viewer");
 		JButton buttonSpeciesInfo = new JButton("Species Info");
 		
@@ -215,6 +234,7 @@ public class GameSetup extends JPanel {
 		buttonSpeciesInfo.setBounds(558, 110, 150, 22);
 		add(buttonSpeciesInfo);
 		
+		//Semi-transparent settings background, and overall window background
 		JLabel settingsBack = new JLabel(new ImageIcon(GameSetup.class.getResource("/images/backs/settings.png")));
 		settingsBack.setBounds(40, 82, 493, 52);
 		add(settingsBack);
@@ -224,6 +244,7 @@ public class GameSetup extends JPanel {
 		add(backgroundImage);
 	}
 	
+	//Getters
 	public JButton getDoneButton() {
 		return buttonDone;
 	}
@@ -231,7 +252,15 @@ public class GameSetup extends JPanel {
 	public JButton getBackButton() {
 		return buttonBack;
 	}
+	//End getters
 	
+	/**
+	 * Use user's input to either initialise a new game or notify them of invalid inputs.
+	 * @param game
+	 * The game to initialise if input is valid
+	 * @return
+	 * Whether the game was initilised or if there was invalid inputs
+	 */
 	public boolean setGamePlayers(Game game) {
 		Player[] players = new Player[numberOfPlayers];
 		for (int i=0; i<numberOfPlayers; i++)
@@ -260,6 +289,11 @@ public class GameSetup extends JPanel {
 		return true;
 	}
 	
+	/**
+	 * Check whether all shown fields have some input entered.
+	 * @return
+	 * Whether all fields have some input entered
+	 */
 	public boolean fieldsFilled() {
 		boolean filled = true;
 		for (int i=0; i<numberOfPlayers; i++) {

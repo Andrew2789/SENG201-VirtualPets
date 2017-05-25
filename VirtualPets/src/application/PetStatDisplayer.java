@@ -10,28 +10,45 @@ import javax.swing.SwingConstants;
 
 public class PetStatDisplayer extends JPanel {
 	private static final long serialVersionUID = 8536607353336710123L;
-	private JLabel sliderRect;
-	private JLabel currentValue;
-	private JLabel currentValueRect;
-	private JLabel minLabel;
-	private JLabel maxLabel;
-	private int min;
-	private int max;
+	private JLabel sliderRect, currentValue, currentValueRect, minLabel, maxLabel;
+	private int min, max;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - a view only slider that displays information about a pet's attribute to a player.
+	 * @param boldFont
+	 * The font to use for headings
+	 * @param semiBoldFont
+	 * The font to use for less important labels
+	 * @param title
+	 * The name of the attribute to display
+	 * @param slider
+	 * The slider image to use
+	 * @param tooltip
+	 * The tooltip to display on hover
+	 * @param sliderColour
+	 * The colour of the slider rectangle to generate
+	 * @param min
+	 * The minimum value for this attribute
+	 * @param max
+	 * The maximum value for this attribute
+	 * @param minLabelOffset
+	 * The vertical offset of the minimum value label
+	 * @param maxLabelOffset
+	 * The vertical offset of the maximum value label
 	 */
 	public PetStatDisplayer(Font boldFont, Font semiBoldFont, String title, ImageIcon slider, 
 			String tooltip, Color sliderColour, int min, int max, int minLabelOffset, int maxLabelOffset) {
 		setLayout(null);
 		setOpaque(false);
 		
+		//Title label
 		JLabel sliderTitle = new JLabel(title);
 		sliderTitle.setBounds(0, 0, 232, 18);
 		add(sliderTitle);
 		sliderTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		sliderTitle.setFont(boldFont);
 		
+		//Current value label and marker rectangle
 		currentValue = new JLabel("");
 		currentValue.setHorizontalAlignment(SwingConstants.CENTER);
 		currentValue.setFont(boldFont);
@@ -44,17 +61,20 @@ public class PetStatDisplayer extends JPanel {
 		currentValueRect.setOpaque(true);
 		add(currentValueRect);
 		
+		//The slider image
 		JLabel sliderIcon = new JLabel(slider);
 		sliderIcon.setBounds(0, 19, 232, 19);
 		add(sliderIcon);
 		sliderIcon.setToolTipText(tooltip);
 		
+		//The rectangle showing the current value of the attribute
 		sliderRect = new JLabel("");
 		sliderRect.setBounds(22, 19, 0, 8);
 		sliderRect.setBackground(sliderColour);
 		sliderRect.setOpaque(true);
 		add(sliderRect);
 		
+		//Labels for the minimum and maximum values reachable
 		minLabel = new JLabel(Integer.toString(min));
 		minLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		minLabel.setBounds(13, 25+minLabelOffset, 18, 22);
@@ -71,6 +91,11 @@ public class PetStatDisplayer extends JPanel {
 		this.max = max;
 	}
 	
+	/**
+	 * Update the slider with a new value for the displayed attribute.
+	 * @param amount
+	 * The new value
+	 */
 	public void setStat(int amount) {
 		int scaledAmount = (amount-min)*188/(max-min);
 		sliderRect.setBounds(22, 19, scaledAmount, 8);
@@ -85,6 +110,13 @@ public class PetStatDisplayer extends JPanel {
 		}
 	}
 	
+	/**
+	 * Set the minimum and maximum values for the slider.
+	 * @param min
+	 * The new minimum value
+	 * @param max
+	 * The new maximum value
+	 */
 	public void setMinMax(int min, int max) {
 		this.min = min;
 		this.max = max;

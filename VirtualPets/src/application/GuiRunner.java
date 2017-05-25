@@ -11,12 +11,12 @@ import javax.swing.JFrame;
 
 import customFileLoader.Loader;
 
+/**
+ * @author Andrew Davidson (ada130)
+ * A controller and viewer for the application. Loads and shows the various game panels.
+ */
 public class GuiRunner {
-	private Font poppins;
-	private Font sourceSansPro;
-	private Font sourceSansProsemibold;
-	private Font sourceSansProBold;
-	
+	private Font poppins, sourceSansPro, sourceSansProsemibold, sourceSansProBold;
 	private Species[] species;
 	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
@@ -44,7 +44,7 @@ public class GuiRunner {
 	}
 
 	/**
-	 * Load fonts, species, toy types, and food types. Initialise the gui and load the main menu.
+	 * Load fonts, species, toy types, and food types. Initialises the gui and loads the main menu.
 	 */
 	public GuiRunner() {
 		species = Loader.loadCustomSpeciesFile("resources/default_species.txt");
@@ -62,7 +62,7 @@ public class GuiRunner {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialises the frame at the correct size with nothing in it.
 	 */
 	private void initialise() {
 		frame = new JFrame();
@@ -102,6 +102,7 @@ public class GuiRunner {
 	private void loadMainMenu() {
 		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProsemibold.deriveFont(16f), sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
 
+		//Switch to gameSetup if new game is clicked
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				loadGameSetup();
@@ -110,6 +111,7 @@ public class GuiRunner {
 			}
 		});
 		
+		//Switch to AssetCreator if create new asset is clicked
 		mainMenu.getCreateNewAssetButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				loadAssetCreator();
@@ -118,6 +120,7 @@ public class GuiRunner {
 			}
 		});
 		
+		//Quit if quit is pressed
 		mainMenu.getQuitButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
@@ -134,6 +137,7 @@ public class GuiRunner {
 	private void loadGameSetup() {
 		gameSetup = new GameSetup(species, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProsemibold.deriveFont(14f), sourceSansPro.deriveFont(14f));
 
+		//If all fields are filled, use the inputs to create and start a new game
 		gameSetup.getDoneButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if (gameSetup.fieldsFilled()) {
@@ -146,6 +150,7 @@ public class GuiRunner {
 			}
 		});
 		
+		//Go back to the main menu if back is clicked
 		gameSetup.getBackButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				gameSetup.setVisible(false);
@@ -159,6 +164,7 @@ public class GuiRunner {
 	private void loadAssetCreator() {
 		assetCreator = new AssetCreator(poppins.deriveFont(72f), sourceSansProsemibold.deriveFont(14f));
 		
+		//Go back to the main menu when back is pressed
 		assetCreator.getBackButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				assetCreator.setVisible(false);
@@ -175,6 +181,7 @@ public class GuiRunner {
 	private void loadGame() {
 		RoundOverview roundOverview = new RoundOverview(poppins.deriveFont(36f), poppins.deriveFont(22f), sourceSansProBold.deriveFont(16f));
 		
+		//When the game ends, show the main menu
 		roundOverview.getButtonEndGame().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				roundOverview.setVisible(false);
@@ -184,6 +191,7 @@ public class GuiRunner {
 		
 		frame.getContentPane().add(roundOverview);
 		
+		//When exit to main menu is pressed, switch to the main menu
 		ActionListener exitToMainMenu = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainMenu.setVisible(true);
@@ -191,6 +199,7 @@ public class GuiRunner {
 			}
 		};
 		
+		//When exit to desktop is pressed, quit
 		ActionListener exitToDesktop = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
