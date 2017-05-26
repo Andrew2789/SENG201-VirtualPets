@@ -5,13 +5,19 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+/**
+ * A panel for displaying a single toy in the shop.
+ * @author Alex Tompkins (ato47)
+ */
 public class ShopToyDisplayer extends JPanel {
 	private static final long serialVersionUID = -7801211551735059571L;
 	private ToyType toyType;
 	private JButton buyButton;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - a single toy in the shop.
+	 * @param toy
+	 * The toy to be displayed.
 	 */
 	public ShopToyDisplayer(ToyType toy, Font semiBoldFont, Font regularFont) {
 		setLayout(null);
@@ -51,6 +57,10 @@ public class ShopToyDisplayer extends JPanel {
 		return buyButton;
 	}
 	
+	/**
+	 * Enables the toy's buy button.
+	 * @param enabled
+	 */
 	public void enableBuyButton(boolean enabled) {
 		buyButton.setEnabled(enabled);
 	}

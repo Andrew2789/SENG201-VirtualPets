@@ -5,13 +5,19 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+/**
+ * A panel for displaying a single food item in the shop.
+ * @author Alex Tompkins (ato47)
+ */
 public class ShopFoodDisplayer extends JPanel {
 	private static final long serialVersionUID = -506971370002352550L;
 	private FoodType foodType;
 	private JButton buyButton;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - a single food item in the shop.
+	 * @param food
+	 * The food to be displayed.
 	 */
 	public ShopFoodDisplayer(FoodType food, Font semiBoldFont, Font regularFont) {
 		setLayout(null);
@@ -61,6 +67,10 @@ public class ShopFoodDisplayer extends JPanel {
 		return buyButton;
 	}
 	
+	/**
+	 * Enables the food's buy button.
+	 * @param enabled
+	 */
 	public void enableBuyButton(boolean enabled) {
 		buyButton.setEnabled(enabled);
 	}
