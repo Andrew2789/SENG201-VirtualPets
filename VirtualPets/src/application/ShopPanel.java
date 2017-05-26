@@ -9,6 +9,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 
+/**
+ * A panel that displays the shop. Includes two scroll panes for buying toys and food,
+ * and displays your money at the top.
+ * @author Alex Tompkins
+ */
 public class ShopPanel extends JPanel {
 	private static final long serialVersionUID = -3713119219367796726L;
 	private JScrollPane buyFoodScrollPane, buyToysScrollPane;
@@ -19,7 +24,19 @@ public class ShopPanel extends JPanel {
 	private ShopToyDisplayer[] toysForSale;
 	
 	/**
-	 * Create the panel.
+	 * Create the panel for displaying the shop.
+	 * @param foodTypes
+	 * The foods available for purchase.
+	 * @param toyTypes
+	 * The toys available for purchase.
+	 * @param money
+	 * The player's money.
+	 * @param semiBoldFont
+	 * The font used for subtitles.
+	 * @param boldFont
+	 * The font used for the title.
+	 * @param regularFont
+	 * The font used for regular text.
 	 */
 	public ShopPanel(FoodType[] foodTypes, ToyType[] toyTypes, int money, Font semiBoldFont, Font boldFont, Font regularFont) {
 		setLayout(null);
@@ -108,6 +125,12 @@ public class ShopPanel extends JPanel {
 		return toysForSale;
 	}
 	
+	/**
+	 * Enables buy buttons on the shop panel selectively based on whether or not the player
+	 * can buy them.
+	 * @param money
+	 * The player's money.
+	 */
 	public void enablePossibleBuyButtons(int money) {
 		for (ShopFoodDisplayer foodDisplay : foodsForSale)
 			if (foodDisplay.getFoodType().getPrice() <= money)
