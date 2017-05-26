@@ -4,13 +4,21 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import java.awt.Color;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.awt.event.ActionEvent;
 
 /**
@@ -130,13 +138,34 @@ public class AssetCreator extends JPanel {
 		maxToyDamageChooser.setBounds(221, 98, 39, 20);
 		speciesPanel.add(maxToyDamageChooser);
 		
-		buttonSpeciesSetIcon = new JButton("Set Icon (100x100)");
-		buttonSpeciesSetIcon.setBounds(222, 130, 155, 25);
-		speciesPanel.add(buttonSpeciesSetIcon);
-		
 		JLabel speciesIconPreview = new JLabel("");
 		speciesIconPreview.setBounds(222, 173, 100, 100);
 		speciesPanel.add(speciesIconPreview);
+		
+		buttonSpeciesSetIcon = new JButton("Set Icon (100x100)");
+		buttonSpeciesSetIcon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser openFile = new JFileChooser();
+				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					try {
+						InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
+						ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
+						newImageIcon = new ImageIcon(newImageIcon.getImage()
+								.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH));
+						speciesIconPreview.setIcon(newImageIcon);
+						imageStream.close();
+					}
+					catch (FileNotFoundException exc) {
+						System.err.println("Image file not found.");
+					}
+					catch (IOException exc) {
+						System.err.println("Error occurred while reading image file.");
+					}
+				}
+			}
+		});
+		buttonSpeciesSetIcon.setBounds(222, 130, 155, 25);
+		speciesPanel.add(buttonSpeciesSetIcon);
 
 		//Error label if the user tries to create the species with missing inputs
 		JLabel speciesErrorLabel = new JLabel("Please enter a name and choose an icon");
@@ -217,13 +246,34 @@ public class AssetCreator extends JPanel {
 		happinessGainChooser.setBounds(12, 157, 39, 20);
 		toyPanel.add(happinessGainChooser);
 		
-		buttonToySetIcon = new JButton("Set Icon (75x75)");
-		buttonToySetIcon.setBounds(202, 34, 135, 25);
-		toyPanel.add(buttonToySetIcon);
-		
 		JLabel toyIconPreview = new JLabel("");
 		toyIconPreview.setBounds(202, 71, 75, 75);
 		toyPanel.add(toyIconPreview);
+		
+		buttonToySetIcon = new JButton("Set Icon (75x75)");
+		buttonToySetIcon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser openFile = new JFileChooser();
+				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					try {
+						InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
+						ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
+						newImageIcon = new ImageIcon(newImageIcon.getImage()
+								.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH));
+						toyIconPreview.setIcon(newImageIcon);
+						imageStream.close();
+					}
+					catch (FileNotFoundException exc) {
+						System.err.println("Image file not found.");
+					}
+					catch (IOException exc) {
+						System.err.println("Error occurred while reading image file.");
+					}
+				}
+			}
+		});
+		buttonToySetIcon.setBounds(202, 34, 135, 25);
+		toyPanel.add(buttonToySetIcon);
 
 		//Error label if the user tries to create the toyType with missing inputs
 		JLabel toyErrorLabel = new JLabel("Please enter a name and choose an icon");
@@ -320,13 +370,34 @@ public class AssetCreator extends JPanel {
 		weightChooser.setBounds(202, 36, 39, 20);
 		foodPanel.add(weightChooser);
 		
-		buttonFoodSetIcon = new JButton("Set Icon (75x75)");
-		buttonFoodSetIcon.setBounds(202, 74, 135, 25);
-		foodPanel.add(buttonFoodSetIcon);
-		
 		JLabel foodIconPreview = new JLabel("");
 		foodIconPreview.setBounds(202, 113, 75, 75);
 		foodPanel.add(foodIconPreview);
+		
+		buttonFoodSetIcon = new JButton("Set Icon (75x75)");
+		buttonFoodSetIcon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser openFile = new JFileChooser();
+				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					try {
+						InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
+						ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
+						newImageIcon = new ImageIcon(newImageIcon.getImage()
+								.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH));
+						foodIconPreview.setIcon(newImageIcon);
+						imageStream.close();
+					}
+					catch (FileNotFoundException exc) {
+						System.err.println("Image file not found.");
+					}
+					catch (IOException exc) {
+						System.err.println("Error occurred while reading image file.");
+					}
+				}
+			}
+		});
+		buttonFoodSetIcon.setBounds(202, 74, 135, 25);
+		foodPanel.add(buttonFoodSetIcon);
 
 		//Error label if the user tries to create the foodType with missing inputs
 		JLabel foodErrorLabel = new JLabel("Please enter a name and choose an icon");

@@ -150,7 +150,7 @@ public class Loader
 		
 		int i = 0;
 		while (i < lines.length) {
-			if (lines[i].substring(0, 5).equals("$Pets")) {
+			if (lines[i].length() >= 5 && lines[i].substring(0, 5).equals("$Pets")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -200,7 +200,7 @@ public class Loader
 				}
 				savedPets = matchingPets.toArray(new Pet[matchingPets.size()]);
 			}
-			if (lines[i].substring(0, 5).equals("$Food")) {
+			if (lines[i].length() >= 5 && lines[i].substring(0, 5).equals("$Food")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -230,7 +230,7 @@ public class Loader
 				
 				}
 			}
-			if (lines[i].substring(0, 5).equals("$Toys")) {
+			if (lines[i].length() >= 5 && lines[i].substring(0, 5).equals("$Toys")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -260,7 +260,7 @@ public class Loader
 						}
 				}
 			}
-			if (lines[i].substring(0, 11).equals("PlayerMisc")) {
+			if (lines[i].length() >= 11 && lines[i].substring(0, 11).equals("PlayerMisc")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -312,7 +312,7 @@ public class Loader
 		
 		int i = 0;
 		while (i < lines.length) {
-			if (lines[i].substring(0, 8).equals("$Species")) {
+			if (lines[i].length() >= 8 && lines[i].substring(0, 8).equals("$Species")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -332,7 +332,7 @@ public class Loader
 						savedObjects.length,
 						Species[].class);
 			}
-			if (lines[i].substring(0, 10).equals("$FoodTypes")) {
+			if (lines[i].length() >= 10 && lines[i].substring(0, 10).equals("$FoodTypes")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -352,7 +352,7 @@ public class Loader
 						savedObjects.length,
 						FoodType[].class);
 			}
-			if (lines[i].substring(0, 9).equals("$ToyTypes")) {
+			if (lines[i].length() >= 9 && lines[i].substring(0, 9).equals("$ToyTypes")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -372,7 +372,7 @@ public class Loader
 						savedObjects.length,
 						ToyType[].class);
 			}
-			if (lines[i].substring(0, 8).equals("$Players")) {
+			if (lines[i].length() >= 8 && lines[i].substring(0, 8).equals("$Players")) {
 				// Check through lines until end of block found.
 				try {
 					while (!lines[i].equals("/Players")) {
@@ -404,7 +404,7 @@ public class Loader
 					System.err.println(String.format("Could not find end of 'Players' block while parsing file."));
 				}
 			}
-			if (lines[i].substring(0, 11).equals("Misc")) {
+			if (lines[i].length() >= 11 && lines[i].substring(0, 11).equals("Misc")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				

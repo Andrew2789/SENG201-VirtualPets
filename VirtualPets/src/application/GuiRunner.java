@@ -115,7 +115,7 @@ public class GuiRunner {
 				gameSetup.setVisible(true);
 				mainMenu.setVisible(false);
 			}
-		});	
+		});
 		
 		//Load a game if load game is clicked
 		mainMenu.getLoadGameButton().addActionListener(new ActionListener(){
