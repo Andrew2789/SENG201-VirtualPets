@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.TreeSet;
 import javax.swing.JPanel;
 
+/**
+ * A panel of food icons to display food that is in the player's inventory.
+ * @author Alex Tompkins (ato47)
+ */
 public class FoodInventory extends JPanel {
 	private static final long serialVersionUID = -581342435839614651L;
 	private static final int[] itemHorizontalPositions = {0, 90, 180};
@@ -13,7 +17,14 @@ public class FoodInventory extends JPanel {
 	private HashMap<FoodType, FoodInventoryIcon> foodIcons;
 
 	/**
-	 * Create the panel.
+	 * Create the panel of food icons for food that is in the player's inventory.
+	 * The panel is 3 food icons wide and the adjusts height to accomodate however
+	 * many rows are necessary to display all food icons. Gets placed in a JScrollPane
+	 * for easy viewing.
+	 * @param playerFoods
+	 * The HashMap containing the food types mapped to their quantities in the player's inventory.
+	 * @param semiBoldFont
+	 * The font to use for the quantity label on the icons.
 	 */
 	public FoodInventory(HashMap<FoodType, Integer> playerFoods, Font semiBoldFont) {
 		setLayout(null);
@@ -36,6 +47,12 @@ public class FoodInventory extends JPanel {
 		return foodIcons;
 	}
 	
+	/**
+	 * Sets all the food icons in this inventory to either enabled or disabled.
+	 * This will grey them out in order to show to the player that they cannot be used yet.
+	 * @param enabled
+	 * True for setting food icons to be enabled, false for setting food icons to be disabled
+	 */
 	public void setFoodIconsEnabled(boolean enabled) {
 		for (FoodInventoryIcon icon : foodIcons.values())
 			icon.setButtonEnabled(enabled);

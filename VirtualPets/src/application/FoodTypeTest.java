@@ -2,6 +2,10 @@ package application;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.TreeSet;
+
 import javax.swing.ImageIcon;
 
 import org.junit.Test;
@@ -15,6 +19,7 @@ public class FoodTypeTest {
 		
 		for (int i=0; i<names.length; i++)
 			foodTypes[i] = new FoodType(names[i], new ImageIcon(), 1, 2, 3, 4);
+		TreeSet<FoodType> orderedFoodTypes = new TreeSet<FoodType>(new HashSet<FoodType>(Arrays.asList(foodTypes)));
 		
 		
 	}

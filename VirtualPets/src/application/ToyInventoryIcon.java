@@ -5,6 +5,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 
+/**
+ * An icon to represent a toy in the player's inventory. Shows the durability on the icon as a label.
+ * @author Alex Tompkins (ato47)
+ */
 public class ToyInventoryIcon extends JPanel {
 	private static final long serialVersionUID = -6546718780959454045L;
 	private JButton clickDetector;
@@ -13,7 +17,11 @@ public class ToyInventoryIcon extends JPanel {
 	private Toy specificToy;
 	
 	/**
-	 * Create the panel.
+	 * Create the panel - a simple icon to represent one of the Toys in the player's inventory.
+	 * @param food
+	 * The Toy that this icon represents.
+	 * @param semiBoldFont
+	 * The font to use for the quantity label.
 	 */
 	public ToyInventoryIcon(Toy toy, Font semiBoldFont) {
 		setLayout(null);
@@ -60,6 +68,12 @@ public class ToyInventoryIcon extends JPanel {
 		return specificToy;
 	}
 	
+	/**
+	 * Sets this icon to be either enabled or disabled. This will grey it out to show to the
+	 * player that it cannot be used.
+	 * @param enabled
+	 * True to enable this icon, false to disable it.
+	 */
 	public void setButtonEnabled(boolean enabled) {
 		clickDetector.setEnabled(enabled);
 		toyIcon.setEnabled(enabled);
