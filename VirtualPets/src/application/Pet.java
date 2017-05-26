@@ -46,6 +46,54 @@ public class Pet {
 		this.favouriteFood = favouriteFood;
 	}
 	
+	/**
+	 * Sets all variables used by a pet instance - this overloaded constructor should be used
+	 * when loading from a saved game.
+	 * @param name
+	 * The name of the pet.
+	 * @param species
+	 * The species of the pet. This species contains species specific information about the pet, 
+	 * such as how much it damages toys, and how much it gains hunger per turn.
+	 * @param healthy
+	 * Whether the pet is healthy or not.
+	 * @param behaving
+	 * Whether the pet is behaving or not.
+	 * @param alive
+	 * Whether the pet is alive.
+	 * @param revivable
+	 * Whether the pet has not already died.
+	 * @param hunger
+	 * The pet's hunger level (higher means hungrier).
+	 * @param energy
+	 * The pet's energy level (higher means more energetic).
+	 * @param happiness
+	 * The pet's happiness level (higher means happier).
+	 * @param weight
+	 * The weight of the pet.
+	 * @param actionPoints
+	 * The number of actions the pet has left for this turn.
+	 * @param favouriteToy
+	 * The pet's favourite toy. Randomly chosen in the game environment.
+	 * @param favouriteFood
+	 * The pet's favourite food. Randomly chosen in the game environment.
+	 */
+	public Pet(String name, Species species, boolean healthy, boolean behaving, boolean alive, boolean revivable, int hunger, 
+			int energy, int happiness, int weight, int actionPoints, ToyType favouriteToy, FoodType favouriteFood) {
+		this.name = name;
+		this.species = species;
+		this.healthy = healthy;
+		this.behaving = behaving;
+		this.alive = alive;
+		this.revivable = revivable;
+		this.hunger = hunger;
+		this.energy = energy;
+		this.happiness = happiness;
+		this.weight = weight;
+		this.actionPoints = actionPoints;
+		this.favouriteToy = favouriteToy;
+		this.favouriteFood = favouriteFood;
+	}
+	
 	// Getters
 	public String getName() {
 		return name;
@@ -101,6 +149,36 @@ public class Pet {
 	// End Getters
 	
 	// Private variable modifiers
+	/**
+	 * Sets the species of a pet to the specified species - should only be used when loading from 
+	 * a saved game.
+	 * @param species
+	 * The species to use.
+	 */
+	public void setSpecies(Species species) {
+		this.species = species;
+	}
+	
+	/**
+	 * Sets the favourite ToyType of a pet to the specified ToyType - should only be used when 
+	 * loading from a saved game.
+	 * @param toy
+	 * The ToyType to set as favourite.
+	 */
+	public void setFavouriteToy(ToyType toy) {
+		this.favouriteToy = toy;
+	}
+	
+	/**
+	 * Sets the favourite FoodType of a pet to the specified FoodType - should only be used when 
+	 * loading from a saved game.
+	 * @param food
+	 * The FoodType to set as favourite.
+	 */
+	public void setFavouriteFood(FoodType food) {
+		this.favouriteFood = food;
+	}
+	
 	/**
 	 * Changes the hunger level of the pet.
 	 * @param amount

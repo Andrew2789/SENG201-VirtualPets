@@ -9,7 +9,7 @@ public class Toy {
 	private int durability;
 	
 	/**
-	 * Initialises a new Toy object with properties based on the given values.
+	 * Initialises a new Toy object with properties based on the given ToyType.
 	 * 
 	 * @param toyType
 	 * The type of the toy. Used to access generic statistics that all members of this toy�s type share, 
@@ -18,6 +18,20 @@ public class Toy {
 	public Toy(ToyType toyType) {
 		this.toyType = toyType;
 		this.durability = 100;
+	}
+	
+	/**
+	 * Initialises a new Toy object with properties based on the given ToyType and a durability
+	 * as given. Should only be used when loading from a saved game.
+	 * @param toyType
+	 * The type of the toy. Used to access generic statistics that all members of this toy�s type share, 
+	 * e.g. the base amount of happiness a toy gains from playing with this toy.
+	 * @param durability
+	 * The percentage of durability, or 'health', that this toy has remaining.
+	 */
+	public Toy(ToyType toyType, int durability) {
+		this.toyType = toyType;
+		this.durability = durability;
 	}
 	
 	// Getters
@@ -29,6 +43,15 @@ public class Toy {
 		return this.durability;
 	}
 	// End Getters
+	
+	/**
+	 * Sets the ToyType of the toy. Should only be used when loading saved games.
+	 * @param toyType
+	 * The ToyType to set this toy to.
+	 */
+	public void setToyType(ToyType toyType) {
+		this.toyType = toyType;
+	}
 	
 	/**
 	 * Changes the durability of this toy by a given value.

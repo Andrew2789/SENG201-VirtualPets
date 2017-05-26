@@ -91,7 +91,6 @@ public class GameSaver {
 				text.add(String.format("$%s", pet.getName()));
 				text.add(String.format("\t" + "name=\"%s\"", pet.getName()));
 				text.add(String.format("\t" + "species=%s", pet.getSpecies().getName()));
-				text.add(String.format("\t" + "icon=\"/images/pets/%s.png\"", pet.getSpecies().getName()));
 				text.add(String.format("\t" + "healthy=%s", pet.isHealthy()));
 				text.add(String.format("\t" + "behaving=%s", pet.isBehaving()));
 				text.add(String.format("\t" + "alive=%s", pet.isAlive()));

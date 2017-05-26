@@ -38,6 +38,33 @@ public class Player {
 		this.money = money;
 	}
 	
+	/**
+	 * Creates a new Player instance with the given properties.
+	 * Should only be used when loading from a save game to reload a previously created player.
+	 * 
+	 * @param name
+	 * The name of the player, set at the start of the game. This will not change
+	 * @param pets
+	 * A collection of the pets belonging to a player
+	 * @param food
+	 * A mapping of FoodTypes to the amount the player has of them
+	 * @param toys
+	 * A collection of the toys belonging to a player
+	 * @param money
+	 * How much money the player starts with
+	 * @param score
+	 * How much score the player currently has
+	 */
+	public Player(String name, Pet[] pets, HashMap<FoodType, Integer> food, 
+			ArrayList<Toy> toys, int money, int score) {
+		this.name = name;
+		this.pets = pets;
+		this.food = food;
+		this.toys = toys;
+		this.money = money;
+		this.score = score;
+	}
+	
 	// Getters
 	public String getName() {
 		return this.name;
