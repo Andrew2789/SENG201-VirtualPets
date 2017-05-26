@@ -60,5 +60,7 @@ public class Toy {
 	 */
 	public void changeDurability(int value) {
 		durability += value;
+		if (durability > 100)
+			durability = 100;
 	}
 }
