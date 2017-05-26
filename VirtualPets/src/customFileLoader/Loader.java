@@ -134,6 +134,13 @@ public class Loader
 	}
 	
 	public static Player parsePlayer(String[] lines, Species[] validSpecies, FoodType[] validFoodTypes, ToyType[] validToyTypes) {
+		String savedName = new String();
+		Pet[] savedPets = new Pet[0];
+		HashMap<FoodType, Integer> savedFood = new HashMap<FoodType, Integer>();
+		ArrayList<Toy> matchingToys = new ArrayList<Toy>();
+		int savedMoney = 0;
+		int savedScore = 0;
+		
 		int i = 0;
 		while (i < lines.length) {
 			if (lines[i].substring(0, 5).equals("$Pets")) {
@@ -152,7 +159,7 @@ public class Loader
 				// Creates a new array comprising the block found.
 				String[] block = Arrays.copyOfRange(lines, blockStartIndex, i);
 				Object[] savedObjects = parseCustomBlocks(block, new PetLoadFormat());
-				Pet[] savedPets = Arrays.copyOf(savedObjects,
+				savedPets = Arrays.copyOf(savedObjects,
 						savedObjects.length,
 						Pet[].class);
 				
@@ -208,7 +215,7 @@ public class Loader
 				List<String> block = Arrays.asList(lines).subList(blockStartIndex, i);
 				HashMap<String, String> foodAttributes = parseAttributesBlock(validFoodNames, block);
 				
-				HashMap<FoodType, Integer> savedFood = new HashMap<FoodType, Integer>();
+				savedFood = new HashMap<FoodType, Integer>();
 				for (String foodName : foodAttributes.keySet()) {
 					for (FoodType validFood : validFoodTypes)
 						if (foodName.equals(validFood.getName()))
@@ -237,7 +244,7 @@ public class Loader
 						Toy[].class);
 				
 				// Change temporary toyType to matching valid saved versions if it exists, otherwise remove Toy
-				ArrayList<Toy> matchingToys = new ArrayList<Toy>();
+				matchingToys = new ArrayList<Toy>();
 				for (Toy toy : savedToys) {
 					for (ToyType validToyType : validToyTypes)
 						if (toy.getToyType().getName().equals(validToyType.getName())) {
@@ -259,18 +266,29 @@ public class Loader
 					System.err.println(String.format("Could not find end of 'PlayerMisc' block while parsing file."));
 				}
 				
-				String[] validPlayerMiscAttributes = {"money", "score"};
+				String[] validPlayerMiscAttributes = {"name", "money", "score"};
 				// Creates a list reference to the lines which comprise the block found.
 				List<String> block = Arrays.asList(lines).subList(blockStartIndex, i);
 				HashMap<String, String> playerMiscAttributes = parseAttributesBlock(validPlayerMiscAttributes, block);
 				
+				String name = playerMiscAttributes.get("name").substring(1, playerMiscAttributes.get("name").length()-1);
 				int money = Integer.parseInt(playerMiscAttributes.get("money"));
 				int score = Integer.parseInt(playerMiscAttributes.get("score"));
 			}
+			// Increment line counter after processing any block
+			i++;
 		}
 		
 		// Creating a new player object out of the data parsed
-		newPlayer = Player()
+		Player savedPlayer = new Player(
+				savedName,
+				savedPets,
+				savedFood,
+				matchingToys,
+				savedMoney,
+				savedScore
+				);
+		return savedPlayer;
 	}
 	
 	public static Game loadSavedGameFile(InputStream inputStream) {

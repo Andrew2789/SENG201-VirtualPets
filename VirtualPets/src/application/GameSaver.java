@@ -122,6 +122,7 @@ public class GameSaver {
 			text.add("/Toys");
 			
 			text.add("$PlayerMisc");
+			text.add(String.format("\t" + "name=\"%s\"", player.getName()));
 			text.add(String.format("\t" + "money=%d", player.getMoney()));
 			text.add(String.format("\t" + "score=%d", player.getScore()));
 			text.add("/PlayerMisc");
