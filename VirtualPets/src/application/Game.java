@@ -438,7 +438,10 @@ public class Game extends JPanel {
 		setTurn(0);
 	}
 	
-	public void resume(Player[] players, int currentDay, int currentPlayerIndex, int numberOfDays, int incomePerTurn, int[] previousScores) {
+	public void resume(FoodType[] foodTypes, ToyType[] toyTypes, Player[] players, int currentDay, 
+			int currentPlayerIndex, int numberOfDays, int incomePerTurn, int[] previousScores) {
+		this.foodTypes = foodTypes;
+		this.toyTypes = toyTypes;
 		this.players = players;
 		this.numberOfDays = numberOfDays;
 		this.incomePerTurn = incomePerTurn;

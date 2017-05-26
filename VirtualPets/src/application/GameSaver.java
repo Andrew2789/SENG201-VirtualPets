@@ -138,7 +138,7 @@ public class GameSaver {
 		text.add("$Misc");
 		text.add(String.format("\t" + "numberOfDays=%d", numberOfDays));
 		text.add(String.format("\t" + "incomePerTurn=%d", incomePerTurn));
-		text.add(String.format("\t" + "currentday=%d", currentDay));
+		text.add(String.format("\t" + "currentDay=%d", currentDay));
 		text.add(String.format("\t" + "currentPlayerIndex=%d", currentPlayerIndex));
 		
 		text.add("$PreviousScores");

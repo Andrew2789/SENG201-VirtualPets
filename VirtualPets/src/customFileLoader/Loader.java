@@ -20,6 +20,7 @@ import application.ToyType;
 
 public class Loader
 {
+	// Generic Static Methods
 	private static String[] readAllLines(InputStream inputStream)
 	{
 		BufferedReader buffer;
@@ -106,6 +107,9 @@ public class Loader
 		return customObjects.toArray(new Object[customObjects.size()]);
 	}
 	
+	// End Generic Static Methods
+	
+	// Loading Custom Methods
 	public static Species[] loadCustomSpeciesFile(InputStream inputStream) {
 		final String[] lines = readAllLines(inputStream);
 		Object[] customObjects = parseCustomBlocks(lines, new SpeciesLoadFormat());
@@ -133,6 +137,9 @@ public class Loader
 				FoodType[].class);
 	}
 	
+	// End Loading Custom Methods
+	
+	// Loading Save Files
 	public static Player parsePlayer(String[] lines, Species[] validSpecies, FoodType[] validFoodTypes, ToyType[] validToyTypes) {
 		String savedName = new String();
 		Pet[] savedPets = new Pet[0];
@@ -271,9 +278,9 @@ public class Loader
 				List<String> block = Arrays.asList(lines).subList(blockStartIndex, i);
 				HashMap<String, String> playerMiscAttributes = parseAttributesBlock(validPlayerMiscAttributes, block);
 				
-				String name = playerMiscAttributes.get("name").substring(1, playerMiscAttributes.get("name").length()-1);
-				int money = Integer.parseInt(playerMiscAttributes.get("money"));
-				int score = Integer.parseInt(playerMiscAttributes.get("score"));
+				savedName = playerMiscAttributes.get("name").substring(1, playerMiscAttributes.get("name").length()-1);
+				savedMoney = Integer.parseInt(playerMiscAttributes.get("money"));
+				savedScore = Integer.parseInt(playerMiscAttributes.get("score"));
 			}
 			// Increment line counter after processing any block
 			i++;
@@ -291,11 +298,17 @@ public class Loader
 		return savedPlayer;
 	}
 	
-	public static Game loadSavedGameFile(InputStream inputStream) {
+	public static void loadSavedGameFile(InputStream inputStream, Game game) {
 		final String[] lines = readAllLines(inputStream);
 		Species[] savedSpecies = new Species[0];
 		FoodType[] savedFoodTypes = new FoodType[0];
 		ToyType[] savedToyTypes = new ToyType[0];
+		ArrayList<Player> savedPlayersList = new ArrayList<Player>();
+		int savedNumberOfDays = 0;
+		int savedIncomePerTurn = 0;
+		int savedCurrentDay = 0;
+		int savedCurrentPlayerIndex = 0;
+		int[] savedPreviousScores = {0, 0};
 		
 		int i = 0;
 		while (i < lines.length) {
@@ -359,28 +372,70 @@ public class Loader
 						savedObjects.length,
 						ToyType[].class);
 			}
-			if (lines[i].substring(0, 1).equals("$Players")) {
-			// Record the index at the start of the block.
-				int blockStartIndex = i + 1;
-				
+			if (lines[i].substring(0, 8).equals("$Players")) {
 				// Check through lines until end of block found.
 				try {
-					while (!lines[i].equals("/Players"))
+					while (!lines[i].equals("/Players")) {
+						if (lines[i].substring(0, 1).equals("$")) {
+							// Record the index and label of the start of the player block.
+							int playerBlockStartIndex = i + 1;
+							String playerLabel = lines[i].substring(1);
+							
+							// Check through lines until end of player block found.
+							try
+							{
+								while (!lines[i].equals("/" + playerLabel))
+									i++;
+							}
+							catch (ArrayIndexOutOfBoundsException e)
+							{
+								System.err.println(String.format("Could not find end of '%s' block while parsing file.", playerLabel));
+							}
+							
+							// Creates a new array comprising the player block found.
+							String[] block = Arrays.copyOfRange(lines, playerBlockStartIndex, i);
+							Player newSavedPlayer = parsePlayer(block, savedSpecies, savedFoodTypes, savedToyTypes);
+							savedPlayersList.add(newSavedPlayer);
+						}
 						i++;
+					}
 				}
 				catch (ArrayIndexOutOfBoundsException e) {
 					System.err.println(String.format("Could not find end of 'Players' block while parsing file."));
 				}
-
-				// Creates a new array comprising the block found.
-				String[] block = Arrays.copyOfRange(lines, blockStartIndex, i);
-				Player[] savedPlayers = loadPlayers(block, savedSpecies, savedFoodTypes, savedToyTypes);
+			}
+			if (lines[i].substring(0, 11).equals("Misc")) {
+				// Record the index at the start of the block.
+				int blockStartIndex = i + 1;
+				
+				// Check through lines until end of block found.
+				try {
+					while (!lines[i].equals("/Misc"))
+						i++;
+				}
+				catch (ArrayIndexOutOfBoundsException e) {
+					System.err.println(String.format("Could not find end of 'Misc' block while parsing file."));
+				}
+				
+				String[] validMiscAttributes = {"numberOfDays", "incomePerTurn", "currentDay", "currentPlayerIndex"};
+				// Creates a list reference to the lines which comprise the block found.
+				List<String> block = Arrays.asList(lines).subList(blockStartIndex, i);
+				HashMap<String, String> miscAttributes = parseAttributesBlock(validMiscAttributes, block);
+				
+				savedNumberOfDays = Integer.parseInt(miscAttributes.get("numberOfDays"));
+				savedIncomePerTurn = Integer.parseInt(miscAttributes.get("incomePerTurn"));
+				savedCurrentDay = Integer.parseInt(miscAttributes.get("currentDay"));
+				savedCurrentPlayerIndex = Integer.parseInt(miscAttributes.get("currentPlayerIndex"));
 			}
 				
 			// Increment line counter after processing any block.
 			i++;
 		}
 		
+		// Now resume Game based on saveData
+		Player[] savedPlayers = savedPlayersList.toArray(new Player[savedPlayersList.size()]);
+		game.resume(savedFoodTypes, savedToyTypes, savedPlayers, savedCurrentDay, savedCurrentPlayerIndex, savedNumberOfDays, savedIncomePerTurn, savedPreviousScores);
 	}
 	
+	// End Loading Save Files
 }

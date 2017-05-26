@@ -5,8 +5,12 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 import customFileLoader.Loader;
@@ -116,11 +120,19 @@ public class GuiRunner {
 		//Load a game if load game is clicked
 		mainMenu.getLoadGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				//Get some things
-				loadGame();
-				game.resume(players, currentDay, currentPlayerIndex, numberOfDays, incomePerTurn, previousScores);
-				game.setVisible(true);
-				mainMenu.setVisible(false);
+				JFileChooser openFile = new JFileChooser();
+				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					try {
+						InputStream saveFileStream = new FileInputStream(openFile.getSelectedFile());
+						loadGame();
+						Loader.loadSavedGameFile(saveFileStream, game);
+						game.setVisible(true);
+						mainMenu.setVisible(false);
+					}
+					catch (FileNotFoundException exc) {
+						System.err.println("Save file not found.");
+					}
+				}
 			}
 		});
 		
