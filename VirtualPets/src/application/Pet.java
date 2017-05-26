@@ -332,6 +332,7 @@ public class Pet {
 		behaving = true;
 		alive = true;
 	}
+	
 	// End pet actions
 	
 	/**
@@ -365,7 +366,7 @@ public class Pet {
 	public int finishTurn() {
 		if (alive) {
 			//Generate score for this round based on stats before adjusting them and generating random events
-			int score = happiness + energy + (100-hunger) + Math.abs(weight-species.getOptimumWeight())*2;
+			int score = happiness + energy + (100-hunger) - Math.abs(weight-species.getOptimumWeight())*2;
 			if (!healthy)
 				score -= 50;
 			if (!behaving)
