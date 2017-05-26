@@ -9,8 +9,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 /**
- * @author Andrew Davidson (ada130)
  * Displays statistics about the player's scores at the end of each round.
+ * @author Andrew Davidson (ada130)
  */
 public class RoundOverview extends JPanel {
 	private static final long serialVersionUID = -3308469502655225114L;

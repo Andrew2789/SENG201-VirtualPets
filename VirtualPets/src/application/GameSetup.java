@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * Allows the user to set up a new game, choosing players, pets, and vital game statistics such as number of days.
+ * @author Andrew Davidson (ada130)
+ */
 public class GameSetup extends JPanel {
 	private static final long serialVersionUID = 1441493919925710008L;
 	private int numberOfPlayers = 1;

@@ -10,6 +10,10 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * An internal dialog box that allows the instantiator to add action listeners to its buttons and choose which buttons to show.
+ * @author Andrew Davidoson (ada130)
+ */
 public class InternalDialog extends JPanel {
 	private static final long serialVersionUID = 8843581086428980769L;
 	private JLabel promptLabel, promptLabel2;

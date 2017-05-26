@@ -11,9 +11,9 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 
 /**
- * @author Andrew Davidson (ada130)
  * A panel that takes up the entire screen, showing a main menu. From the main menu, the user can start a new game, 
  * load a game, create new assets, read about how to play the game, and quit.
+ * @author Andrew Davidson (ada130)
  */
 public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 5563328853841424713L;

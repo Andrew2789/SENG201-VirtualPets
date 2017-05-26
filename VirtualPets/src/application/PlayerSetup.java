@@ -11,8 +11,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 /**
- * @author Andrew Davidson (ada130)
  * Allows the user to set up a player, giving it a name and pets. Can generate a player. GameSetup should use multiple PlayerSetups.
+ * @author Andrew Davidson (ada130)
  */
 public class PlayerSetup extends JPanel {
 	private static final long serialVersionUID = -138517277103698226L;

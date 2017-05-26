@@ -14,9 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
+ * Allows the user to create and save custom species, toyTypes, and foodTypes.
  * @author Andrew Davidson (ada130)
  * @author Alex Tompkins (ato47)
- * Allows the user to create and save custom species, toyTypes, and foodTypes.
  */
 public class AssetCreator extends JPanel {
 	private static final long serialVersionUID = 5455584120587343044L;

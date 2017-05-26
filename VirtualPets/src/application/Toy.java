@@ -14,9 +14,6 @@ public class Toy {
 	 * @param toyType
 	 * The type of the toy. Used to access generic statistics that all members of this toy�s type share, 
 	 * e.g. the base amount of happiness a toy gains from playing with this toy.
-	 * @param durability
-	 * A number representation of the durability or �health� of this specific toy. 
-	 * Used to determine how much more damage a toy can take before breaking. 
 	 */
 	public Toy(ToyType toyType) {
 		this.toyType = toyType;

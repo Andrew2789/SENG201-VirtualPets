@@ -22,9 +22,11 @@ public class Player {
 	 * Sets food and toys to their respective empty collections.
 	 * 
 	 * @param name
-	 * The name of the player, set at the start of the game. This will not change.
+	 * The name of the player, set at the start of the game. This will not change
 	 * @param pets
-	 * A collection of the pets belonging to a player.
+	 * A collection of the pets belonging to a player
+	 * @param money
+	 * How much money the player starts with
 	 */
 	public Player(String name, Pet[] pets, int money) {
 		this.name = name;
@@ -94,7 +96,7 @@ public class Player {
 
 	/**
 	 * Adds the given toy to the player�s inventory.
-	 * @param toyToAdd
+	 * @param toy
 	 * A reference to the Toy object you want to add to the player's inventory.
 	 */
 	public void addToy(Toy toy) {

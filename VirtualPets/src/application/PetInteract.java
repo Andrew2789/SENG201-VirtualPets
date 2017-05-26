@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
- * @author Andrew Davidson (ada130)
  * Displays pet statistics and allows the player to interact with the pet.
+ * @author Andrew Davidson (ada130)
  */
 public class PetInteract extends JPanel {
 	private static final long serialVersionUID = 571759901412319640L;

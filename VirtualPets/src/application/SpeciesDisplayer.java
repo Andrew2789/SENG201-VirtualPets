@@ -7,8 +7,8 @@ import java.awt.Color;
 import java.awt.Font;
 
 /**
- * @author Andrew Davidson (ada130)
  * A box that displays all information about a certain species.
+ * @author Andrew Davidson (ada130)
  */
 public class SpeciesDisplayer extends JPanel {
 	private static final long serialVersionUID = 2326573558020329538L;

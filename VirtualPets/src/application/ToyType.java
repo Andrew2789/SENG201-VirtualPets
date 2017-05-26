@@ -16,11 +16,13 @@ public class ToyType {
 	 * Initialises a new ToyType instance based on given values.
 	 * 
 	 * @param name
-	 * The name of this type of toy. 
+	 * The name of this type of toy.
+	 * @param icon
+	 * The icon for this toy type
 	 * @param price
-	 * The base price of this type of toy.
+	 * The base price of this type of toy
 	 * @param happinessGain
-	 * A number representation of the base amount of happiness playing with this toy will give a pet.
+	 * A number representation of the base amount of happiness playing with this toy will give a pet
 	 */
 	public ToyType(String name, ImageIcon icon, int price, int happinessGain) {
 		this.name = name;

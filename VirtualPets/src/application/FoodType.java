@@ -3,8 +3,8 @@ package application;
 import javax.swing.ImageIcon;
 
 /**
- * @author Andrew Davidson (ada130)
  * Instances of this class represent the various food types available to buy and consume in the game.
+ * @author Andrew Davidson (ada130)
  */
 public class FoodType implements Comparable<FoodType> {
 	private String name;
@@ -18,13 +18,17 @@ public class FoodType implements Comparable<FoodType> {
 	 * Initialises all variables used by a FoodType instance.
 	 * 
 	 * @param name
-	 * The name of the food.
+	 * The name of the food
+	 * @param icon
+	 * The icon for this food
 	 * @param price
-	 * How much it will cost to buy this food from the ingame store using ingame currency.
+	 * How much it will cost to buy this food from the ingame store using ingame currency
 	 * @param nutrition
-	 * How nutritious the food is - a more nutritious food will remove more hunger when consumed.
+	 * How nutritious the food is - a more nutritious food will remove more hunger when consumed
 	 * @param tastiness
-	 * How tasty the food is - a tastier food will increase happiness more when consumed.
+	 * How tasty the food is - a tastier food will increase happiness more when consumed
+	 * @param weight
+	 * How heavy the food is
 	 */
 	public FoodType(String name, ImageIcon icon, int price, int nutrition, int tastiness, int weight) {
 		this.name = name;

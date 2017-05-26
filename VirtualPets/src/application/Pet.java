@@ -2,11 +2,11 @@ package application;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * @author Andrew Davidson (ada130)
  * Instances of this class represent a pet. The pet has a species and name, and has attributes
  * that must be maintained (hunger, energy, happiness, and weight). The pet may become unhealthy,
  * misbehave, or die. The pet also has a single favourite toy and food. Pets are interacted with 
  * through a set of actions: eat, play, rest, go to toilet, be cured, be disciplined, get revived.
+ * @author Andrew Davidson (ada130)
  */
 public class Pet {
 	private String name;
@@ -279,7 +279,7 @@ public class Pet {
 	 * +0-100% for hunger 90-100
 	 * +0-100% for energy 10-0
 	 * 
-	 * Starts starving when hunger >= 90
+	 * Starts starving when hunger greater/equal 90
 	 * 
 	 * @return
 	 * The score for this pet

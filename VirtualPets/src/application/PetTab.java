@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 /**
- * @author Andrew Davidson (ada130)
  * A clickable tab which will switch the selected pet to the pet represented in this tab, the tab also displays
  * status effects and action points of the pet.
+ * @author Andrew Davidson (ada130)
  */
 public class PetTab extends JPanel {
 	private static final long serialVersionUID = -4840106067673959643L;

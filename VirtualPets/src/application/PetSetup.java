@@ -12,8 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- * @author Andrew Davidson (ada130)
  * Allows the user to set the name and species of a single pet, and generate the pet. PlayerSetup should create multiple PetSetups.
+ * @author Andrew Davidson (ada130)
  */
 public class PetSetup extends JPanel {
 	private static final long serialVersionUID = -4986198431577503898L;

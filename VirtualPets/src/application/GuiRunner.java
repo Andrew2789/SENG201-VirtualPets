@@ -12,8 +12,8 @@ import javax.swing.JFrame;
 import customFileLoader.Loader;
 
 /**
- * @author Andrew Davidson (ada130)
  * A controller and viewer for the application. Loads and shows the various game panels.
+ * @author Andrew Davidson (ada130)
  */
 public class GuiRunner {
 	private Font poppins, sourceSansPro, sourceSansProSemibold, sourceSansProBold;
@@ -29,6 +29,8 @@ public class GuiRunner {
 
 	/**
 	 * Launch the application.
+	 * @param args
+	 * Arguments to run the application with. Not used
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -75,8 +77,8 @@ public class GuiRunner {
 	
 	/**
 	 * Load a font.
-	 * @param location
-	 * The classpath URL to the font
+	 * @param file
+	 * An InputStream to the desired font
 	 * @return
 	 * The loaded font
 	 */
@@ -112,7 +114,7 @@ public class GuiRunner {
 		});	
 		
 		//Load a game if load game is clicked
-		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
+		mainMenu.getLoadGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				//Get some things
 				loadGame();

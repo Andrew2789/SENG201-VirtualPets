@@ -8,6 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * A view only slider that displays information about a pet's attribute.
+ * @author Andrew Davidson (ada130)
+ */
 public class PetStatDisplayer extends JPanel {
 	private static final long serialVersionUID = 8536607353336710123L;
 	private JLabel sliderRect, currentValue, currentValueRect, minLabel, maxLabel;
