@@ -18,6 +18,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * 
+ * @author Andrew Davidson (ada130)
+ * @author Alex Tompkins (ato47)
+ */
 public class Game extends JPanel {
 	private static final long serialVersionUID = 1557753595413288282L;
 	private ToyType[] toyTypes;
@@ -51,7 +56,27 @@ public class Game extends JPanel {
 	private Font semiBoldFont, boldFont, regularFont;
 
 	/**
-	 * Create the panel.
+	 * Create the panel - the panel that the main game is played in. Players can interact with pets and visit the store.
+	 * @param toyTypes
+	 * All toy types in the game
+	 * @param foodTypes
+	 * All food types in the game
+	 * @param titleFont
+	 * The font for the day heading
+	 * @param subtitleFont
+	 * The font for subtitles
+	 * @param boldFont
+	 * The font for subheadings
+	 * @param semiBoldFont
+	 * The font for regular text
+	 * @param regularFont
+	 * The font for fields and spinners
+	 * @param roundOverview
+	 * A panel to display a round overview at the end of each round
+	 * @param exitToMainMenu
+	 * An action listener that will exit to main menu on action
+	 * @param exitToDesktop
+	 * An action listener that will exit to desktop on action
 	 */
 	public Game(ToyType[] toyTypes, FoodType[] foodTypes, Font titleFont, Font subtitleFont, Font boldFont, Font semiBoldFont, Font regularFont, 
 			RoundOverview roundOverview, ActionListener exitToMainMenu, ActionListener exitToDesktop) {
