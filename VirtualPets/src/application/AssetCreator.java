@@ -19,7 +19,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 /**
  * Allows the user to create and save custom species, toyTypes, and foodTypes.
@@ -31,6 +34,11 @@ public class AssetCreator extends JPanel {
 	private JButton buttonSpeciesSetIcon, buttonFoodSetIcon, buttonToySetIcon;
 	private JButton buttonSpecies, buttonToy, buttonFood;
 	private JButton buttonBack;
+	private ArrayList<Species> speciesCreated;
+	private ArrayList<ToyType> toysCreated;
+	private ArrayList<FoodType> foodCreated;
+	private ImageIcon speciesIcon, toyIcon, foodIcon;
+	private JLabel fileError;
 
 	/**
 	 * Create the panel - has a setup box openable for new species, toyType, or foodType.
@@ -43,12 +51,33 @@ public class AssetCreator extends JPanel {
 		setLayout(null);
 		setSize(800,600);
 		setVisible(false);
+
+		speciesCreated = new ArrayList<Species>();
+		toysCreated = new ArrayList<ToyType>();
+		foodCreated = new ArrayList<FoodType>();
 		
 		JLabel title = new JLabel("Asset Creator");
 		title.setFont(titleFont);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setBounds(150, 40, 500, 80);
 		add(title);
+		
+		JLabel assetCreatedLabel = new JLabel("Asset created!");
+		assetCreatedLabel.setForeground(Color.WHITE);
+		assetCreatedLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		assetCreatedLabel.setBounds(300, 515, 200, 19);
+		assetCreatedLabel.setFont(labelFont);
+		assetCreatedLabel.setVisible(false);
+		add(assetCreatedLabel);
+		
+		fileError = new JLabel("Error: File not recognised as an image");
+		fileError.setBounds(390, 440, 249, 25);
+		fileError.setVisible(false);
+		fileError.setFont(labelFont);
+		fileError.setHorizontalAlignment(SwingConstants.CENTER);
+		fileError.setForeground(Color.WHITE);
+		add(fileError);
+		
 		
 		//A panel to allow creation of a new species, with all the relevant fields and spinners. Also allows the user to select an icon from their device.
 		JPanel speciesPanel = new JPanel();
@@ -63,6 +92,7 @@ public class AssetCreator extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				setButtonsEnabled(true);
 				speciesPanel.setVisible(false);
+				fileError.setVisible(false);
 			}
 		});
 		buttonSpeciesCancel.setBounds(239, 313, 117, 25);
@@ -94,7 +124,7 @@ public class AssetCreator extends JPanel {
 		speciesPanel.add(hungerGainLabel);
 		
 		JSpinner hungerGainChooser = new JSpinner();
-		hungerGainChooser.setModel(new SpinnerNumberModel(30, 0, 65, 5));
+		hungerGainChooser.setModel(new SpinnerNumberModel(20, 0, 65, 5));
 		hungerGainChooser.setBounds(12, 157, 39, 20);
 		speciesPanel.add(hungerGainChooser);
 		
@@ -104,7 +134,7 @@ public class AssetCreator extends JPanel {
 		speciesPanel.add(energyLossLabel);
 		
 		JSpinner energyLossChooser = new JSpinner();
-		energyLossChooser.setModel(new SpinnerNumberModel(30, 0, 65, 1));
+		energyLossChooser.setModel(new SpinnerNumberModel(20, 0, 65, 1));
 		energyLossChooser.setBounds(12, 216, 39, 20);
 		speciesPanel.add(energyLossChooser);
 		
@@ -114,7 +144,7 @@ public class AssetCreator extends JPanel {
 		speciesPanel.add(happinessLossLabel);
 		
 		JSpinner happinessLossChooser = new JSpinner();
-		happinessLossChooser.setModel(new SpinnerNumberModel(30, 0, 65, 1));
+		happinessLossChooser.setModel(new SpinnerNumberModel(20, 0, 65, 1));
 		happinessLossChooser.setBounds(12, 274, 39, 20);
 		speciesPanel.add(happinessLossChooser);
 		
@@ -134,6 +164,12 @@ public class AssetCreator extends JPanel {
 		speciesPanel.add(maxToyDamageLabel);
 		
 		JSpinner maxToyDamageChooser = new JSpinner();
+		maxToyDamageChooser.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if ((int)maxToyDamageChooser.getValue() < (int)minToyDamageChooser.getValue())
+					maxToyDamageChooser.setValue(minToyDamageChooser.getValue());
+			}
+		});
 		maxToyDamageChooser.setModel(new SpinnerNumberModel(60, 0, 100, 5));
 		maxToyDamageChooser.setBounds(221, 98, 39, 20);
 		speciesPanel.add(maxToyDamageChooser);
@@ -141,54 +177,45 @@ public class AssetCreator extends JPanel {
 		JLabel speciesIconPreview = new JLabel("");
 		speciesIconPreview.setBounds(222, 173, 100, 100);
 		speciesPanel.add(speciesIconPreview);
-		
-		buttonSpeciesSetIcon = new JButton("Set Icon (100x100)");
-		buttonSpeciesSetIcon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser openFile = new JFileChooser();
-				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					try {
-						InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
-						ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
-						newImageIcon = new ImageIcon(newImageIcon.getImage()
-								.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH));
-						speciesIconPreview.setIcon(newImageIcon);
-						imageStream.close();
-					}
-					catch (FileNotFoundException exc) {
-						System.err.println("Image file not found.");
-					}
-					catch (IOException exc) {
-						System.err.println("Error occurred while reading image file.");
-					}
-				}
-			}
-		});
-		buttonSpeciesSetIcon.setBounds(222, 130, 155, 25);
-		speciesPanel.add(buttonSpeciesSetIcon);
 
 		//Error label if the user tries to create the species with missing inputs
 		JLabel speciesErrorLabel = new JLabel("Please enter a name and choose an icon");
 		speciesErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		speciesErrorLabel.setForeground(Color.WHITE);
-		speciesErrorLabel.setBounds(239, 277, 249, 25);
+		speciesErrorLabel.setBounds(239, 282, 249, 25);
 		speciesErrorLabel.setVisible(false);
 		speciesPanel.add(speciesErrorLabel);
+		
+		speciesIcon = null;
+		buttonSpeciesSetIcon = new JButton("Set Icon (100x100)");
+		buttonSpeciesSetIcon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileError.setVisible(false);
+				speciesErrorLabel.setVisible(false);
+				speciesIcon = chooseFile(100);
+				speciesIconPreview.setIcon(speciesIcon);
+			}
+		});
+		buttonSpeciesSetIcon.setBounds(222, 130, 155, 25);
+		speciesPanel.add(buttonSpeciesSetIcon);
 		
 		//Create and save the new species if inputs are valid, display error otherwise
 		JButton buttonSpeciesDone = new JButton("Done");
 		buttonSpeciesDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!speciesNameField.getText().isEmpty() && (true)) {
-					Species species = new Species(
-							speciesNameField.getName(), 
-							new ImageIcon(), 
+				if (!speciesNameField.getText().isEmpty() && !(speciesIcon == null)) {
+					speciesCreated.add(new Species(
+							speciesNameField.getText(), 
+							speciesIcon, 
 							(int)optimumWeightChooser.getValue(), 
 							(int)hungerGainChooser.getValue(), 
 							(int)energyLossChooser.getValue(), 
 							(int)happinessLossChooser.getValue(), 
 							(int)minToyDamageChooser.getValue(), 
-							(int)maxToyDamageChooser.getValue());
+							(int)maxToyDamageChooser.getValue()));
+					speciesPanel.setVisible(false);
+					setButtonsEnabled(true);
+					assetCreatedLabel.setVisible(true);
 				}
 				else
 					speciesErrorLabel.setVisible(true);
@@ -212,6 +239,7 @@ public class AssetCreator extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				setButtonsEnabled(true);
 				toyPanel.setVisible(false);
+				fileError.setVisible(false);
 			}
 		});
 		toyPanel.add(buttonToyCancel);
@@ -249,31 +277,6 @@ public class AssetCreator extends JPanel {
 		JLabel toyIconPreview = new JLabel("");
 		toyIconPreview.setBounds(202, 71, 75, 75);
 		toyPanel.add(toyIconPreview);
-		
-		buttonToySetIcon = new JButton("Set Icon (75x75)");
-		buttonToySetIcon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser openFile = new JFileChooser();
-				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					try {
-						InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
-						ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
-						newImageIcon = new ImageIcon(newImageIcon.getImage()
-								.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH));
-						toyIconPreview.setIcon(newImageIcon);
-						imageStream.close();
-					}
-					catch (FileNotFoundException exc) {
-						System.err.println("Image file not found.");
-					}
-					catch (IOException exc) {
-						System.err.println("Error occurred while reading image file.");
-					}
-				}
-			}
-		});
-		buttonToySetIcon.setBounds(202, 34, 135, 25);
-		toyPanel.add(buttonToySetIcon);
 
 		//Error label if the user tries to create the toyType with missing inputs
 		JLabel toyErrorLabel = new JLabel("Please enter a name and choose an icon");
@@ -283,16 +286,32 @@ public class AssetCreator extends JPanel {
 		toyErrorLabel.setVisible(false);
 		toyPanel.add(toyErrorLabel);
 		
+		toyIcon = null;
+		buttonToySetIcon = new JButton("Set Icon (75x75)");
+		buttonToySetIcon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileError.setVisible(false);
+				toyErrorLabel.setVisible(false);
+				toyIcon = chooseFile(75);
+				toyIconPreview.setIcon(toyIcon);
+			}
+		});
+		buttonToySetIcon.setBounds(202, 34, 135, 25);
+		toyPanel.add(buttonToySetIcon);
+		
 		//Create and save the new toyType if inputs are valid, display error otherwise
 		JButton buttonToyDone = new JButton("Done");
 		buttonToyDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!toyNameField.getText().isEmpty() && (true)) {
-					ToyType toyType = new ToyType(
-							toyNameField.getName(), 
-							new ImageIcon(), 
+				if (!toyNameField.getText().isEmpty() && !(toyIcon == null)) {
+					toysCreated.add(new ToyType(
+							toyNameField.getText(), 
+							toyIcon,
 							(int)toyPriceChooser.getValue(), 
-							(int)happinessGainChooser.getValue());
+							(int)happinessGainChooser.getValue()));
+					toyPanel.setVisible(false);
+					setButtonsEnabled(true);
+					assetCreatedLabel.setVisible(true);
 				}
 				else
 					toyErrorLabel.setVisible(true);
@@ -314,6 +333,7 @@ public class AssetCreator extends JPanel {
 		buttonFoodCancel.setBounds(239, 313, 117, 25);
 		buttonFoodCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				fileError.setVisible(false);
 				setButtonsEnabled(true);
 				foodPanel.setVisible(false);
 			}
@@ -373,31 +393,6 @@ public class AssetCreator extends JPanel {
 		JLabel foodIconPreview = new JLabel("");
 		foodIconPreview.setBounds(202, 113, 75, 75);
 		foodPanel.add(foodIconPreview);
-		
-		buttonFoodSetIcon = new JButton("Set Icon (75x75)");
-		buttonFoodSetIcon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser openFile = new JFileChooser();
-				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					try {
-						InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
-						ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
-						newImageIcon = new ImageIcon(newImageIcon.getImage()
-								.getScaledInstance(75, 75, java.awt.Image.SCALE_SMOOTH));
-						foodIconPreview.setIcon(newImageIcon);
-						imageStream.close();
-					}
-					catch (FileNotFoundException exc) {
-						System.err.println("Image file not found.");
-					}
-					catch (IOException exc) {
-						System.err.println("Error occurred while reading image file.");
-					}
-				}
-			}
-		});
-		buttonFoodSetIcon.setBounds(202, 74, 135, 25);
-		foodPanel.add(buttonFoodSetIcon);
 
 		//Error label if the user tries to create the foodType with missing inputs
 		JLabel foodErrorLabel = new JLabel("Please enter a name and choose an icon");
@@ -407,19 +402,35 @@ public class AssetCreator extends JPanel {
 		foodErrorLabel.setVisible(false);
 		foodPanel.add(foodErrorLabel);
 		
+		foodIcon = null;
+		buttonFoodSetIcon = new JButton("Set Icon (75x75)");
+		buttonFoodSetIcon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileError.setVisible(false);
+				foodErrorLabel.setVisible(false);
+				foodIcon = chooseFile(75);
+				foodIconPreview.setIcon(foodIcon);
+			}
+		});
+		buttonFoodSetIcon.setBounds(202, 74, 135, 25);
+		foodPanel.add(buttonFoodSetIcon);
+		
 		//Create and save the new foodType if inputs are valid, display error otherwise
 		JButton buttonFoodDone = new JButton("Done");
 		buttonFoodDone.setBounds(371, 313, 117, 25);
 		buttonFoodDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!foodNameField.getText().isEmpty() && (true)) {
-					FoodType foodType = new FoodType(
-							foodNameField.getName(), 
-							new ImageIcon(), 
+				if (!foodNameField.getText().isEmpty() && !(foodIcon == null)) {
+					foodCreated.add(new FoodType(
+							foodNameField.getText(), 
+							foodIcon, 
 							(int)foodPriceChooser.getValue(), 
 							(int)nutritionChooser.getValue(), 
 							(int)tastinessChooser.getValue(), 
-							(int)weightChooser.getValue());
+							(int)weightChooser.getValue()));
+					foodPanel.setVisible(false);
+					setButtonsEnabled(true);
+					assetCreatedLabel.setVisible(true);
 				}
 				else
 					foodErrorLabel.setVisible(true);
@@ -442,6 +453,7 @@ public class AssetCreator extends JPanel {
 				maxToyDamageChooser.setValue(60);
 				speciesIconPreview.setIcon(null);
 				speciesErrorLabel.setVisible(false);
+				speciesIcon = null;
 				
 				speciesPanel.setVisible(true);
 				setButtonsEnabled(false);
@@ -457,6 +469,8 @@ public class AssetCreator extends JPanel {
 				happinessGainChooser.setValue(35);
 				toyIconPreview.setIcon(null);
 				toyErrorLabel.setVisible(false);
+				assetCreatedLabel.setVisible(false);
+				toyIcon = null;
 				
 				toyPanel.setVisible(true);
 				setButtonsEnabled(false);
@@ -476,6 +490,9 @@ public class AssetCreator extends JPanel {
 				weightChooser.setValue(8);
 				foodIconPreview.setIcon(null);
 				foodErrorLabel.setVisible(false);
+				assetCreatedLabel.setVisible(false);
+				assetCreatedLabel.setVisible(false);
+				foodIcon = null;
 				
 				foodPanel.setVisible(true);
 				setButtonsEnabled(false);
@@ -511,6 +528,18 @@ public class AssetCreator extends JPanel {
 	public JButton getBackButton() {
 		return buttonBack;
 	}
+
+	public ArrayList<Species> getNewSpecies() {
+		return speciesCreated;
+	}
+	
+	public ArrayList<ToyType> getNewToyTypes() {
+		return toysCreated;
+	}
+	
+	public ArrayList<FoodType> getNewFoodTypes() {
+		return foodCreated;
+	}
 	
 	/**
 	 * Set whether non-asset-creator buttons are enabled
@@ -522,5 +551,36 @@ public class AssetCreator extends JPanel {
 		buttonToy.setEnabled(enabled);
 		buttonFood.setEnabled(enabled);
 		buttonBack.setEnabled(enabled);
+	}
+	
+	/**
+	 * Select an image for a new asset using a file selector.
+	 * @return
+	 * The selected image, or null if none was selected
+	 */
+	private ImageIcon chooseFile(int scaledSide) {
+		JFileChooser openFile = new JFileChooser();
+		if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			try {
+				InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
+				ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
+				newImageIcon = new ImageIcon(newImageIcon.getImage()
+						.getScaledInstance(scaledSide, scaledSide, java.awt.Image.SCALE_SMOOTH));
+				imageStream.close();
+				return newImageIcon;
+			}
+			catch (FileNotFoundException exc) {
+				System.err.println("Image file not found.");
+			}
+			catch (IOException exc) {
+				System.err.println("Error occurred while reading image file.");
+				fileError.setVisible(true);
+			}
+			catch (NullPointerException exc) {
+				System.err.println("Error occurred while reading image file.");
+				fileError.setVisible(true);
+			}
+		}
+		return null;
 	}
 }

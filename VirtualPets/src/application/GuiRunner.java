@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -186,6 +187,9 @@ public class GuiRunner {
 		frame.getContentPane().add(gameSetup);
 	}
 	
+	/**
+	 * ASDF
+	 */
 	private void loadAssetCreator() {
 		assetCreator = new AssetCreator(poppins.deriveFont(72f), sourceSansProSemibold.deriveFont(14f));
 		
@@ -193,6 +197,37 @@ public class GuiRunner {
 		assetCreator.getBackButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				assetCreator.setVisible(false);
+				
+				ArrayList<Species> newSpecies = assetCreator.getNewSpecies();
+				if (newSpecies.size() > 0) {
+					Species[] updatedSpecies = new Species[species.length+newSpecies.size()];
+					for (int i=0; i<species.length; i++)
+						updatedSpecies[i] = species[i];
+					for (int i=0; i<newSpecies.size(); i++)
+						updatedSpecies[species.length+i] = newSpecies.get(i);
+					species = updatedSpecies;
+				}
+				
+				ArrayList<ToyType> newToyTypes = assetCreator.getNewToyTypes();
+				if (newToyTypes.size() > 0) {
+					ToyType[] updatedToyTypes = new ToyType[toyTypes.length+newToyTypes.size()];
+					for (int i=0; i<toyTypes.length; i++)
+						updatedToyTypes[i] = toyTypes[i];
+					for (int i=0; i<newToyTypes.size(); i++)
+						updatedToyTypes[toyTypes.length+i] = newToyTypes.get(i);
+					toyTypes = updatedToyTypes;
+				}
+				
+				ArrayList<FoodType> newFoodTypes = assetCreator.getNewFoodTypes();
+				if (newFoodTypes.size() > 0) {
+					FoodType[] updatedFoodTypes = new FoodType[foodTypes.length+newFoodTypes.size()];
+					for (int i=0; i<foodTypes.length; i++)
+						updatedFoodTypes[i] = foodTypes[i];
+					for (int i=0; i<newFoodTypes.size(); i++)
+						updatedFoodTypes[foodTypes.length+i] = newFoodTypes.get(i);
+					foodTypes = updatedFoodTypes;
+				}
+				
 				mainMenu.setVisible(true);
 			}
 		});
