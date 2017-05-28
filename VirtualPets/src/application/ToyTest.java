@@ -6,8 +6,13 @@ import javax.swing.ImageIcon;
 
 import org.junit.Test;
 
+/**
+ * Tests the only non-getter/setter method of Toy: durability change.
+ * @author Andrew Davidson (ada130)
+ * @author Alex Tompkins (ato47)
+ */
 public class ToyTest {
-
+	
 	@Test
 	public void testDurabilityDecrease() {
 		ToyType toyType = new ToyType("Test toy type", new ImageIcon(), 25, 30);

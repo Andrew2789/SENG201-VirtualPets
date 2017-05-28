@@ -553,7 +553,7 @@ public class Game extends JPanel {
 	}
 	
 	/**
-	 * Ends the turn for the currently selected player, changes score and selects the next player.
+	 * Ends the turn for the currently selected player, changes score, generates random events, and selects the next player.
 	 */
 	private void endTurn() {
 		activePlayer.changeMoney(incomePerTurn);

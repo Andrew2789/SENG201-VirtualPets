@@ -54,9 +54,9 @@ public class Toy {
 	}
 	
 	/**
-	 * Changes the durability of this toy by a given value.
+	 * Changes the durability of this toy by a given value. Durability cannot increase above 100.
 	 * @param value
-	 * The amount to change the durability by (would normally be negative to show damage to toy).
+	 * The amount to change the durability by (would normally be negative to show damage to toy)
 	 */
 	public void changeDurability(int value) {
 		durability += value;

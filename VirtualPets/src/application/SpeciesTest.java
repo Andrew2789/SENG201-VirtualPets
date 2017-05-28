@@ -6,6 +6,11 @@ import javax.swing.ImageIcon;
 
 import org.junit.Test;
 
+/**
+ * Tests the only non-getter/setter method of Species: genToyDamage.
+ * @author Andrew Davidson (ada130)
+ * @author Alex Tompkins (ato47)
+ */
 public class SpeciesTest {
 
 	@Test
@@ -16,6 +21,12 @@ public class SpeciesTest {
 		for (int i=0; i<10000; i++) {
 			damage = species.genToyDamage();
 			assertTrue((damage <= 25) && (damage >= 15));
+		}
+		
+		species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 5, 80);
+		for (int i=0; i<10000; i++) {
+			damage = species.genToyDamage();
+			assertTrue((damage <= 80) && (damage >= 5));
 		}
 	}
 

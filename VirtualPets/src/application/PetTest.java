@@ -4,70 +4,77 @@ import static org.junit.Assert.*;
 
 import javax.swing.ImageIcon;
 
+import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests the non-getter/setter methods of pet: eat, play, toilet, sleep, cure, discipline, revive, and end turn.
+ * @author Andrew Davidson (ada130)
+ * @author Alex Tompkins (ato47)
+ */
 public class PetTest {
-
+	Species testSpecies;
+	ToyType testToyType;
+	FoodType testFoodType;
+	ToyType testFavToyType;
+	FoodType testFavFoodType;
+	
+	@Before
+	public void setUp() {
+		testSpecies = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
+		testToyType = new ToyType("Test toy type", new ImageIcon(), 25, 30);
+		testFoodType = new FoodType("Test food type", new ImageIcon(), 10, 12, 8, 5);
+		testFavToyType = new ToyType("Test favtoy type", new ImageIcon(), 20, 15);
+		testFavFoodType = new FoodType("Test favfood type", new ImageIcon(), 15, 10, 6, 4);
+	}
+	
 	@Test
 	public void testEat() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType favFood = new FoodType("Test favfood type", new ImageIcon(), 1, 2, 3, 4);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 4);
-		Pet testPet = new Pet("Test Pet", species, toy, favFood);
+		Pet testPet = new Pet("Test Pet", testSpecies, true, true, true, true, 50, 50, 50, 40, 2, testFavToyType, testFavFoodType);
 
-		assertEquals(testPet.getHunger(), 20);
-		assertEquals(testPet.getHappiness(), 80);
+		assertEquals(testPet.getHunger(), 50);
+		assertEquals(testPet.getHappiness(), 50);
 		assertEquals(testPet.getWeight(), 40);
 		assertEquals(testPet.getActionPoints(), 2);
 		
-		testPet.eat(food);
-		assertEquals(testPet.getHunger(), 18);
-		assertEquals(testPet.getHappiness(), 83);
-		assertEquals(testPet.getWeight(), 44);
+		testPet.eat(testFoodType);
+		assertEquals(testPet.getHunger(), 38);
+		assertEquals(testPet.getHappiness(), 58);
+		assertEquals(testPet.getWeight(), 45);
 		assertEquals(testPet.getActionPoints(), 1);
 		
-		testPet.eat(favFood);
-		assertEquals(testPet.getHunger(), 16);
-		assertEquals(testPet.getHappiness(), 87);
-		assertEquals(testPet.getWeight(), 48);
+		testPet.eat(testFavFoodType);
+		assertEquals(testPet.getHunger(), 28);
+		assertEquals(testPet.getHappiness(), 67);
+		assertEquals(testPet.getWeight(), 49);
 		assertEquals(testPet.getActionPoints(), 0);
 	}
 	
 	@Test
 	public void testPlay() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType favToy = new ToyType("Test favtoy type", new ImageIcon(), 25, 30);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 4);
-		Pet testPet = new Pet("Test Pet", species, favToy, food);
+		Pet testPet = new Pet("Test Pet", testSpecies, true, true, true, true, 50, 50, 20, 40, 2, testFavToyType, testFavFoodType);
 
-		testPet.discipline();
-		testPet.discipline();
-		assertEquals(testPet.getHunger(), 20);
+		assertEquals(testPet.getHunger(), 50);
 		assertEquals(testPet.getHappiness(), 20);
-		assertEquals(testPet.getEnergy(), 80);
-		assertEquals(testPet.getActionPoints(), 0);
+		assertEquals(testPet.getEnergy(), 50);
+		assertEquals(testPet.getActionPoints(), 2);
 		
-		testPet.play(new Toy(toy));
-		assertEquals(testPet.getHunger(), 25);
+		testPet.play(new Toy(testToyType));
+		assertEquals(testPet.getHunger(), 55);
 		assertEquals(testPet.getHappiness(), 50);
-		assertEquals(testPet.getEnergy(), 70);
-		assertEquals(testPet.getActionPoints(), -1);
+		assertEquals(testPet.getEnergy(), 40);
+		assertEquals(testPet.getActionPoints(), 1);
 		
-		testPet.play(new Toy(favToy));
-		assertEquals(testPet.getHunger(), 30);
-		assertEquals(testPet.getHappiness(), 95);
-		assertEquals(testPet.getEnergy(), 60);
-		assertEquals(testPet.getActionPoints(), -2);
+		testPet.play(new Toy(testFavToyType));
+		assertEquals(testPet.getHunger(), 60);
+		assertEquals(testPet.getHappiness(), 72);
+		assertEquals(testPet.getEnergy(), 30);
+		assertEquals(testPet.getActionPoints(), 0);
 	}
 	
 	@Test
 	public void testToilet() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 20);
-		Pet testPet = new Pet("Test Pet", species, toy, food);
+		Pet testPet = new Pet("Test Pet", testSpecies, testToyType, testFoodType);
 
 		assertEquals(testPet.getWeight(), 40);
 		assertEquals(testPet.getActionPoints(), 2);
@@ -76,27 +83,21 @@ public class PetTest {
 		assertEquals(testPet.getWeight(), 40);
 		assertEquals(testPet.getActionPoints(), 1);
 		
-		testPet.eat(food);
+		testPet = new Pet("Test Pet", testSpecies, true, true, true, true, 50, 50, 50, 60, 2, testFavToyType, testFavFoodType);
 		testPet.goToToilet();
 		assertEquals(testPet.getWeight(), 53);
 	}	
 	
 	@Test
 	public void testSleep() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 20);
-		Pet testPet = new Pet("Test Pet", species, toy, food);
+		Pet testPet = new Pet("Test Pet", testSpecies, true, true, true, true, 50, 50, 50, 40, 2, testFavToyType, testFavFoodType);
 
-		testPet.play(new Toy(toy));
-		testPet.play(new Toy(toy));
-
-		assertEquals(testPet.getEnergy(), 60);
-		assertEquals(testPet.getActionPoints(), 0);
+		assertEquals(testPet.getEnergy(), 50);
+		assertEquals(testPet.getActionPoints(), 2);
 		
 		testPet.sleep();
-		assertEquals(testPet.getEnergy(), 90);
-		assertEquals(testPet.getActionPoints(), -1);
+		assertEquals(testPet.getEnergy(), 80);
+		assertEquals(testPet.getActionPoints(), 1);
 		
 		testPet.sleep();
 		assertEquals(testPet.getEnergy(), 100);
@@ -104,10 +105,7 @@ public class PetTest {
 	
 	@Test
 	public void testCure() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 20);
-		Pet testPet = new Pet("Test Pet", species, false, false, false, false, 50, 50, 50, 50, 2, toy, food);
+		Pet testPet = new Pet("Test Pet", testSpecies, false, false, false, false, 50, 50, 50, 50, 2, testToyType, testFoodType);
 
 		assertEquals(testPet.getHappiness(), 50);
 		assertEquals(testPet.getActionPoints(), 2);
@@ -121,10 +119,7 @@ public class PetTest {
 	
 	@Test
 	public void testDiscipline() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 20);
-		Pet testPet = new Pet("Test Pet", species, false, false, true, true, 50, 50, 50, 50, 2, toy, food);
+		Pet testPet = new Pet("Test Pet", testSpecies, false, false, true, true, 50, 50, 50, 50, 2, testToyType, testFoodType);
 
 		assertEquals(testPet.getHappiness(), 50);
 		assertEquals(testPet.getActionPoints(), 2);
@@ -138,10 +133,7 @@ public class PetTest {
 	
 	@Test
 	public void testRevive() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 20);
-		Pet testPet = new Pet("Test Pet", species, false, false, false, true, 50, 50, 50, 50, 2, toy, food);
+		Pet testPet = new Pet("Test Pet", testSpecies, false, false, false, true, 50, 50, 50, 50, 2, testToyType, testFoodType);
 
 		assertEquals(testPet.isRevivable(), true);
 		assertEquals(testPet.isAlive(), false);
@@ -159,10 +151,7 @@ public class PetTest {
 
 	@Test
 	public void testFinishTurn() {
-		Species species = new Species("Test species", new ImageIcon(), 40, 10, 10, 10, 15, 25);
-		ToyType toy = new ToyType("Test toy type", new ImageIcon(), 25, 30);
-		FoodType food = new FoodType("Test food type", new ImageIcon(), 1, 2, 3, 20);
-		Pet testPet = new Pet("Test Pet", species, toy, food);
+		Pet testPet = new Pet("Test Pet", testSpecies, testToyType, testFoodType);
 
 		assertEquals(testPet.finishTurn(), 240);
 		assertEquals(testPet.getHunger(), 30);
