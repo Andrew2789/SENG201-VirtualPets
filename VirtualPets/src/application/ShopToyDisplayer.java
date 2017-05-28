@@ -49,6 +49,7 @@ public class ShopToyDisplayer extends JPanel {
 		this.toyType = toy;
 	}
 	
+	//Getters
 	public ToyType getToyType() {
 		return toyType;
 	}
@@ -56,6 +57,7 @@ public class ShopToyDisplayer extends JPanel {
 	public JButton getBuyButton() {
 		return buyButton;
 	}
+	//End getters
 	
 	/**
 	 * Enables the toy's buy button.

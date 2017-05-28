@@ -18,7 +18,7 @@ public class FoodInventory extends JPanel {
 
 	/**
 	 * Create the panel of food icons for food that is in the player's inventory.
-	 * The panel is 3 food icons wide and the adjusts height to accomodate however
+	 * The panel is 3 food icons wide and the adjusts height to accommodate however
 	 * many rows are necessary to display all food icons. Gets placed in a JScrollPane
 	 * for easy viewing.
 	 * @param playerFoods

@@ -3,8 +3,8 @@ package application;
 import javax.swing.ImageIcon;
 
 /**
+ * Stores the unique attributes of a type of toy in each instance, used by Toy.
  * @author Alex Tompkins (ato47)
- *
  */
 public class ToyType {
 	private String name;

@@ -188,7 +188,7 @@ public class GuiRunner {
 	}
 	
 	/**
-	 * ASDF
+	 * Load the asset creation screen and store it.
 	 */
 	private void loadAssetCreator() {
 		assetCreator = new AssetCreator(poppins.deriveFont(72f), sourceSansProSemibold.deriveFont(14f));
@@ -197,6 +197,8 @@ public class GuiRunner {
 		assetCreator.getBackButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				assetCreator.setVisible(false);
+				
+				//Load newly created species, toy types, and food types
 				
 				ArrayList<Species> newSpecies = assetCreator.getNewSpecies();
 				if (newSpecies.size() > 0) {

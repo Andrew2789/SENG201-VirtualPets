@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 /**
- * 
+ * The main game panel. Displays pet and player info, and allows the player to interact with pets and visit the store.
  * @author Andrew Davidson (ada130)
  * @author Alex Tompkins (ato47)
  */
@@ -84,10 +84,12 @@ public class Game extends JPanel {
 		setSize(800, 600);
 		setVisible(false);
 
+		//Initialise an empty internal dialog box
 		currentDialog = new InternalDialog(boldFont);
 		currentDialog.setBounds(275, 165, 250, 100);
 		add(currentDialog);
 		
+		//Menu panel and buttons
 		menu = new JPanel();
 		menu.setBackground(Color.GRAY);
 		menu.setBounds(250, 180, 300, 310);
@@ -176,6 +178,7 @@ public class Game extends JPanel {
 		buttonCloseMenu.setBounds(50, 222, 200, 50);
 		menu.add(buttonCloseMenu);
 
+		//Shop background panel to be drawn to later, inventory scroll panes
 		shopBase = new JPanel();
 		shopBase.setLayout(null);
 		shopBase.setVisible(false);
@@ -217,6 +220,7 @@ public class Game extends JPanel {
 		}
 		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, Color.WHITE));
 		
+		//Titles
 		dayLabel = new JLabel("");
 		dayLabel.setForeground(Color.WHITE);
 		dayLabel.setFont(titleFont);
@@ -231,6 +235,7 @@ public class Game extends JPanel {
 		playerLabel.setBounds(200, 60, 400, 30);
 		add(playerLabel);
 		
+		//Pet interaction area and its button responders
 		petInteract = new PetInteract(boldFont, semiBoldFont);
 		petInteract.setBounds(0, 255, 500, 345);
 		add(petInteract);
@@ -398,6 +403,7 @@ public class Game extends JPanel {
 		buttonMenu.setToolTipText("Open the menu.");
 		add(buttonMenu);
 		
+		//Inventory backgrounds and titles
 		JLabel inventoryLabel = new JLabel("Inventory");
 		inventoryLabel.setForeground(Color.BLACK);
 		inventoryLabel.setBounds(506, 212, 294, 20);
@@ -422,10 +428,12 @@ public class Game extends JPanel {
 		inventoryLabelBackground.setBounds(589, 210, 130, 45);
 		add(inventoryLabelBackground);
 		
+		//Overall background
 		JLabel background = new JLabel(new ImageIcon(Game.class.getResource("/images/gameBackground.png")));
 		background.setBounds(0, 0, 800, 600);
 		add(background);
 
+		//Private variable saving and initialisation of the round overview screen
 		roundOverview.initialise();
 		roundOverview.getButtonContinue().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -442,6 +450,7 @@ public class Game extends JPanel {
 		this.roundOverview = roundOverview;
 	}
 	
+	//Getters
 	public JButton getExitToMainMenu() {
 		return buttonExitToMainMenu;
 	}
@@ -453,7 +462,17 @@ public class Game extends JPanel {
 	public InternalDialog getCurrentDialog() {
 		return currentDialog;
 	}
+	//End getters
 	
+	/**
+	 * Initialise the game environment for a new game.
+	 * @param players
+	 * The players to participate in this new game
+	 * @param numberOfDays
+	 * The number of days the game will go for
+	 * @param incomePerTurn
+	 * The player's income per day in the game
+	 */
 	public void initialise(Player[] players, int numberOfDays, int incomePerTurn) {
 		this.players = players;
 		this.numberOfDays = numberOfDays;
@@ -463,6 +482,25 @@ public class Game extends JPanel {
 		setTurn(0);
 	}
 	
+	/**
+	 * Initialise the game from a saved game file.
+	 * @param foodTypes
+	 * The food types that were in the saved game
+	 * @param toyTypes
+	 * The toy types that were in the saved game
+	 * @param players
+	 * The players that were in the saved game
+	 * @param currentDay
+	 * The day the saved game was at
+	 * @param currentPlayerIndex
+	 * The player the saved game was at
+	 * @param numberOfDays
+	 * The total number of days the saved game is to go for
+	 * @param incomePerTurn
+	 * The income per turn for each player
+	 * @param previousScores
+	 * The scores of the players for the previous round, used in round overview
+	 */
 	public void resume(FoodType[] foodTypes, ToyType[] toyTypes, Player[] players, int currentDay, 
 			int currentPlayerIndex, int numberOfDays, int incomePerTurn, int[] previousScores) {
 		this.foodTypes = foodTypes;
@@ -476,6 +514,11 @@ public class Game extends JPanel {
 		setTurn(currentPlayerIndex);
 	}
 	
+	/**
+	 * Sets the turn to a certain player, changing the GUI as required.
+	 * @param playerIndex
+	 * The index in the players array to change to
+	 */
 	private void setTurn(int playerIndex) {
 		activePlayer = players[playerIndex];
 		playerLabel.setText(activePlayer.getName()+"'s turn. Score: "+activePlayer.getScore());
@@ -498,12 +541,20 @@ public class Game extends JPanel {
 		petTabs[0].setBorder(new MatteBorder(4, 4, 0, 4, Color.WHITE));
 	}
 
+	/**
+	 * Set the selected pet, changing the GUI as necessary.
+	 * @param petIndex
+	 * The index of the newly selected pet in the pets array of the selected player
+	 */
 	private void setPet(int petIndex) {
 		activePet = activePlayer.getPets()[petIndex];
 		petInteract.setPet(activePet);
 		petInteract.setButtonsEnabled(activePet.getActionPoints() > 0);
 	}
 	
+	/**
+	 * Ends the turn for the currently selected player, changes score and selects the next player.
+	 */
 	private void endTurn() {
 		activePlayer.changeMoney(incomePerTurn);
 		for (Pet pet: activePlayer.getPets())
@@ -532,6 +583,9 @@ public class Game extends JPanel {
 		setTurn(currentPlayerIndex);
 	}
 	
+	/**
+	 * Refresh the pet tabs and pet interaction panel.
+	 */
 	private void refreshPetInfo() {
 		for (int i=0; i<activePlayer.getPets().length; i++)
 			petTabs[i].setPet(activePlayer.getPets()[i]);
@@ -540,6 +594,9 @@ public class Game extends JPanel {
 			petInteract.setButtonsEnabled(false);
 	}
 	
+	/**
+	 * 
+	 */
 	private void refreshFoodInventory() {
 		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
 		foodInventory.setPreferredSize(new Dimension(269, ((activePlayer.getFood().size()+2)/3)*90));
@@ -562,7 +619,10 @@ public class Game extends JPanel {
 			});
 		}
 	}
-		
+	
+	/**
+	 * 
+	 */
 	private void refreshToyInventory() {
 		toyInventory = new ToyInventory(activePlayer.getToys(), semiBoldFont);
 		toyInventory.setPreferredSize(new Dimension(269, ((activePlayer.getToys().size()+2)/3)*90));
@@ -586,6 +646,9 @@ public class Game extends JPanel {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	private void displayShop() {
 		for (Component comp : shopBase.getComponents()) {
 			shopBase.remove(comp);
@@ -623,6 +686,9 @@ public class Game extends JPanel {
 			});
 		}
 		
+		/**
+		 * 
+		 */
 		for (ShopToyDisplayer toyDisplay : shopPanel.getToysForSale()) {
 			toyDisplay.getBuyButton().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -645,6 +711,11 @@ public class Game extends JPanel {
 		}
 	}
 	
+	/**
+	 * Set whether the game buttons will be enabled or not.
+	 * @param enabled
+	 * Whether the game buttons will be enabled
+	 */
 	private void setButtonsEnabled(boolean enabled) {
 		buttonShop.setEnabled(enabled);
 		buttonEndTurn.setEnabled(enabled);
@@ -655,6 +726,11 @@ public class Game extends JPanel {
 			petTab.setButtonEnabled(enabled);
 	}
 	
+	/**
+	 * Set whether the game menu buttons are enabled or not.
+	 * @param enabled
+	 * Whether the buttons will be enabled
+	 */
 	private void setMenuButtonsEnabled(boolean enabled) {
 		buttonSaveGame.setEnabled(enabled);
 		buttonExitToMainMenu.setEnabled(enabled);

@@ -1,8 +1,8 @@
 package application;
 
 /**
+ * A class to represent a toy with a type and a durability.
  * @author Alex Tompkins (ato47)
- *
  */
 public class Toy {
 	private ToyType toyType;

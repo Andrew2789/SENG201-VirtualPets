@@ -52,6 +52,7 @@ public class ToyInventoryIcon extends JPanel {
 		clickDetector.setEnabled(false);
 	}
 	
+	//Getters
 	public void setToyIcon(ToyType toyType) {
 		this.toyIcon.setIcon(toyType.getIcon());
 	}
@@ -67,6 +68,7 @@ public class ToyInventoryIcon extends JPanel {
 	public Toy getSpecificToy() {
 		return specificToy;
 	}
+	//End getters
 	
 	/**
 	 * Sets this icon to be either enabled or disabled. This will grey it out to show to the

@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * A class for storing players and executing their interactions with pets.
  * @author Alex Tompkins (ato47)
- *
  */
 public class Player {
 	private String name;

@@ -59,6 +59,7 @@ public class ShopFoodDisplayer extends JPanel {
 		this.foodType = food;
 	}
 	
+	//Getters
 	public FoodType getFoodType() {
 		return foodType;
 	}
@@ -66,6 +67,7 @@ public class ShopFoodDisplayer extends JPanel {
 	public JButton getBuyButton() {
 		return buyButton;
 	}
+	//End getters
 	
 	/**
 	 * Enables the food's buy button.

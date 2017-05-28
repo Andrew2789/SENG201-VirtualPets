@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 /**
- * An icon to repesent the number of a specific FoodType in the player's inventory.
+ * An icon to represent the number of a specific FoodType in the player's inventory.
  * @author Alex Tompkins (ato47)
  */
 public class FoodInventoryIcon extends JPanel {

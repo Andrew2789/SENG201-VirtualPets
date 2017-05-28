@@ -105,6 +105,7 @@ public class ShopPanel extends JPanel {
 		enablePossibleBuyButtons(money);
 	}
 	
+	//Getters
 	public JScrollPane getBuyFoodScrollPane() {
 		return buyFoodScrollPane;
 	}
@@ -124,6 +125,7 @@ public class ShopPanel extends JPanel {
 	public ShopToyDisplayer[] getToysForSale() {
 		return toysForSale;
 	}
+	//End getters
 	
 	/**
 	 * Enables buy buttons on the shop panel selectively based on whether or not the player

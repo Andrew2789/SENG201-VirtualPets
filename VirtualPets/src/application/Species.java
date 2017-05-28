@@ -87,8 +87,8 @@ public class Species {
 	
 	/**
 	 * Generates and returns an amount to damage a toy by.
-	 * 
-	 * @return A random integer amount of damage between baseToyDamage and baseToyDamage + randomToyDamage, inclusive.
+	 * @return 
+	 * A random integer amount of damage between minToyDamage and maxToyDamage, inclusive
 	 */
 	public int genToyDamage() {
 		return ThreadLocalRandom.current().nextInt(minToyDamage, maxToyDamage + 1);

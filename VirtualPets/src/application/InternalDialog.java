@@ -79,7 +79,7 @@ public class InternalDialog extends JPanel {
 	/**
 	 * Set the dialog box contents. Clean out old actionListeners and make it hide on either button click.
 	 * @param line1
-	 * The first notification liine
+	 * The first notification line
 	 * @param line2
 	 * The second notification line
 	 * @param okShown
