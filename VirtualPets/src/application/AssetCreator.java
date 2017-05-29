@@ -32,7 +32,8 @@ import model.ToyType;
  * @author Alex Tompkins (ato47)
  */
 public class AssetCreator extends JPanel {
-	private static final long serialVersionUID = 5455584120587343044L;
+	private static final long serialVersionUID = 1L;
+	
 	private JButton buttonSpeciesSetIcon, buttonFoodSetIcon, buttonToySetIcon;
 	private JButton buttonSpecies, buttonToy, buttonFood;
 	private JButton buttonBack;
@@ -573,7 +574,7 @@ public class AssetCreator extends JPanel {
 		// Create dialog box to choose file to load image from
 		JFileChooser openFile = new JFileChooser();
 		if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			// Once user selected a file, try to create a new image from that file by scaling it down
+			// Once user has selected a file, try to create a new image from that file by scaling it down
 			try {
 				InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
 				ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));

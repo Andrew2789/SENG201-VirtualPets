@@ -22,7 +22,8 @@ import model.ToyType;
  * @author Andrew Davidson (ada130)
  */
 public class PetSetup extends JPanel {
-	private static final long serialVersionUID = -4986198431577503898L;
+	private static final long serialVersionUID = 1L;
+	
 	private JTextField petNameField;
 	private JComboBox<String> speciesChooser;
 	private JLabel speciesIcon;

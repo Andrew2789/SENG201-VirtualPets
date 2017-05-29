@@ -13,7 +13,8 @@ import javax.swing.SwingConstants;
  * @author Andrew Davidson (ada130)
  */
 public class MainMenu extends JPanel {
-	private static final long serialVersionUID = 5563328853841424713L;
+	private static final long serialVersionUID = 1L;
+	
 	private JButton buttonNewGame, buttonLoadGame, buttonCreateNewAsset, buttonSaveAssetConfig, buttonLoadAssetConfig, buttonHelp, buttonQuit;
 
 	/**

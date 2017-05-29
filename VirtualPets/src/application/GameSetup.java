@@ -31,7 +31,8 @@ import javax.swing.ScrollPaneConstants;
  * @author Andrew Davidson (ada130)
  */
 public class GameSetup extends JPanel {
-	private static final long serialVersionUID = 1441493919925710008L;
+	private static final long serialVersionUID = 1L;
+	
 	private int numberOfPlayers = 1;
 	private int numberOfDays = 5;
 	private int startingMoney = 150;

@@ -15,7 +15,7 @@ import model.Player;
  * @author Andrew Davidson (ada130)
  */
 public class RoundOverview extends JPanel {
-	private static final long serialVersionUID = -3308469502655225114L;
+	private static final long serialVersionUID = 1L;
 	private JLabel dayLabel, winnerLabel;
 	private JLabel[][] playerLabels;
 	private JButton buttonContinue, buttonEndGame;

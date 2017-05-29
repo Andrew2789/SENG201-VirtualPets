@@ -12,7 +12,8 @@ import javax.swing.SwingConstants;
  * @author Andrew Davidson (ada130)
  */
 public class PetStatDisplayer extends JPanel {
-	private static final long serialVersionUID = 8536607353336710123L;
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel sliderRect, currentValue, currentValueRect, minLabel, maxLabel;
 	private int min, max;
 

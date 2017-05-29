@@ -12,7 +12,8 @@ import model.ToyType;
  * @author Alex Tompkins (ato47)
  */
 public class ShopToyDisplayer extends JPanel {
-	private static final long serialVersionUID = -7801211551735059571L;
+	private static final long serialVersionUID = 1L;
+	
 	private ToyType toyType;
 	private JButton buyButton;
 

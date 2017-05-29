@@ -12,7 +12,8 @@ import model.FoodType;
  * @author Alex Tompkins (ato47)
  */
 public class ShopFoodDisplayer extends JPanel {
-	private static final long serialVersionUID = -506971370002352550L;
+	private static final long serialVersionUID = 1L;
+	
 	private FoodType foodType;
 	private JButton buyButton;
 

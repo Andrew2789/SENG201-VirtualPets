@@ -140,7 +140,7 @@ public class GuiRunner {
 	private void loadMainMenu() {
 		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemibold.deriveFont(16f));
 
-		//Switch to gameSetup if new game is clicked
+		// Switch to gameSetup if new game is clicked
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				loadGameSetup();
@@ -149,13 +149,16 @@ public class GuiRunner {
 			}
 		});
 		
-		//Load a game if load game is clicked
+		// Load a game if the 'Load Game' button is clicked.
 		mainMenu.getLoadGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				// Open up a open file dialog for choosing a save file to load
 				JFileChooser openFileDialog = new JFileChooser();
+				openFileDialog.setCurrentDirectory(new File("."));
 				openFileDialog.setDialogTitle("Load Game");
 				if (openFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					try {
+						// If file selected, try to read game from that file and resume.
 						File saveFile = openFileDialog.getSelectedFile();
 						loadGame();
 						Game savedGame = SaveGameHandler.readGameFromFile(saveFile);
@@ -163,6 +166,7 @@ public class GuiRunner {
 						mainMenu.setVisible(false);
 						game.resume(savedGame);
 					}
+					// If failed, show popup error with the reason why.
 					catch (NullPointerException exc) {
 						JOptionPane.showMessageDialog(frame, 
 								"Loading game failed due to an invalid/missing save file being provided.", 
@@ -214,9 +218,10 @@ public class GuiRunner {
 			}
 		});
 
-		//Load asset configuration from a file
+		// Load asset configuration from a folder
 		mainMenu.getLoadAssetsButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				// If load asset config button clicked, open up open file dialog to choose the folder where assets are stored.
 				JFileChooser openFileDialog = new JFileChooser();
 				openFileDialog.setCurrentDirectory(new File("."));
 				openFileDialog.setDialogTitle("Choose a folder to load assets from");
@@ -226,11 +231,14 @@ public class GuiRunner {
 				if (openFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File customAssetFolder = openFileDialog.getSelectedFile();
 					try {
+						// Try to load assets from this folder, then separate into different types.
 						Object[][] customAssets = AssetsLoader.loadCustomAssetsFile(customAssetFolder);
 						Species[] customSpecies = Arrays.copyOf(customAssets[0], customAssets[0].length, Species[].class);
 						FoodType[] customFoodTypes = Arrays.copyOf(customAssets[1], customAssets[1].length, FoodType[].class);
 						ToyType[] customToyTypes = Arrays.copyOf(customAssets[2], customAssets[2].length, ToyType[].class);
 						
+						// Check if any Species loaded from the file conflict with those already in the game, and if so, disregard them.
+						// Otherwise, add them to the list of species.
 						ArrayList<Species> newSpeciesList = new ArrayList<Species>(Arrays.asList(species));
 						for (Species custom : customSpecies) {
 							boolean conflict = false;
@@ -240,6 +248,8 @@ public class GuiRunner {
 							if (!conflict)
 								newSpeciesList.add(custom);
 						}
+						// Check if any FoodTypes loaded from the file conflict with those already in the game, and if so, disregard them.
+						// Otherwise, add them to the list of FoodTypes.
 						ArrayList<FoodType> newFoodTypesList = new ArrayList<FoodType>(Arrays.asList(foodTypes));
 						for (FoodType custom : customFoodTypes) {
 							boolean conflict = false;
@@ -249,6 +259,8 @@ public class GuiRunner {
 							if (!conflict)
 								newFoodTypesList.add(custom);
 						}
+						// Check if any ToyTypes loaded from the file conflict with those already in the game, and if so, disregard them.
+						// Otherwise, add them to the list of ToyTypes.
 						ArrayList<ToyType> newToyTypesList = new ArrayList<ToyType>(Arrays.asList(toyTypes));
 						for (ToyType custom : customToyTypes) {
 							boolean conflict = false;
@@ -259,10 +271,12 @@ public class GuiRunner {
 								newToyTypesList.add(custom);
 						}
 						
+						// Finally, set private variables to the newly combined lists to update them.
 						species = newSpeciesList.toArray(new Species[newSpeciesList.size()]);
 						foodTypes = newFoodTypesList.toArray(new FoodType[newFoodTypesList.size()]);
 						toyTypes = newToyTypesList.toArray(new ToyType[newToyTypesList.size()]);
 					}
+					// If loading saved asset files failed, show popup error with the reason why.
 					catch (FileNotFoundException exc) {
 						JOptionPane.showMessageDialog(frame, 
 								"The specified custom asset files could not be found or are invalid.", 

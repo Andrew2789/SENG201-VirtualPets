@@ -18,7 +18,8 @@ import model.ToyType;
  * @author Alex Tompkins
  */
 public class ShopPanel extends JPanel {
-	private static final long serialVersionUID = -3713119219367796726L;
+	private static final long serialVersionUID = 1L;
+	
 	private JScrollPane buyFoodScrollPane, buyToysScrollPane;
 	private JPanel buyFoodPanel, buyToysPanel;
 	private JButton leaveButton;

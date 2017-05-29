@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -34,7 +35,8 @@ import model.ToyType;
  * @author Alex Tompkins (ato47)
  */
 public class Game extends JPanel implements Serializable {
-	private static final long serialVersionUID = 1557753595413288282L;
+	private static final long serialVersionUID = 1L;
+	
 	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
 	private Player[] players;
@@ -113,6 +115,7 @@ public class Game extends JPanel implements Serializable {
 			public void actionPerformed(ActionEvent e) {
 				// When clicked, brings up a save file dialog box to select your save file location.
 				JFileChooser saveFileDialog = new JFileChooser();
+				saveFileDialog.setCurrentDirectory(new File("."));
 				saveFileDialog.setDialogTitle("Save Game");
 				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					// Tries writing a save file of the current game.
@@ -270,11 +273,14 @@ public class Game extends JPanel implements Serializable {
 				currentDialog.setVisible(true);
 			}
 		});
-
+		
+		// Feed Pet Button
 		petInteract.getButtonFeed().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Disables all other buttons when you have feed pet active
 				setButtonsEnabled(false);
 				currentDialog.setOptions("Click a food from your inventory", "to feed to your pet", false, true);
+				// But enables the food icons buttons
 				selectingFood = true;
 				foodInventory.setFoodIconsEnabled(true);
 				
@@ -289,7 +295,8 @@ public class Game extends JPanel implements Serializable {
 				currentDialog.setVisible(true);
 			}
 		});
-
+		
+		// Rest Button
 		petInteract.getButtonRest().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				activePet.sleep();
@@ -297,6 +304,7 @@ public class Game extends JPanel implements Serializable {
 			}
 		});
 		
+		// Toilet Button
 		petInteract.getButtonToilet().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				activePet.goToToilet();
@@ -304,8 +312,10 @@ public class Game extends JPanel implements Serializable {
 			}
 		});
 		
+		// Cure Button
 		petInteract.getButtonCure().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Only available if player has enough money to buy cure
 				if (activePlayer.getMoney() >= 50) {
 					activePet.cure();
 					activePlayer.changeMoney(-50);
@@ -327,6 +337,7 @@ public class Game extends JPanel implements Serializable {
 			}
 		});
 
+		// Discipline Pet Button
 		petInteract.getButtonDiscipline().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				activePet.discipline();
@@ -334,6 +345,7 @@ public class Game extends JPanel implements Serializable {
 			}
 		});
 		
+		// Revive Button
 		petInteract.getButtonRevive().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (activePlayer.getMoney() >= 100) {
@@ -357,8 +369,10 @@ public class Game extends JPanel implements Serializable {
 			}
 		});
 		
+		// Shop Button
 		buttonShop = new JButton(new ImageIcon(Game.class.getResource("/images/shop.png")));
 		buttonShop.addActionListener(new ActionListener() {
+			// When clicked, display shop screen
 			public void actionPerformed(ActionEvent e) {
 				displayShop();
 			}
@@ -367,9 +381,11 @@ public class Game extends JPanel implements Serializable {
 		buttonShop.setToolTipText("Shop for food and toys for your pets.");
 		add(buttonShop);
 		
+		// End Turn Button
 		buttonEndTurn = new JButton(new ImageIcon(Game.class.getResource("/images/endTurn.png")));
 		buttonEndTurn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Goes through checks to see if any pets have remaining action points.
 				boolean requiresPrompt = false;
 				for (Pet pet: activePlayer.getPets()) {
 					if (pet.getActionPoints() > 0) {
@@ -377,6 +393,7 @@ public class Game extends JPanel implements Serializable {
 						break;
 					}
 				}
+				// If so, will prompt the player to make sure they want to end their turn.
 				if (requiresPrompt) {
 					setButtonsEnabled(false);
 					currentDialog.setOptions("Some of your pets still have AP.", "Are you sure you want to end turn?", true, true);
@@ -618,7 +635,8 @@ public class Game extends JPanel implements Serializable {
 	}
 	
 	/**
-	 * 
+	 * Refreshes the food inventory panel, generally used after any event that affects the contents 
+	 * of the player's food inventory, such as buying food from the shop or feeding a pet.
 	 */
 	private void refreshFoodInventory() {
 		foodInventory = new FoodInventory(activePlayer.getFood(), semiBoldFont);
@@ -629,6 +647,8 @@ public class Game extends JPanel implements Serializable {
 		for (FoodType food : foodIcons.keySet()) {
 			foodIcons.get(food).getClickDetector().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					// Add a listener to each icon so that when the icon is clicked, if the player is selecting food 
+					// to feed their pet, the food the icon represents will be chosen to be fed to the pet.
 					if (selectingFood) {
 						activePlayer.feed(activePet, food);
 						selectingFood = false;
@@ -644,7 +664,8 @@ public class Game extends JPanel implements Serializable {
 	}
 	
 	/**
-	 * 
+	 * Refreshes the toy inventory panel, generally used after any event that affects the contents 
+	 * of the player's toy inventory, such as buying a toy from the shop or playing with a pet.
 	 */
 	private void refreshToyInventory() {
 		toyInventory = new ToyInventory(activePlayer.getToys(), semiBoldFont);
@@ -655,6 +676,8 @@ public class Game extends JPanel implements Serializable {
 		for (ToyInventoryIcon icon : toyIcons) {
 			icon.getClickDetector().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					// Add a listener to each icon so that when the icon is clicked, if the player is selecting a 
+					// toy to play with with their pet, the toy the icon represents will be chosen to be played with.
 					if (selectingToy) {
 						activePlayer.playWith(activePet, icon.getSpecificToy());
 						selectingToy = false;
@@ -670,12 +693,16 @@ public class Game extends JPanel implements Serializable {
 	}
 	
 	/**
-	 * 
+	 * Displays the shop panel over the left hand side of the screen. When called, will remove any
+	 * previous shop screens created on the shopBase, to ensure no conflicts. Will refresh all its
+	 * information when called, so generally also called to refresh the view after a player buys something.
 	 */
 	private void displayShop() {
+		// Clear base component of any previous panels added to it.
 		for (Component comp : shopBase.getComponents()) {
 			shopBase.remove(comp);
 		}
+		// Make a new shopPanel to add to the shopBase.
 		shopPanel = new ShopPanel(foodTypes, toyTypes, activePlayer.getMoney(), semiBoldFont, boldFont, regularFont);
 		shopBase.add(shopPanel);
 		shopBase.setVisible(true);
@@ -683,14 +710,18 @@ public class Game extends JPanel implements Serializable {
 		shopPanel.enablePossibleBuyButtons(activePlayer.getMoney());
 		shopPanel.getLeaveButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Add listener so that the shop quits when leave button clicked.
 				shopBase.setVisible(false);
 				setButtonsEnabled(true);
 			}
 		});
 		
+		// Adding listeners to each food for sale in the shop
 		for (ShopFoodDisplayer foodDisplay : shopPanel.getFoodsForSale()) {
 			foodDisplay.getBuyButton().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					// For each food item for sale in the shop, add a listener so that it 
+					// gets bought when its buy button is clicked.
 					if (activePlayer.getMoney() >= foodDisplay.getFoodType().getPrice()) {
 						activePlayer.changeMoney(-foodDisplay.getFoodType().getPrice());
 						activePlayer.addFood(foodDisplay.getFoodType());
@@ -709,12 +740,12 @@ public class Game extends JPanel implements Serializable {
 			});
 		}
 		
-		/**
-		 * 
-		 */
+		// Adding listeners to each toy for sale in the shop
 		for (ShopToyDisplayer toyDisplay : shopPanel.getToysForSale()) {
 			toyDisplay.getBuyButton().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					// For each toy for sale in the shop, add a listener so that it
+					// gets bought when its buy button is clicked.
 					if (activePlayer.getMoney() >= toyDisplay.getToyType().getPrice()) {
 						activePlayer.changeMoney(-toyDisplay.getToyType().getPrice());
 						activePlayer.addToy(new Toy(toyDisplay.getToyType()));

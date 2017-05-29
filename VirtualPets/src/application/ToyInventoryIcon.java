@@ -13,7 +13,8 @@ import model.ToyType;
  * @author Alex Tompkins (ato47)
  */
 public class ToyInventoryIcon extends JPanel {
-	private static final long serialVersionUID = -6546718780959454045L;
+	private static final long serialVersionUID = 1L;
+	
 	private JButton clickDetector;
 	private JLabel toyIcon;
 	private JLabel durabilityLabel;
@@ -74,7 +75,7 @@ public class ToyInventoryIcon extends JPanel {
 	//End getters
 	
 	/**
-	 * Sets this icon to be either enabled or disabled. This will grey it out to show to the
+	 * Sets this icon to be either enabled or disabled. Being disabled will grey it out to show to the
 	 * player that it cannot be used.
 	 * @param enabled
 	 * True to enable this icon, false to disable it.

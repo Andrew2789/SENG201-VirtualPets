@@ -15,7 +15,8 @@ import model.Pet;
  * @author Andrew Davidson (ada130)
  */
 public class PetInteract extends JPanel {
-	private static final long serialVersionUID = 571759901412319640L;
+	private static final long serialVersionUID = 1L;
+	
 	private Pet activePet;
 	private JLabel speciesLabel, favouriteToyLabel, favouriteToyIcon, favouriteFoodLabel, favouriteFoodIcon;
 	private JLabel behavingLabel, healthyLabel;

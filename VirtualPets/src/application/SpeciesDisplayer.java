@@ -13,7 +13,7 @@ import model.Species;
  * @author Andrew Davidson (ada130)
  */
 public class SpeciesDisplayer extends JPanel {
-	private static final long serialVersionUID = 2326573558020329538L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the species displayer for a specified species, displaying all of its attributes and its icon.

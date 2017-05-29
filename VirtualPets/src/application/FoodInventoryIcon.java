@@ -12,7 +12,8 @@ import model.FoodType;
  * @author Alex Tompkins (ato47)
  */
 public class FoodInventoryIcon extends JPanel {
-	private static final long serialVersionUID = 2475277303480636218L;
+	private static final long serialVersionUID = 1L;
+	
 	private JButton clickDetector;
 	private JLabel foodIcon;
 	private JLabel quantityLabel;

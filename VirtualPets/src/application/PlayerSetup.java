@@ -22,7 +22,8 @@ import model.ToyType;
  * @author Andrew Davidson (ada130)
  */
 public class PlayerSetup extends JPanel {
-	private static final long serialVersionUID = -138517277103698226L;
+	private static final long serialVersionUID = 1L;
+	
 	private JTextField playerNameField;
 	private JComboBox<String> petAmountChooser;
 	private PetSetup[] petSetups;

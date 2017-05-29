@@ -11,10 +11,9 @@ import model.Toy;
  * @author Alex Tompkins (ato47)
  */
 public class ToyInventory extends JPanel {
-	private static final long serialVersionUID = -752677781672398397L;
-	private static final int[] itemHorizontalPositions = {0, 90, 180};
-	private static final int itemVerticalDistance = 90;
+	private static final long serialVersionUID = 1L;
 	
+	private static final int itemDistance = 90;
 	private ToyInventoryIcon[] toyIcons;
 
 	/**
@@ -34,9 +33,9 @@ public class ToyInventory extends JPanel {
 		
 		for (int i=0; i < playerToys.size(); i++) {
 			toyIcons[i] = new ToyInventoryIcon(playerToys.get(i), semiBoldFont);
-			toyIcons[i].setBounds(itemHorizontalPositions[i%3], 
-										 i/3*itemVerticalDistance, 
-										 85,85);
+			// Position each toy icon in its correct position by doing integer division/remainder by 3, 
+			// which is the length of the row, then multiplying by the distance between their origins.
+			toyIcons[i].setBounds((i%3)*itemDistance, i/3*itemDistance, 85,85);
 			add(toyIcons[i]);
 		}
 	}

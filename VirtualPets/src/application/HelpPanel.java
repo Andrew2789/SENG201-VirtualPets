@@ -14,7 +14,8 @@ import javax.swing.JTextArea;
  * @author Andrew Davidson (ada130)
  */
 public class HelpPanel extends JPanel {
-	private static final long serialVersionUID = -1616396715859775492L;
+	private static final long serialVersionUID = 1L;
+	
 	private JButton buttonClose;
 	
 	/**

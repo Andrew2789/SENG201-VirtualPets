@@ -14,7 +14,8 @@ import javax.swing.SwingConstants;
  * @author Andrew Davidoson (ada130)
  */
 public class InternalDialog extends JPanel {
-	private static final long serialVersionUID = 8843581086428980769L;
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel promptLabel, promptLabel2;
 	private JButton buttonOk, buttonCancel;
 

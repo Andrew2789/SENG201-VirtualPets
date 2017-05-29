@@ -12,10 +12,9 @@ import model.FoodType;
  * @author Alex Tompkins (ato47)
  */
 public class FoodInventory extends JPanel {
-	private static final long serialVersionUID = -581342435839614651L;
-	private static final int[] itemHorizontalPositions = {0, 90, 180};
-	private static final int itemVerticalDistance = 90;
+	private static final long serialVersionUID = 1L;
 	
+	private static final int itemDistance = 90;
 	private HashMap<FoodType, FoodInventoryIcon> foodIcons;
 
 	/**
@@ -36,9 +35,9 @@ public class FoodInventory extends JPanel {
 		int i = 0;
 		for (FoodType food : new TreeSet<FoodType>(playerFoods.keySet())) {
 			foodIcons.put(food, new FoodInventoryIcon(food, playerFoods.get(food), semiBoldFont));
-			foodIcons.get(food).setBounds(itemHorizontalPositions[i%3], 
-													i/3*itemVerticalDistance, 
-													85,85);
+			// Position each food icon in its correct position by doing integer division/remainder by 3, 
+			// which is the length of the row, then multiplying by the distance between their origins.
+			foodIcons.get(food).setBounds((i%3)*itemDistance, i/3*itemDistance, 85,85);
 			add(foodIcons.get(food));
 			i++;
 		}
@@ -51,7 +50,7 @@ public class FoodInventory extends JPanel {
 	
 	/**
 	 * Sets all the food icons in this inventory to either enabled or disabled.
-	 * This will grey them out in order to show to the player that they cannot be used yet.
+	 * Disabling them will grey them out in order to show to the player that they cannot be used yet.
 	 * @param enabled
 	 * True for setting food icons to be enabled, false for setting food icons to be disabled
 	 */

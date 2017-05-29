@@ -17,7 +17,8 @@ import model.Pet;
  * @author Andrew Davidson (ada130)
  */
 public class PetTab extends JPanel {
-	private static final long serialVersionUID = -4840106067673959643L;
+	private static final long serialVersionUID = 1L;
+	
 	private JButton clickDetector;
 	private JLabel deadOverlay, sickIcon, misbehavingIcon, starvingIcon;
 	private JLabel petNameLabel, petIcon, actionPointsLabel;
