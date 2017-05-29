@@ -104,6 +104,13 @@ public class GuiRunner {
 			System.out.println("Failed to load font.");
 			return null;
 		}
+		finally {
+			try {
+				file.close();
+			}
+			catch (IOException e) {
+			}
+		}
 	}
 	
 	/**
