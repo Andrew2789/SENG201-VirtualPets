@@ -31,20 +31,21 @@ public class AssetsSaver {
 				bufferOut.newLine();
 			}
 			
-			saveIcons(file, species, foodTypes, toyTypes);
+			//saveIcons(file, species, foodTypes, toyTypes);
 		}
 		catch (IOException exc) {
 			System.err.println("An error occurred when writing the asset files.");
 		}
 		finally {
 			try {
-				if (fileOut != null)
-					fileOut.close();
 				if (bufferOut != null)
 					bufferOut.close();
+				if (fileOut != null)
+					fileOut.close();
 			}
 			catch (IOException exc) {
 				System.err.println("An error occurred when closing the assets config file.");
+				exc.printStackTrace(System.err);
 			}
 		}
 	}
@@ -52,7 +53,7 @@ public class AssetsSaver {
 	private static ArrayList<String> generateSpeciesBlocks(Species[] speciesArray) {
 		ArrayList<String> text = new ArrayList<String>();
 		
-		text.add("$Species");
+		text.add("@Species");
 		for (Species species : speciesArray) {
 			text.add(String.format("$%s", species.getName()));
 			text.add(String.format("\t" + "name=\"%s\"", species.getName()));
@@ -65,7 +66,7 @@ public class AssetsSaver {
 			text.add(String.format("\t" + "maxToyDamage=%d", species.getMaxToyDamage()));
 			text.add(String.format("/%s", species.getName()));
 		}
-		text.add("/Species");
+		text.add("@Species");
 		
 		return text;
 	}
@@ -73,7 +74,7 @@ public class AssetsSaver {
 	private static ArrayList<String> generateFoodTypeBlocks(FoodType[] foodTypes) {
 		ArrayList<String> text = new ArrayList<String>();
 		
-		text.add("$FoodTypes");
+		text.add("@FoodTypes");
 		for (FoodType food : foodTypes) {
 			text.add(String.format("$%s", food.getName()));
 			text.add(String.format("\t" + "name=\"%s\"", food.getName()));
@@ -84,7 +85,7 @@ public class AssetsSaver {
 			text.add(String.format("\t" + "weight=%d", food.getWeight()));
 			text.add(String.format("/%s", food.getName()));
 		}
-		text.add("/FoodTypes");
+		text.add("@FoodTypes");
 		
 		return text;
 	}
@@ -92,24 +93,24 @@ public class AssetsSaver {
 	private static ArrayList<String> generateToyTypeBlocks(ToyType[] toyTypes) {
 		ArrayList<String> text = new ArrayList<String>();
 		
-		text.add("$ToyTypes");
+		text.add("@ToyTypes");
 		for (ToyType toy : toyTypes) {
 			text.add(String.format("$%s", toy.getName()));
 			text.add(String.format("\t" + "name=\"%s\"", toy.getName()));
 			text.add(String.format("\t" + "icon=\"/images/toys/%s.png\"", toy.getName()));
-			text.add(String.format("\t" + "nutrition=%d", toy.getPrice()));
-			text.add(String.format("\t" + "tastiness=%d", toy.getHappinessGain()));
+			text.add(String.format("\t" + "price=%d", toy.getPrice()));
+			text.add(String.format("\t" + "happinessGain=%d", toy.getHappinessGain()));
 			text.add(String.format("/%s", toy.getName()));
 		}
-		text.add("/ToyTypes");
+		text.add("@ToyTypes");
 		
 		return text;
 	}
 	
 	private static void saveIcons(File file, Species[] speciesArray, FoodType[] foodTypes, ToyType[] toyTypes) throws IOException {
 		for (Species species : speciesArray) {
-			File imageFile = new File(file.getParentFile().getPath() + "/images/");
-			ImageIO.write((BufferedImage) species.getIcon().getImage(), "", imageFile);
+			File imageFile = new File(file.getParentFile().getPath() + "/images/species/");
+			
 		}
 	}
 }
