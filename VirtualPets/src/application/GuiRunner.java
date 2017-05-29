@@ -31,6 +31,7 @@ public class GuiRunner {
 	private GameSetup gameSetup;
 	private AssetCreator assetCreator;
 	private Game game;
+	private HelpPanel helpPanel;
 
 	/**
 	 * Launch the application.
@@ -65,6 +66,8 @@ public class GuiRunner {
 		
 		initialise();
 		loadMainMenu();
+		helpPanel = new HelpPanel(sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
+		frame.add(helpPanel);
 		mainMenu.setVisible(true);
 	}
 	
@@ -107,7 +110,7 @@ public class GuiRunner {
 	 * Load the main menu screen and store it.
 	 */
 	private void loadMainMenu() {
-		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemibold.deriveFont(16f), sourceSansProBold.deriveFont(15f), sourceSansPro.deriveFont(15f));
+		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemibold.deriveFont(16f));
 
 		//Switch to gameSetup if new game is clicked
 		mainMenu.getNewGameButton().addActionListener(new ActionListener(){
@@ -136,12 +139,26 @@ public class GuiRunner {
 				}
 			}
 		});
-		
+
 		//Switch to AssetCreator if create new asset is clicked
 		mainMenu.getCreateNewAssetButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				loadAssetCreator();
 				assetCreator.setVisible(true);
+				mainMenu.setVisible(false);
+			}
+		});
+		
+		//Open help panel if help pressed
+		mainMenu.getHelpButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				helpPanel.setActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						helpPanel.setVisible(false);
+						mainMenu.setVisible(true);
+					}
+				});
+				helpPanel.setVisible(true);
 				mainMenu.setVisible(false);
 			}
 		});
@@ -271,6 +288,20 @@ public class GuiRunner {
 		
 		game = new Game(toyTypes, foodTypes, poppins.deriveFont(48f), poppins.deriveFont(18f), sourceSansProBold.deriveFont(14f), 
 				sourceSansProSemibold.deriveFont(14f), sourceSansPro.deriveFont(14f), roundOverview, exitToMainMenu, exitToDesktop);
+		
+		//Open help panel if help pressed
+		game.getHelpButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				helpPanel.setActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e) {
+						helpPanel.setVisible(false);
+						game.setVisible(true);
+					}
+				});
+				helpPanel.setVisible(true);
+				game.setVisible(false);
+			}
+		});
 		
 		frame.getContentPane().add(game);
 	}

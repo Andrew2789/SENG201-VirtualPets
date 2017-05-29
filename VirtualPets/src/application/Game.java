@@ -41,7 +41,7 @@ public class Game extends JPanel {
 	private JLabel dayLabel, playerLabel;
 	private JButton buttonShop, buttonEndTurn, buttonMenu;
 	private JPanel menu;
-	private JButton buttonSaveGame, buttonExitToMainMenu, buttonExitToDesktop, buttonCloseMenu;
+	private JButton buttonSaveGame, buttonHelp, buttonExitToMainMenu, buttonExitToDesktop, buttonCloseMenu;
 
 	private JLabel inventoryMoney;
 	private boolean selectingToy = false;
@@ -92,7 +92,7 @@ public class Game extends JPanel {
 		//Menu panel and buttons
 		menu = new JPanel();
 		menu.setBackground(Color.GRAY);
-		menu.setBounds(250, 180, 300, 310);
+		menu.setBounds(250, 153, 300, 372);
 		menu.setVisible(false);
 		menu.setLayout(null);
 		add(menu);
@@ -127,6 +127,10 @@ public class Game extends JPanel {
 		});
 		buttonSaveGame.setBounds(50, 36, 200, 50);
 		menu.add(buttonSaveGame);
+
+		buttonHelp = new JButton("Help");
+		buttonHelp.setBounds(50, 98, 200, 50);
+		menu.add(buttonHelp);
 		
 		buttonExitToMainMenu = new JButton("Exit to Main Menu");
 		buttonExitToMainMenu.addActionListener(new ActionListener() {
@@ -145,7 +149,7 @@ public class Game extends JPanel {
 				currentDialog.setVisible(true);
 			}
 		});
-		buttonExitToMainMenu.setBounds(50, 98, 200, 50);
+		buttonExitToMainMenu.setBounds(50, 160, 200, 50);
 		menu.add(buttonExitToMainMenu);
 		
 		buttonExitToDesktop = new JButton("Exit to Desktop");
@@ -165,7 +169,7 @@ public class Game extends JPanel {
 				currentDialog.setVisible(true);
 			}
 		});
-		buttonExitToDesktop.setBounds(50, 160, 200, 50);
+		buttonExitToDesktop.setBounds(50, 222, 200, 50);
 		menu.add(buttonExitToDesktop);
 		
 		buttonCloseMenu = new JButton("Close Menu");
@@ -175,7 +179,7 @@ public class Game extends JPanel {
 				setButtonsEnabled(true);
 			}
 		});
-		buttonCloseMenu.setBounds(50, 222, 200, 50);
+		buttonCloseMenu.setBounds(50, 284, 200, 50);
 		menu.add(buttonCloseMenu);
 
 		//Shop background panel to be drawn to later, inventory scroll panes
@@ -451,6 +455,10 @@ public class Game extends JPanel {
 	}
 	
 	//Getters
+	public JButton getHelpButton() {
+		return buttonHelp;
+	}
+	
 	public JButton getExitToMainMenu() {
 		return buttonExitToMainMenu;
 	}
@@ -733,6 +741,7 @@ public class Game extends JPanel {
 	 */
 	private void setMenuButtonsEnabled(boolean enabled) {
 		buttonSaveGame.setEnabled(enabled);
+		buttonHelp.setEnabled(enabled);
 		buttonExitToMainMenu.setEnabled(enabled);
 		buttonExitToDesktop.setEnabled(enabled);
 		buttonCloseMenu.setEnabled(enabled);
