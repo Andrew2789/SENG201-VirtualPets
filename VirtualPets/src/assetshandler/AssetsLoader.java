@@ -19,7 +19,7 @@ import model.ToyType;
 public class AssetsLoader
 {
 	// Generic Static Methods
-	private static String[] readAllLines(InputStream inputStream)
+	private static String[] readAllLines(InputStream inputStream) throws FileNotFoundException, IOException
 	{
 		BufferedReader buffer = null;
 		ArrayList<String> lines = new ArrayList<String>();
@@ -36,11 +36,11 @@ public class AssetsLoader
 		}
 		catch (FileNotFoundException e)
 		{
-			System.err.println("Custom asset file not found.");
+			throw new IOException("Custom asset file not found.");
 		}
 		catch (IOException e)
 		{
-			System.err.println("An error occured while reading the custom asset file.");
+			throw new IOException("An error occured while reading the custom asset file.");
 		}
 		finally {
 			try {
@@ -118,7 +118,7 @@ public class AssetsLoader
 	// End Generic Static Methods
 	
 	// Loading Custom Methods
-	public static Object[][] loadCustomAssetsFile(File customAssetFolder) throws FileNotFoundException {
+	public static Object[][] loadCustomAssetsFile(File customAssetFolder) throws FileNotFoundException, IOException {
 		InputStream configStream = new FileInputStream(new File(customAssetFolder.getPath() + "/config.txt"));
 		
 		final String[] lines = readAllLines(configStream);
@@ -178,7 +178,7 @@ public class AssetsLoader
 		return customAssets;
 	}
 	
-	public static Species[] loadCustomSpeciesFile(InputStream inputStream) {
+	public static Species[] loadCustomSpeciesFile(InputStream inputStream) throws FileNotFoundException, IOException {
 		final String[] lines = readAllLines(inputStream);
 		Object[] customObjects = parseCustomBlocks(lines, new SpeciesLoadFormat(null));
 		return Arrays.copyOf(
@@ -187,7 +187,7 @@ public class AssetsLoader
 				Species[].class);
 	}
 	
-	public static ToyType[] loadCustomToyTypesFile(InputStream inputStream) {
+	public static ToyType[] loadCustomToyTypesFile(InputStream inputStream) throws FileNotFoundException, IOException {
 		final String[] lines = readAllLines(inputStream);
 		Object[] customObjects = parseCustomBlocks(lines, new ToyTypeLoadFormat(null));
 		return Arrays.copyOf(
@@ -196,7 +196,7 @@ public class AssetsLoader
 				ToyType[].class);
 	}
 	
-	public static FoodType[] loadCustomFoodTypesFile(InputStream inputStream) {
+	public static FoodType[] loadCustomFoodTypesFile(InputStream inputStream) throws FileNotFoundException, IOException {
 		final String[] lines = readAllLines(inputStream);
 		Object[] customObjects = parseCustomBlocks(lines, new FoodTypeLoadFormat(null));
 		return Arrays.copyOf(

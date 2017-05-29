@@ -111,13 +111,14 @@ public class Game extends JPanel implements Serializable {
 		buttonSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser saveFileDialog = new JFileChooser();
+				saveFileDialog.setDialogTitle("Save Game");
 				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					try {
 						SaveGameHandler.writeGameToFile(getGame(), saveFileDialog.getSelectedFile());
 					}
 					catch (NullPointerException exc) {
 						JOptionPane.showMessageDialog(SwingUtilities.windowForComponent(getGame()), 
-								"Loading game file failed due to an invalid save file location being provided.", 
+								"Saving game file failed due to an invalid save file location being provided.", 
 								"Save File Loading Error", JOptionPane.ERROR_MESSAGE);
 					}
 					catch (IOException exc) {

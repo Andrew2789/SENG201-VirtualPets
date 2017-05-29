@@ -62,9 +62,21 @@ public class GuiRunner {
 	 * Load fonts, species, toy types, and food types. Initialises the gui and loads the main menu.
 	 */
 	public GuiRunner() {
-		species = AssetsLoader.loadCustomSpeciesFile(GuiRunner.class.getResourceAsStream("/default_species.txt"));
-		toyTypes = AssetsLoader.loadCustomToyTypesFile(GuiRunner.class.getResourceAsStream("/default_toytypes.txt"));
-		foodTypes = AssetsLoader.loadCustomFoodTypesFile(GuiRunner.class.getResourceAsStream("/default_foodtypes.txt"));
+		try {
+			species = AssetsLoader.loadCustomSpeciesFile(GuiRunner.class.getResourceAsStream("/default_species.txt"));
+			toyTypes = AssetsLoader.loadCustomToyTypesFile(GuiRunner.class.getResourceAsStream("/default_toytypes.txt"));
+			foodTypes = AssetsLoader.loadCustomFoodTypesFile(GuiRunner.class.getResourceAsStream("/default_foodtypes.txt"));
+		}
+		catch (FileNotFoundException exc) {
+			JOptionPane.showMessageDialog(frame, 
+					"Default asset resources could not be found." + exc.getMessage(),
+					"Loading Default Assets Error", JOptionPane.ERROR_MESSAGE);
+		}
+		catch (IOException exc) {
+			JOptionPane.showMessageDialog(frame, 
+					"An error occurred while loading default assets: \n" + exc.getMessage(),
+					"Loading Default Assets Error", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		poppins = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
@@ -141,6 +153,7 @@ public class GuiRunner {
 		mainMenu.getLoadGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser openFileDialog = new JFileChooser();
+				openFileDialog.setDialogTitle("Load Game");
 				if (openFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					try {
 						File saveFile = openFileDialog.getSelectedFile();
@@ -188,8 +201,15 @@ public class GuiRunner {
 				saveFileDialog.setAcceptAllFileFilterUsed(false);
 				
 				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					File customAssetFile = saveFileDialog.getSelectedFile();
-					AssetsSaver.writeAssetsToFile(customAssetFile, species, foodTypes, toyTypes);
+					try {
+						File customAssetFile = saveFileDialog.getSelectedFile();
+						AssetsSaver.writeAssetsToFile(customAssetFile, species, foodTypes, toyTypes);
+					}
+					catch (IOException exc) {
+						JOptionPane.showMessageDialog(frame, 
+								"Saving assets failed due to: \n" + exc.getMessage(), 
+								"Saving Assets Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});
@@ -244,7 +264,14 @@ public class GuiRunner {
 						toyTypes = newToyTypesList.toArray(new ToyType[newToyTypesList.size()]);
 					}
 					catch (FileNotFoundException exc) {
-						System.err.println("The specified custom asset file could not be found.");
+						JOptionPane.showMessageDialog(frame, 
+								"The specified custom asset files could not be found or are invalid.", 
+								"Loading Assets Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch (IOException exc) {
+						JOptionPane.showMessageDialog(frame, 
+								"Loading of custom assets failed due to: \n" + exc.getMessage(),
+								"Loading Assets Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

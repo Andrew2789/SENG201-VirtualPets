@@ -46,7 +46,7 @@ public class SpeciesLoadFormat implements LoadFormat {
 			System.err.println("Incorrect number format when parsing custom file.");
 		}
 		catch (NullPointerException exc) {
-			System.err.println("Speices attribute value either missing or invalid.");
+			System.err.println("Species attribute value either missing or invalid.");
 		}
 		return customObjects;
 	}

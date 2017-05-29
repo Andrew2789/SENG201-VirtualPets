@@ -15,7 +15,7 @@ import model.FoodType;
 import model.ToyType;
 
 public class AssetsSaver {
-	public static void writeAssetsToFile(File folder, Species[] species, FoodType[] foodTypes, ToyType[] toyTypes) {
+	public static void writeAssetsToFile(File folder, Species[] species, FoodType[] foodTypes, ToyType[] toyTypes) throws IOException {
 		File file = new File(folder.getPath() + "/config.txt");
 		FileWriter fileOut = null;
 		BufferedWriter bufferOut = null;
@@ -41,7 +41,9 @@ public class AssetsSaver {
 				throw new IOException("Asset images folder could not be created.");
 		}
 		catch (IOException exc) {
-			System.err.println("An error occurred when writing the asset files.");
+			if (exc.getMessage().equals(""))
+				exc = new IOException("An error occurred when writing the asset files.");
+			throw exc;
 		}
 		finally {
 			try {
