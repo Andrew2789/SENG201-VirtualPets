@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import assetsLoader.AssetsLoader;
+import assetsLoader.AssetsSaver;
 import model.FoodType;
 import model.Species;
 import model.ToyType;
@@ -181,7 +182,11 @@ public class GuiRunner {
 		//Save current asset configuration to a file
 		mainMenu.getSaveAssetsButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				//SAVEASSETS;
+				JFileChooser saveFileDialog = new JFileChooser();
+				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					File customAssetFile = saveFileDialog.getSelectedFile();
+					AssetsSaver.writeAssetsToFile(customAssetFile, species, foodTypes, toyTypes);
+				}
 			}
 		});
 
