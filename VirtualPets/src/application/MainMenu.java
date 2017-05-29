@@ -13,7 +13,7 @@ import javax.swing.SwingConstants;
  */
 public class MainMenu extends JPanel {
 	private static final long serialVersionUID = 5563328853841424713L;
-	private JButton buttonNewGame, buttonLoadGame, buttonCreateNewAsset, buttonHelp, buttonQuit;
+	private JButton buttonNewGame, buttonLoadGame, buttonCreateNewAsset, buttonSaveAssetConfig, buttonLoadAssetConfig, buttonHelp, buttonQuit;
 
 	/**
 	 * Create the main menu panel: title label and menu buttons.
@@ -37,31 +37,45 @@ public class MainMenu extends JPanel {
 		buttonNewGame = new JButton("New Game");
 		buttonNewGame.setFont(buttonFont);
 		buttonNewGame.setEnabled(true);
-		buttonNewGame.setBounds(300, 150, 200, 60);
+		buttonNewGame.setBounds(275, 150, 250, 45);
 		add(buttonNewGame);
 		
 		buttonLoadGame = new JButton("Load Game");
 		buttonLoadGame.setFont(buttonFont);
 		buttonLoadGame.setEnabled(true);
-		buttonLoadGame.setBounds(300, 221, 200, 60);
+		buttonLoadGame.setBounds(275, 206, 250, 45);
 		add(buttonLoadGame);
 		
 		buttonCreateNewAsset = new JButton("Create New Asset");
 		buttonCreateNewAsset.setFont(buttonFont);
 		buttonCreateNewAsset.setEnabled(true);
-		buttonCreateNewAsset.setBounds(300, 292, 200, 60);
+		buttonCreateNewAsset.setBounds(275, 262, 250, 45);
 		add(buttonCreateNewAsset);
+		
+		buttonSaveAssetConfig = new JButton("Save Asset Configuration");
+		buttonSaveAssetConfig.setFont(null);
+		buttonSaveAssetConfig.setEnabled(true);
+		buttonSaveAssetConfig.setFont(buttonFont);
+		buttonSaveAssetConfig.setBounds(275, 318, 250, 45);
+		add(buttonSaveAssetConfig);
+		
+		buttonLoadAssetConfig = new JButton("Load Asset Configuration");
+		buttonLoadAssetConfig.setFont(null);
+		buttonLoadAssetConfig.setEnabled(true);
+		buttonLoadAssetConfig.setFont(buttonFont);
+		buttonLoadAssetConfig.setBounds(275, 374, 250, 45);
+		add(buttonLoadAssetConfig);
 		
 		buttonHelp = new JButton("Help");
 		buttonHelp.setFont(buttonFont);
 		buttonHelp.setEnabled(true);
-		buttonHelp.setBounds(300, 363, 200, 60);
+		buttonHelp.setBounds(275, 430, 250, 45);
 		add(buttonHelp);
 		
 		buttonQuit = new JButton("Quit");
 		buttonQuit.setFont(buttonFont);
 		buttonQuit.setEnabled(true);
-		buttonQuit.setBounds(300, 434, 200, 60);
+		buttonQuit.setBounds(275, 486, 250, 45);
 		add(buttonQuit);
 		
 		JLabel backgroundImage = new JLabel("");
@@ -81,6 +95,14 @@ public class MainMenu extends JPanel {
 
 	public JButton getCreateNewAssetButton() {
 		return buttonCreateNewAsset;
+	}
+
+	public JButton getSaveAssetsButton() {
+		return buttonSaveAssetConfig;
+	}
+
+	public JButton getLoadAssetsButton() {
+		return buttonLoadAssetConfig;
 	}
 	
 	public JButton getHelpButton() {
