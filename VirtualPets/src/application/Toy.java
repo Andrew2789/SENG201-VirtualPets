@@ -1,10 +1,14 @@
 package application;
 
+import java.io.Serializable;
+
 /**
  * A class to represent a toy with a type and a durability.
  * @author Alex Tompkins (ato47)
  */
-public class Toy {
+public class Toy implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private ToyType toyType;
 	private int durability;
 	

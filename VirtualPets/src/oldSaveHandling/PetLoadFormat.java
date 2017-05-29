@@ -1,4 +1,4 @@
-package customFileLoader;
+package oldSaveHandling;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import application.FoodType;
 import application.Pet;
 import application.Species;
 import application.ToyType;
+import customFileLoader.LoadFormat;
 
 public class PetLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"name", "icon", "species", "healthy", "behaving", "alive", "revivable", 
@@ -57,7 +58,7 @@ public class PetLoadFormat implements LoadFormat {
 			customObjects.add(newPet);
 		}
 		catch (NumberFormatException e) {
-			System.err.println("Incorrect number format when parsing custom file.");
+			System.err.println("Incorrect number format when parsing pets block.");
 		}
 		catch (NullPointerException e) {
 			System.err.println("Attribute value either missing or invalid.");

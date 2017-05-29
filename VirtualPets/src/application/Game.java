@@ -1,4 +1,5 @@
 package application;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -6,12 +7,15 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
+
+import saveFileHandling.GameSaver;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -23,7 +27,7 @@ import javax.swing.ScrollPaneConstants;
  * @author Andrew Davidson (ada130)
  * @author Alex Tompkins (ato47)
  */
-public class Game extends JPanel {
+public class Game extends JPanel implements Serializable {
 	private static final long serialVersionUID = 1557753595413288282L;
 	private ToyType[] toyTypes;
 	private FoodType[] foodTypes;
@@ -100,28 +104,14 @@ public class Game extends JPanel {
 		buttonSaveGame = new JButton("Save Game");
 		buttonSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser saveFile = new JFileChooser();
-				int response = saveFile.showSaveDialog(null);
-				switch (response) {
-					case JFileChooser.APPROVE_OPTION:
-						ArrayList<Species> speciesList = new ArrayList<Species>();
-						for (Player player : players)
-							for (Pet pet : player.getPets())
-								if (!speciesList.contains(pet.getSpecies()))
-									speciesList.add(pet.getSpecies());
-						Species[] species = speciesList.toArray(new Species[speciesList.size()]);
-						
-						int currentPlayerIndex = 0;
-						for (int i=0; i<players.length; i++)
-							if (players[i] == activePlayer)
-								currentPlayerIndex = i;
-						
-						GameSaver.saveGame(saveFile.getSelectedFile(), species, foodTypes, toyTypes, players, 
-								numberOfDays, incomePerTurn, currentDay, currentPlayerIndex, roundOverview.getPreviousScores());
-					case JFileChooser.CANCEL_OPTION:
-						;
-					case JFileChooser.ERROR_OPTION:
-						;
+				JFileChooser saveFileDialog = new JFileChooser();
+				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					try {
+						GameSaver.writeGameToFile(getGame(), saveFileDialog.getSelectedFile());
+					}
+					catch (NullPointerException exc) {
+						System.err.println("Saving game file failed due to an invalid/missing file being provided.");
+					}
 				}
 			}
 		});
@@ -455,6 +445,10 @@ public class Game extends JPanel {
 	}
 	
 	//Getters
+	public Game getGame() {
+		return this;
+	}
+	
 	public JButton getHelpButton() {
 		return buttonHelp;
 	}
@@ -509,17 +503,20 @@ public class Game extends JPanel {
 	 * @param previousScores
 	 * The scores of the players for the previous round, used in round overview
 	 */
-	public void resume(FoodType[] foodTypes, ToyType[] toyTypes, Player[] players, int currentDay, 
-			int currentPlayerIndex, int numberOfDays, int incomePerTurn, int[] previousScores) {
-		this.foodTypes = foodTypes;
-		this.toyTypes = toyTypes;
-		this.players = players;
-		this.numberOfDays = numberOfDays;
-		this.incomePerTurn = incomePerTurn;
-		this.currentDay = currentDay;
+	public void resume(Game savedGame) {
+		this.foodTypes = savedGame.foodTypes;
+		this.toyTypes = savedGame.toyTypes;
+		this.players = savedGame.players;
+		this.numberOfDays = savedGame.numberOfDays;
+		this.incomePerTurn = savedGame.incomePerTurn;
+		this.currentDay = savedGame.currentDay;
+		this.activePlayer = savedGame.activePlayer;
+		roundOverview = savedGame.roundOverview;
+		
 		dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
-		roundOverview.setPreviousRoundScores(previousScores);
-		setTurn(currentPlayerIndex);
+		for (int i = 0; i<players.length; i++)
+			if (players[i].equals(activePlayer))
+				setTurn(i);
 	}
 	
 	/**

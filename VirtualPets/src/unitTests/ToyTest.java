@@ -1,10 +1,13 @@
-package application;
+package unitTests;
 
 import static org.junit.Assert.*;
 
 import javax.swing.ImageIcon;
 
 import org.junit.Test;
+
+import application.Toy;
+import application.ToyType;
 
 /**
  * Tests the only non-getter/setter method of Toy: durability change.

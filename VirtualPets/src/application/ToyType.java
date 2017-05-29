@@ -1,12 +1,15 @@
 package application;
 
+import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 /**
  * Stores the unique attributes of a type of toy in each instance, used by Toy.
  * @author Alex Tompkins (ato47)
  */
-public class ToyType {
+public class ToyType implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private ImageIcon icon;
 	private int price;

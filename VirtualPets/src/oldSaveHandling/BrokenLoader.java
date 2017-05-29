@@ -1,4 +1,4 @@
-package customFileLoader;
+package oldSaveHandling;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,8 +17,12 @@ import application.FoodType;
 import application.Species;
 import application.Toy;
 import application.ToyType;
+import customFileLoader.FoodTypeLoadFormat;
+import customFileLoader.LoadFormat;
+import customFileLoader.SpeciesLoadFormat;
+import customFileLoader.ToyTypeLoadFormat;
 
-public class Loader
+public class BrokenLoader
 {
 	// Generic Static Methods
 	private static String[] readAllLines(InputStream inputStream)
@@ -446,8 +450,8 @@ public class Loader
 		// END DEBUG
 		
 		// Now resume Game based on saveData
-		Player[] savedPlayers = savedPlayersList.toArray(new Player[savedPlayersList.size()]);
-		game.resume(savedFoodTypes, savedToyTypes, savedPlayers, savedCurrentDay, savedCurrentPlayerIndex, savedNumberOfDays, savedIncomePerTurn, savedPreviousScores);
+		//Player[] savedPlayers = savedPlayersList.toArray(new Player[savedPlayersList.size()]);
+		//game.resume(savedFoodTypes, savedToyTypes, savedPlayers, savedCurrentDay, savedCurrentPlayerIndex, savedNumberOfDays, savedIncomePerTurn, savedPreviousScores);
 	}
 	
 	// End Loading Save Files

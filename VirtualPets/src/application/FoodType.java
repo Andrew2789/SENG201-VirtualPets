@@ -1,12 +1,15 @@
 package application;
 
+import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 /**
  * Instances of this class represent the various food types available to buy and consume in the game.
  * @author Andrew Davidson (ada130)
  */
-public class FoodType implements Comparable<FoodType> {
+public class FoodType implements Serializable, Comparable<FoodType> {
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private ImageIcon icon;
 	private int price;

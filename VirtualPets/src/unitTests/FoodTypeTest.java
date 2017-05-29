@@ -1,7 +1,9 @@
-package application;
+package unitTests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import application.FoodType;
 
 import java.util.Arrays;
 import java.util.HashSet;

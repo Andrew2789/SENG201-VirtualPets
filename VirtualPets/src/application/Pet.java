@@ -1,4 +1,6 @@
 package application;
+
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -8,7 +10,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * through a set of actions: eat, play, rest, go to toilet, be cured, be disciplined, get revived.
  * @author Andrew Davidson (ada130)
  */
-public class Pet {
+public class Pet implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private Species species;
 	

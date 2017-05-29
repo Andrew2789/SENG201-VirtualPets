@@ -1,4 +1,4 @@
-package customFileLoader;
+package oldSaveHandling;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 import application.Toy;
 import application.ToyType;
+import customFileLoader.LoadFormat;
 
 public class ToyLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"toyType", "durability"};

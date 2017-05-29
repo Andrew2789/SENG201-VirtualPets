@@ -1,4 +1,6 @@
 package application;
+
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.ImageIcon;
 
@@ -8,7 +10,9 @@ import javax.swing.ImageIcon;
  * None of a species attributes can be changed after initialisation.
  * @author Andrew Davidson (ada130)
  */
-public class Species {
+public class Species implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private ImageIcon icon;
 	private int optimumWeight;

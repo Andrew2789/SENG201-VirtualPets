@@ -1,4 +1,4 @@
-package application;
+package oldSaveHandling;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,7 +6,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameSaver {
+import application.FoodType;
+import application.Pet;
+import application.Player;
+import application.Species;
+import application.Toy;
+import application.ToyType;
+
+public class GameSaverOld {
 	public static void saveGame(File saveFile, Species[] species, FoodType[] foodTypes, ToyType[] toyTypes, Player[] players, 
 			int numberOfDays, int incomePerTurn, int currentday, int currentPlayerIndex, int[] previousScores) {
 		BufferedWriter writer = null;

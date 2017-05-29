@@ -1,20 +1,19 @@
 package application;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.File;
 import java.io.InputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
-import customFileLoader.Loader;
+import customFileLoader.SettingsLoader;
+import saveFileHandling.GameLoader;
 
 /**
  * A controller and viewer for the application. Loads and shows the various game panels.
@@ -55,9 +54,9 @@ public class GuiRunner {
 	 * Load fonts, species, toy types, and food types. Initialises the gui and loads the main menu.
 	 */
 	public GuiRunner() {
-		species = Loader.loadCustomSpeciesFile(GuiRunner.class.getResourceAsStream("/default_species.txt"));
-		toyTypes = Loader.loadCustomToyTypesFile(GuiRunner.class.getResourceAsStream("/default_toytypes.txt"));
-		foodTypes = Loader.loadCustomFoodTypesFile(GuiRunner.class.getResourceAsStream("/default_foodtypes.txt"));
+		species = SettingsLoader.loadCustomSpeciesFile(GuiRunner.class.getResourceAsStream("/default_species.txt"));
+		toyTypes = SettingsLoader.loadCustomToyTypesFile(GuiRunner.class.getResourceAsStream("/default_toytypes.txt"));
+		foodTypes = SettingsLoader.loadCustomFoodTypesFile(GuiRunner.class.getResourceAsStream("/default_foodtypes.txt"));
 		
 		poppins = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
@@ -131,17 +130,18 @@ public class GuiRunner {
 		//Load a game if load game is clicked
 		mainMenu.getLoadGameButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser openFile = new JFileChooser();
-				if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				JFileChooser openFileDialog = new JFileChooser();
+				if (openFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					try {
-						InputStream saveFileStream = new FileInputStream(openFile.getSelectedFile());
+						File saveFile = openFileDialog.getSelectedFile();
 						loadGame();
-						Loader.loadSavedGameFile(saveFileStream, game);
+						Game savedGame = GameLoader.readGameFromFile(saveFile);
 						game.setVisible(true);
 						mainMenu.setVisible(false);
+						game.resume(savedGame);
 					}
-					catch (FileNotFoundException exc) {
-						System.err.println("Save file not found.");
+					catch (NullPointerException exc) {
+						System.err.println("Loading game file failed due to an invalid/missing file being provided.");
 					}
 				}
 			}
