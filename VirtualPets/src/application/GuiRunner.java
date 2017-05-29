@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -84,6 +86,8 @@ public class GuiRunner {
 		frame.setResizable(false);
 		frame.getContentPane().setPreferredSize(new Dimension(800, 600));
 		frame.pack();
+		frame.setTitle("Virtual Pets");
+		frame.setIconImage(new ImageIcon(GuiRunner.class.getResource("/images/FrameIcon.png")).getImage());
 	};
 	
 	/**
