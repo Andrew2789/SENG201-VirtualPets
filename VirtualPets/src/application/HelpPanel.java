@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 /**
- * 
+ * A panel that displays information explaining the game mechanics and controls.
  * @author Andrew Davidson (ada130)
  */
 public class HelpPanel extends JPanel {
