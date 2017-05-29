@@ -522,7 +522,7 @@ public class AssetCreator extends JPanel {
 			comp.setFont(labelFont);
 	}
 	
-	//Getter
+	//Getters
 	public JButton getBackButton() {
 		return buttonBack;
 	}
@@ -538,6 +538,7 @@ public class AssetCreator extends JPanel {
 	public ArrayList<FoodType> getNewFoodTypes() {
 		return foodCreated;
 	}
+	//End getters
 	
 	/**
 	 * Set whether non-asset-creator buttons are enabled
