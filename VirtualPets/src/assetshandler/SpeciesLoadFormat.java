@@ -9,6 +9,12 @@ import model.Species;
 public class SpeciesLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"name", "icon", "optimumWeight", "hungerGain", 
 			"energyLoss", "happinessLoss", "minToyDamage", "maxToyDamage"};
+	private String path;
+	private ImageIcon icon;
+	
+	public SpeciesLoadFormat(String path) {
+		this.path = path;
+	}
 
 	@Override
 	public String[] getValidAttributes() {
@@ -20,24 +26,27 @@ public class SpeciesLoadFormat implements LoadFormat {
 		try {
 			// Parse each attribute's given value to check if valid 
 			// and pass correct type to constructor.
-			Species newSpecies = new Species(
-					attributes.get("name").substring(1, attributes.get("name").length() - 1),
-					new ImageIcon(this.getClass().getResource(
-							attributes.get("icon").substring(1, attributes.get("icon").length() - 1)
-							)),
-					Integer.parseInt(attributes.get("optimumWeight")), 
-					Integer.parseInt(attributes.get("hungerGain")),
-					Integer.parseInt(attributes.get("energyLoss")), 
-					Integer.parseInt(attributes.get("happinessLoss")),
-					Integer.parseInt(attributes.get("minToyDamage")),
-					Integer.parseInt(attributes.get("maxToyDamage")));
+			
+			String name = attributes.get("name").substring(1, attributes.get("name").length() - 1);
+			if (path == null)
+				icon = new ImageIcon(this.getClass().getResource(attributes.get("icon").substring(1, attributes.get("icon").length() - 1)));
+			else
+				icon = new ImageIcon((path + attributes.get("icon").substring(1, attributes.get("icon").length() - 1)).replaceAll("\\\\", "/"));
+			int optimumWeight = Integer.parseInt(attributes.get("optimumWeight"));
+			int hungerGain = Integer.parseInt(attributes.get("hungerGain"));
+			int energyLoss = Integer.parseInt(attributes.get("energyLoss"));
+			int happinessLoss = Integer.parseInt(attributes.get("happinessLoss"));
+			int minToyDamage = Integer.parseInt(attributes.get("minToyDamage"));
+			int maxToyDamage = Integer.parseInt(attributes.get("maxToyDamage"));
+			
+			Species newSpecies = new Species(name, icon, optimumWeight, hungerGain, energyLoss, happinessLoss, minToyDamage, maxToyDamage);
 			customObjects.add(newSpecies);
 		}
-		catch (NumberFormatException e) {
+		catch (NumberFormatException exc) {
 			System.err.println("Incorrect number format when parsing custom file.");
 		}
-		catch (NullPointerException e) {
-			System.err.println("Attribute value either missing or invalid.");
+		catch (NullPointerException exc) {
+			System.err.println("Speices attribute value either missing or invalid.");
 		}
 		return customObjects;
 	}

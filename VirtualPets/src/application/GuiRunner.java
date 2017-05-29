@@ -7,7 +7,6 @@ import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.IOException;
@@ -183,6 +182,11 @@ public class GuiRunner {
 		mainMenu.getSaveAssetsButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser saveFileDialog = new JFileChooser();
+				saveFileDialog.setCurrentDirectory(new File("."));
+				saveFileDialog.setDialogTitle("Choose a folder to store assets in");
+				saveFileDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				saveFileDialog.setAcceptAllFileFilterUsed(false);
+				
 				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File customAssetFile = saveFileDialog.getSelectedFile();
 					AssetsSaver.writeAssetsToFile(customAssetFile, species, foodTypes, toyTypes);
@@ -194,10 +198,15 @@ public class GuiRunner {
 		mainMenu.getLoadAssetsButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser openFileDialog = new JFileChooser();
+				openFileDialog.setCurrentDirectory(new File("."));
+				openFileDialog.setDialogTitle("Choose a folder to load assets from");
+				openFileDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				openFileDialog.setAcceptAllFileFilterUsed(false);
+				
 				if (openFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					File customAssetFile = openFileDialog.getSelectedFile();
+					File customAssetFolder = openFileDialog.getSelectedFile();
 					try {
-						Object[][] customAssets = AssetsLoader.loadCustomAssetsFile((new FileInputStream(customAssetFile)));
+						Object[][] customAssets = AssetsLoader.loadCustomAssetsFile(customAssetFolder);
 						Species[] customSpecies = Arrays.copyOf(customAssets[0], customAssets[0].length, Species[].class);
 						FoodType[] customFoodTypes = Arrays.copyOf(customAssets[1], customAssets[1].length, FoodType[].class);
 						ToyType[] customToyTypes = Arrays.copyOf(customAssets[2], customAssets[2].length, ToyType[].class);

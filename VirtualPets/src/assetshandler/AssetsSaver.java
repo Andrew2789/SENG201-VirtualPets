@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
@@ -13,7 +15,8 @@ import model.FoodType;
 import model.ToyType;
 
 public class AssetsSaver {
-	public static void writeAssetsToFile(File file, Species[] species, FoodType[] foodTypes, ToyType[] toyTypes) {
+	public static void writeAssetsToFile(File folder, Species[] species, FoodType[] foodTypes, ToyType[] toyTypes) {
+		File file = new File(folder.getPath() + "/config.txt");
 		FileWriter fileOut = null;
 		BufferedWriter bufferOut = null;
 		
@@ -31,7 +34,11 @@ public class AssetsSaver {
 				bufferOut.newLine();
 			}
 			
-			//saveIcons(file, species, foodTypes, toyTypes);
+			File imagesFolder = new File(folder.getPath() + "/images");
+			if (imagesFolder.exists() || imagesFolder.mkdir())
+				saveIcons(imagesFolder, species, foodTypes, toyTypes);
+			else
+				throw new IOException("Asset images folder could not be created.");
 		}
 		catch (IOException exc) {
 			System.err.println("An error occurred when writing the asset files.");
@@ -45,7 +52,6 @@ public class AssetsSaver {
 			}
 			catch (IOException exc) {
 				System.err.println("An error occurred when closing the assets config file.");
-				exc.printStackTrace(System.err);
 			}
 		}
 	}
@@ -107,10 +113,44 @@ public class AssetsSaver {
 		return text;
 	}
 	
-	private static void saveIcons(File file, Species[] speciesArray, FoodType[] foodTypes, ToyType[] toyTypes) throws IOException {
-		for (Species species : speciesArray) {
-			File imageFile = new File(file.getParentFile().getPath() + "/images/species/");
-			
+	private static void saveIcons(File imagesFolder, Species[] speciesArray, FoodType[] foodTypes, ToyType[] toyTypes) throws IOException {
+		File speciesFolder = new File(imagesFolder.getPath() + "/species");
+		if (speciesFolder.exists() || speciesFolder.mkdir()) {
+			for (Species species : speciesArray) {
+				File imageFile = new File(speciesFolder.getPath() + String.format("/%s.png", species.getName()));
+				writeIcon(imageFile, species.getIcon().getImage());
+			}
 		}
+		else
+			throw new IOException("Folder for species icons could not be created.");
+		
+		File foodFolder = new File(imagesFolder.getPath() + "/food");
+		if (foodFolder.exists() || foodFolder.mkdir()) {
+			for (FoodType food : foodTypes) {
+				File imageFile = new File(foodFolder.getPath() + String.format("/%s.png", food.getName()));
+				writeIcon(imageFile, food.getIcon().getImage());
+			}
+		}
+		else
+			throw new IOException("Folder for toy icons could not be created.");
+		
+		File toysFolder = new File(imagesFolder.getPath() + "/toys");
+		if (toysFolder.exists() || toysFolder.mkdir()) {
+			for (ToyType toy : toyTypes) {
+				File imageFile = new File(toysFolder.getPath() + String.format("/%s.png", toy.getName()));
+				writeIcon(imageFile, toy.getIcon().getImage());
+			}
+		}
+		else
+			throw new IOException("Folder for toy icons could not be created.");
+	}
+	
+	private static void writeIcon(File file, Image icon) throws IOException {
+		BufferedImage buffered = new BufferedImage(icon.getWidth(null), icon.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics = buffered.createGraphics();
+		graphics.drawImage(icon, 0, 0, null);
+		graphics.dispose();
+		
+		ImageIO.write(buffered, "png", file);
 	}
 }
