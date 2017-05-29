@@ -80,7 +80,7 @@ public class GuiRunner {
 	}
 	
 	/**
-	 * Initialises the frame at the correct size with nothing in it.
+	 * Initialises the frame at the correct size with nothing in it. Sets window label and icon.
 	 */
 	private void initialise() {
 		frame = new JFrame();
@@ -124,7 +124,7 @@ public class GuiRunner {
 	}
 	
 	/**
-	 * Load the main menu screen and store it.
+	 * Load the main menu screen - has buttons that allow access to the different parts of the program.
 	 */
 	private void loadMainMenu() {
 		mainMenu = new MainMenu(poppins.deriveFont(84f), sourceSansProSemibold.deriveFont(16f));
@@ -267,7 +267,7 @@ public class GuiRunner {
 	}
 	
 	/**
-	 * Load the game setup screen and store it.
+	 * Load the game setup screen and store it. The game setup screen allows the user to specify players and their pets, and the attributes of all of these. Game variables such as number of days are also set.
 	 */
 	private void loadGameSetup() {
 		gameSetup = new GameSetup(species, toyTypes, foodTypes, poppins.deriveFont(48f), sourceSansProBold.deriveFont(14f), sourceSansProSemibold.deriveFont(14f), sourceSansPro.deriveFont(14f));
@@ -297,7 +297,7 @@ public class GuiRunner {
 	}
 	
 	/**
-	 * Load the asset creation screen and store it.
+	 * Load the asset creation screen and store it. The asset creation screen allows players to add custom new species, toy types and food types.
 	 */
 	private void loadAssetCreator() {
 		assetCreator = new AssetCreator(poppins.deriveFont(72f), sourceSansProSemibold.deriveFont(14f));
@@ -347,7 +347,7 @@ public class GuiRunner {
 	}
 	
 	/**
-	 * Load the game screen and store it.
+	 * Load the game screen and store it. The game screen is where game execution occurs - players take turns to interact with their pets and shop, and a round overview is shown at the end of each turn.
 	 */
 	private void loadGame() {
 		RoundOverview roundOverview = new RoundOverview(poppins.deriveFont(36f), poppins.deriveFont(22f), sourceSansProBold.deriveFont(16f));
