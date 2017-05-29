@@ -55,7 +55,7 @@ public class PetStatDisplayer extends JPanel {
 		currentValue = new JLabel("");
 		currentValue.setHorizontalAlignment(SwingConstants.CENTER);
 		currentValue.setFont(boldFont);
-		currentValue.setBounds(0, 31, 18, 22);
+		currentValue.setBounds(0, 31, 28, 22);
 		add(currentValue);
 		
 		currentValueRect = new JLabel("");
@@ -108,7 +108,7 @@ public class PetStatDisplayer extends JPanel {
 		}
 		else {
 			currentValue.setVisible(true);
-			currentValue.setBounds((amount-min)*188/(max-min)+12, 31, 18, 22);
+			currentValue.setBounds((amount-min)*188/(max-min)+8, 31, 28, 22);
 			currentValue.setText(Integer.toString(amount));
 		}
 	}
