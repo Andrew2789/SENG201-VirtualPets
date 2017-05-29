@@ -1,13 +1,14 @@
-package customFileLoader;
+package assetsLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
-import model.ToyType;
+import model.FoodType;
 
-public class ToyTypeLoadFormat implements LoadFormat {
-	private static String[] validAttributes = {"name", "icon", "price", "happinessGain"};
+public class FoodTypeLoadFormat implements LoadFormat {
+	private static String[] validAttributes = {"name", "icon", "price", "nutrition", 
+			"tastiness", "weight"};
 
 	@Override
 	public String[] getValidAttributes() {
@@ -19,14 +20,16 @@ public class ToyTypeLoadFormat implements LoadFormat {
 		try {
 			// Parse each attribute's given value to check if valid 
 			// and pass correct type to constructor.
-			ToyType newToyType = new ToyType(
+			FoodType newFoodType = new FoodType(
 					attributes.get("name").substring(1, attributes.get("name").length() - 1),
 					new ImageIcon(this.getClass().getResource(
 							attributes.get("icon").substring(1, attributes.get("icon").length() - 1)
 							)), 
 					Integer.parseInt(attributes.get("price")), 
-					Integer.parseInt(attributes.get("happinessGain")));
-			customObjects.add(newToyType);
+					Integer.parseInt(attributes.get("nutrition")), 
+					Integer.parseInt(attributes.get("tastiness")), 
+					Integer.parseInt(attributes.get("weight")));
+			customObjects.add(newFoodType);
 		}
 		catch (NumberFormatException e) {
 			System.err.println("Incorrect number format when parsing custom file.");

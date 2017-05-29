@@ -14,8 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import customFileLoader.SettingsLoader;
-
+import assetsLoader.AssetsLoader;
 import model.FoodType;
 import model.Species;
 import model.ToyType;
@@ -59,9 +58,9 @@ public class GuiRunner {
 	 * Load fonts, species, toy types, and food types. Initialises the gui and loads the main menu.
 	 */
 	public GuiRunner() {
-		species = SettingsLoader.loadCustomSpeciesFile(GuiRunner.class.getResourceAsStream("/default_species.txt"));
-		toyTypes = SettingsLoader.loadCustomToyTypesFile(GuiRunner.class.getResourceAsStream("/default_toytypes.txt"));
-		foodTypes = SettingsLoader.loadCustomFoodTypesFile(GuiRunner.class.getResourceAsStream("/default_foodtypes.txt"));
+		species = AssetsLoader.loadCustomSpeciesFile(GuiRunner.class.getResourceAsStream("/default_species.txt"));
+		toyTypes = AssetsLoader.loadCustomToyTypesFile(GuiRunner.class.getResourceAsStream("/default_toytypes.txt"));
+		foodTypes = AssetsLoader.loadCustomFoodTypesFile(GuiRunner.class.getResourceAsStream("/default_foodtypes.txt"));
 		
 		poppins = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Poppins/Poppins-Regular.ttf"));
 		sourceSansPro = loadFont(GuiRunner.class.getResourceAsStream("/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf"));
@@ -182,7 +181,7 @@ public class GuiRunner {
 
 		//Load asset configuration from a file
 		mainMenu.getLoadAssetsButton().addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				//LOADASSETS;
 			}
 		});

@@ -1,4 +1,4 @@
-package customFileLoader;
+package assetsLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package customFileLoader;
+package assetsLoader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +14,7 @@ import model.FoodType;
 import model.Species;
 import model.ToyType;
 
-public class SettingsLoader
+public class AssetsLoader
 {
 	// Generic Static Methods
 	private static String[] readAllLines(InputStream inputStream)
