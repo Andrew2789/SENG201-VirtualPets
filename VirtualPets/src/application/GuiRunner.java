@@ -155,6 +155,20 @@ public class GuiRunner {
 			}
 		});
 		
+		//Save current asset configuration to a file
+		mainMenu.getSaveAssetsButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				//SAVEASSETS;
+			}
+		});
+
+		//Load asset configuration from a file
+		mainMenu.getLoadAssetsButton().addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+				//LOADASSETS;
+			}
+		});
+		
 		//Open help panel if help pressed
 		mainMenu.getHelpButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
