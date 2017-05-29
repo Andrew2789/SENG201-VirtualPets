@@ -1,5 +1,5 @@
 /application/
-/customFileLoader/
+/assetsLoader/
 /default_foodtypes.txt
 /default_species.txt
 /default_toytypes.txt
@@ -7,4 +7,3 @@
 /images/
 /model/
 /unitTests/
-/assetsLoader/

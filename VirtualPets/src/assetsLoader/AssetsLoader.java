@@ -19,7 +19,7 @@ public class AssetsLoader
 	// Generic Static Methods
 	private static String[] readAllLines(InputStream inputStream)
 	{
-		BufferedReader buffer;
+		BufferedReader buffer = null;
 		ArrayList<String> lines = new ArrayList<String>();
 
 		try
@@ -34,11 +34,22 @@ public class AssetsLoader
 		}
 		catch (FileNotFoundException e)
 		{
-			System.err.println("File not found.");
+			System.err.println("Custom asset file not found.");
 		}
 		catch (IOException e)
 		{
-			System.err.println("Error reading the file.");
+			System.err.println("An error occured while reading the custom asset file.");
+		}
+		finally {
+			try {
+				if (inputStream != null)
+					inputStream.close();
+				if (buffer != null)
+					buffer.close();
+			}
+			catch (IOException exc) {
+				System.err.println("Error while attempting to close custom asset file.");
+			}
 		}
 		return lines.toArray(new String[lines.size()]);
 	}
@@ -69,7 +80,7 @@ public class AssetsLoader
 		int i = 0;
 		while (i < lines.length)
 		{
-			if (lines[i].substring(0, 1).equals("$"))
+			if (lines[i].length() > 0 && lines[i].startsWith("$"))
 			{
 				// Record the index and label at the start of the block.
 				int blockStartIndex = i + 1;
@@ -102,10 +113,67 @@ public class AssetsLoader
 		// Processing of all blocks done, return custom objects defined in file as Object array.
 		return customObjects.toArray(new Object[customObjects.size()]);
 	}
-	
 	// End Generic Static Methods
 	
 	// Loading Custom Methods
+	public static Object[][] loadCustomAssetsFile(InputStream inputStream) {
+		final String[] lines = readAllLines(inputStream);
+		String[] selectedBlocks = null;
+		Object[] customObjects = null;
+		Species[] customSpecies = {};
+		FoodType[] customFoodTypes = {};
+		ToyType[] customToyTypes = {};
+		
+		HashMap<String, int[]> markers = new HashMap<String, int[]>();
+		int lineNum = 0;
+		while (lineNum < lines.length) {
+			if (lines[lineNum].length() > 0 && lines[lineNum].startsWith("@")) {
+				String key = lines[lineNum].substring(1);
+				if (!markers.containsKey(key)) {
+					markers.put(key, new int[]{lineNum+1, -1});
+				}
+				else if (markers.get(key)[1] == -1) {
+					markers.get(key)[1] = lineNum;
+				}
+			}
+			lineNum++;
+		}
+		
+		if (markers.containsKey("Species") && 
+			 markers.get("Species")[0] != -1 &&
+			 markers.get("Species")[1] != -1) {
+			selectedBlocks = Arrays.copyOfRange(lines, markers.get("Species")[0], markers.get("Species")[1]);
+			customObjects = parseCustomBlocks(selectedBlocks, new SpeciesLoadFormat());
+			customSpecies = Arrays.copyOf(
+					customObjects, 
+					customObjects.length, 
+					Species[].class);
+		}
+		if (markers.containsKey("FoodTypes") && 
+			 markers.get("FoodTypes")[0] != -1 &&
+			 markers.get("FoodTypes")[1] != -1) {
+			selectedBlocks = Arrays.copyOfRange(lines, markers.get("FoodTypes")[0], markers.get("FoodTypes")[1]);
+			customObjects = parseCustomBlocks(selectedBlocks, new FoodTypeLoadFormat());
+			customFoodTypes = Arrays.copyOf(
+					customObjects, 
+					customObjects.length, 
+					FoodType[].class);
+		}
+		if (markers.containsKey("ToyTypes") && 
+			 markers.get("ToyTypes")[0] != -1 &&
+			 markers.get("ToyTypes")[1] != -1) {
+			selectedBlocks = Arrays.copyOfRange(lines, markers.get("ToyTypes")[0], markers.get("ToyTypes")[1]);
+			customObjects = parseCustomBlocks(selectedBlocks, new ToyTypeLoadFormat());
+			customToyTypes = Arrays.copyOf(
+					customObjects, 
+					customObjects.length, 
+					ToyType[].class);
+		}
+		
+		Object[][] customAssets = {customSpecies, customFoodTypes, customToyTypes};
+		return customAssets;
+	}
+	
 	public static Species[] loadCustomSpeciesFile(InputStream inputStream) {
 		final String[] lines = readAllLines(inputStream);
 		Object[] customObjects = parseCustomBlocks(lines, new SpeciesLoadFormat());

@@ -7,9 +7,13 @@ import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -182,7 +186,51 @@ public class GuiRunner {
 		//Load asset configuration from a file
 		mainMenu.getLoadAssetsButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				//LOADASSETS;
+				JFileChooser openFileDialog = new JFileChooser();
+				if (openFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					File customAssetFile = openFileDialog.getSelectedFile();
+					try {
+						Object[][] customAssets = AssetsLoader.loadCustomAssetsFile((new FileInputStream(customAssetFile)));
+						Species[] customSpecies = Arrays.copyOf(customAssets[0], customAssets[0].length, Species[].class);
+						FoodType[] customFoodTypes = Arrays.copyOf(customAssets[1], customAssets[1].length, FoodType[].class);
+						ToyType[] customToyTypes = Arrays.copyOf(customAssets[2], customAssets[2].length, ToyType[].class);
+						
+						ArrayList<Species> newSpeciesList = new ArrayList<Species>(Arrays.asList(species));
+						for (Species custom : customSpecies) {
+							boolean conflict = false;
+							for (Species old : species)
+								if (custom.getName().equals(old.getName()))
+									conflict = true;
+							if (!conflict)
+								newSpeciesList.add(custom);
+						}
+						ArrayList<FoodType> newFoodTypesList = new ArrayList<FoodType>(Arrays.asList(foodTypes));
+						for (FoodType custom : customFoodTypes) {
+							boolean conflict = false;
+							for (FoodType old : foodTypes)
+								if (custom.getName().equals(old.getName()))
+									conflict = true;
+							if (!conflict)
+								newFoodTypesList.add(custom);
+						}
+						ArrayList<ToyType> newToyTypesList = new ArrayList<ToyType>(Arrays.asList(toyTypes));
+						for (ToyType custom : customToyTypes) {
+							boolean conflict = false;
+							for (ToyType old : toyTypes)
+								if (custom.getName().equals(old.getName()))
+									conflict = true;
+							if (!conflict)
+								newToyTypesList.add(custom);
+						}
+						
+						species = newSpeciesList.toArray(new Species[newSpeciesList.size()]);
+						foodTypes = newFoodTypesList.toArray(new FoodType[newFoodTypesList.size()]);
+						toyTypes = newToyTypesList.toArray(new ToyType[newToyTypesList.size()]);
+					}
+					catch (FileNotFoundException exc) {
+						System.err.println("The specified custom asset file could not be found.");
+					}
+				}
 			}
 		});
 		
