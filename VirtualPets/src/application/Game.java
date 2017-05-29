@@ -514,8 +514,8 @@ public class Game extends JPanel implements Serializable {
 		this.incomePerTurn = savedGame.incomePerTurn;
 		this.currentDay = savedGame.currentDay;
 		this.activePlayer = savedGame.activePlayer;
-		roundOverview = savedGame.roundOverview;
-		
+		this.roundOverview.setPreviousRoundScores(savedGame.roundOverview.getPreviousScores());
+
 		dayLabel.setText("Day "+currentDay+" of "+numberOfDays);
 		for (int i = 0; i<players.length; i++)
 			if (players[i].equals(activePlayer))
