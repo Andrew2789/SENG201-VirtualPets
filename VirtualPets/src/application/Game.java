@@ -7,11 +7,14 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.MatteBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -113,7 +116,14 @@ public class Game extends JPanel implements Serializable {
 						SaveGameHandler.writeGameToFile(getGame(), saveFileDialog.getSelectedFile());
 					}
 					catch (NullPointerException exc) {
-						System.err.println("Saving game file failed due to an invalid/missing file being provided.");
+						JOptionPane.showMessageDialog(SwingUtilities.windowForComponent(getGame()), 
+								"Loading game file failed due to an invalid save file location being provided.", 
+								"Save File Loading Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch (IOException exc) {
+						JOptionPane.showMessageDialog(SwingUtilities.windowForComponent(getGame()), 
+								"Saving game file failed due to unexpected IO error when writing to the file.", 
+								"Save File Loading Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

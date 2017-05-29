@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import customFileLoader.SettingsLoader;
 
@@ -145,7 +146,19 @@ public class GuiRunner {
 						game.resume(savedGame);
 					}
 					catch (NullPointerException exc) {
-						System.err.println("Loading game file failed due to an invalid/missing file being provided.");
+						JOptionPane.showMessageDialog(frame, 
+								"Loading game failed due to an invalid/missing save file being provided.", 
+								"Save File Loading Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch (IOException exc) {
+						JOptionPane.showMessageDialog(frame, 
+								"Loading game failed due to the save file being invalid or a problem occurring while reading it.", 
+								"Save File Loading Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch (ClassNotFoundException exc) {
+						JOptionPane.showMessageDialog(frame, 
+								"Loading game failed as the version of the save file does not match this version of the game.", 
+								"Save File Loading Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
