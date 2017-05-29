@@ -1,4 +1,4 @@
-package assetsLoader;
+package assetshandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;

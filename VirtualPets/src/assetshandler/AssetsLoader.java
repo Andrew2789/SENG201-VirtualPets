@@ -1,4 +1,4 @@
-package assetsLoader;
+package assetshandler;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

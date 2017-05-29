@@ -1,4 +1,4 @@
-package assetsLoader;
+package assetshandler;
 
 import java.io.File;
 import java.io.FileWriter;

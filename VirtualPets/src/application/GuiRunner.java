@@ -18,8 +18,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import assetsLoader.AssetsLoader;
-import assetsLoader.AssetsSaver;
+import assetshandler.AssetsLoader;
+import assetshandler.AssetsSaver;
 import model.FoodType;
 import model.Species;
 import model.ToyType;
