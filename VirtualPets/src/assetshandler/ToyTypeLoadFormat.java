@@ -6,20 +6,35 @@ import javax.swing.ImageIcon;
 
 import model.ToyType;
 
+/**
+ * A format for loading ToyTypes from a file.
+ * @author Alex Tompkins (ato47)
+ */
 public class ToyTypeLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"name", "icon", "price", "happinessGain"};
 	private String path;
 	private ImageIcon icon;
 	
+	/**
+	 * Creates a ToyType loading format with a given path to its images folder.
+	 * @param path
+	 * The given path to its images folder.
+	 */
 	public ToyTypeLoadFormat (String path) {
 		this.path = path;
 	}
 	
+	/**
+	 * Refer to interface LoadFormat
+	 */
 	@Override
 	public String[] getValidAttributes() {
 		return validAttributes;
 	}
 
+	/**
+	 * Refer to interface LoadFormat
+	 */
 	@Override
 	public ArrayList<Object> addCustomObject(ArrayList<Object> customObjects, HashMap<String, String> attributes) {
 		try {

@@ -107,15 +107,19 @@ public class Game extends JPanel implements Serializable {
 		menu.setLayout(null);
 		add(menu);
 		
+		// Save Game Button
 		buttonSaveGame = new JButton("Save Game");
 		buttonSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// When clicked, brings up a save file dialog box to select your save file location.
 				JFileChooser saveFileDialog = new JFileChooser();
 				saveFileDialog.setDialogTitle("Save Game");
 				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					// Tries writing a save file of the current game.
 					try {
 						SaveGameHandler.writeGameToFile(getGame(), saveFileDialog.getSelectedFile());
 					}
+					// If writing a save file fails, bring up an error popup to show why.
 					catch (NullPointerException exc) {
 						JOptionPane.showMessageDialog(SwingUtilities.windowForComponent(getGame()), 
 								"Saving game file failed due to an invalid save file location being provided.", 

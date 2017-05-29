@@ -6,21 +6,36 @@ import javax.swing.ImageIcon;
 
 import model.Species;
 
+/**
+ * A format for loading Species from a file.
+ * @author Alex Tompkins (ato47)
+ */
 public class SpeciesLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"name", "icon", "optimumWeight", "hungerGain", 
 			"energyLoss", "happinessLoss", "minToyDamage", "maxToyDamage"};
 	private String path;
 	private ImageIcon icon;
 	
+	/**
+	 * Creates a Species loading format with a given path to its images folder.
+	 * @param path
+	 * The given path to its images folder.
+	 */
 	public SpeciesLoadFormat(String path) {
 		this.path = path;
 	}
 
+	/**
+	 * Refer to interface LoadFormat
+	 */
 	@Override
 	public String[] getValidAttributes() {
 		return validAttributes;
 	}
 
+	/**
+	 * Refer to interface LoadFormat
+	 */
 	@Override
 	public ArrayList<Object> addCustomObject(ArrayList<Object> customObjects, HashMap<String, String> attributes) {
 		try {
