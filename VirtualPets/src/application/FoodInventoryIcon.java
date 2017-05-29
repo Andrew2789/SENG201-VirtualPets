@@ -57,8 +57,8 @@ public class FoodInventoryIcon extends JPanel {
 	}
 	
 	/**
-	 * Sets this icon to be either enabled or disabled. This will grey it out to show to the
-	 * player that it cannot be used.
+	 * Sets this icon to be either enabled or disabled. When disabled the button will be greyed out 
+	 * to show to the player that it cannot be used.
 	 * @param enabled
 	 * True to enable this icon, false to disable it.
 	 */

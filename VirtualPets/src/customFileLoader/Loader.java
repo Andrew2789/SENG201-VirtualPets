@@ -404,7 +404,8 @@ public class Loader
 					System.err.println(String.format("Could not find end of 'Players' block while parsing file."));
 				}
 			}
-			if (lines[i].length() >= 11 && lines[i].substring(0, 11).equals("Misc")) {
+			/*
+			if (lines[i].length() >= 5 && lines[i].substring(0, 5).equals("$Misc")) {
 				// Record the index at the start of the block.
 				int blockStartIndex = i + 1;
 				
@@ -427,10 +428,22 @@ public class Loader
 				savedCurrentDay = Integer.parseInt(miscAttributes.get("currentDay"));
 				savedCurrentPlayerIndex = Integer.parseInt(miscAttributes.get("currentPlayerIndex"));
 			}
+			*/
 				
 			// Increment line counter after processing any block.
 			i++;
 		}
+		
+		// DEBUG
+		for (Player p : savedPlayersList) {
+			System.out.println(p.toString());
+			System.out.println(p.getName());
+			System.out.println(p.getMoney());
+			for (Pet pet : p.getPets()) {
+				System.out.println(pet.toString());
+			}
+		}
+		// END DEBUG
 		
 		// Now resume Game based on saveData
 		Player[] savedPlayers = savedPlayersList.toArray(new Player[savedPlayersList.size()]);

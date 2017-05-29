@@ -557,8 +557,10 @@ public class AssetCreator extends JPanel {
 	 * The selected image, or null if none was selected
 	 */
 	private ImageIcon chooseFile(int scaledSide) {
+		// Create dialog box to choose file to load image from
 		JFileChooser openFile = new JFileChooser();
 		if (openFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			// Once user selected a file, try to create a new image from that file by scaling it down
 			try {
 				InputStream imageStream = new FileInputStream(openFile.getSelectedFile());
 				ImageIcon newImageIcon = new ImageIcon(ImageIO.read(imageStream));
