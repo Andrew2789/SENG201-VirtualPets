@@ -1,12 +1,15 @@
 package application;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+
 import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+import model.Pet;
 
 /**
  * A clickable tab which will switch the selected pet to the pet represented in this tab, the tab also displays

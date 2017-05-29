@@ -12,7 +12,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+
 import customFileLoader.SettingsLoader;
+
+import model.FoodType;
+import model.Species;
+import model.ToyType;
 
 /**
  * A controller and viewer for the application. Loads and shows the various game panels.

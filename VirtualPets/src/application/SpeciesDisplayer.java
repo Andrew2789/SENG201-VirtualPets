@@ -1,10 +1,12 @@
 package application;
 
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.border.MatteBorder;
-import java.awt.Color;
-import java.awt.Font;
+
+import model.Species;
 
 /**
  * A box that displays all information about a certain species.

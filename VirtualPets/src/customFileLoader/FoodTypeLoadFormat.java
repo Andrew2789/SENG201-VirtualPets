@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
-import application.FoodType;
+import model.FoodType;
 
 public class FoodTypeLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"name", "icon", "price", "nutrition", 

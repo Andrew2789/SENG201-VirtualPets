@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import application.FoodType;
-import application.Species;
-import application.ToyType;
+import model.FoodType;
+import model.Species;
+import model.ToyType;
 
 public class SettingsLoader
 {

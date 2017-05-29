@@ -2,13 +2,12 @@ package application;
 
 import java.awt.Color;
 import java.awt.Font;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  * An internal dialog box that allows the instantiator to add action listeners to its buttons and choose which buttons to show.

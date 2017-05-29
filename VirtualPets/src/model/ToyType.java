@@ -1,4 +1,4 @@
-package application;
+package model;
 
 import java.io.Serializable;
 import javax.swing.ImageIcon;

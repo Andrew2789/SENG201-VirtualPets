@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+import model.Toy;
+
 /**
  * A panel of toy icons to display toys that are in the player's inventory.
  * @author Alex Tompkins (ato47)

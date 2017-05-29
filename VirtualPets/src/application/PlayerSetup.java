@@ -1,14 +1,21 @@
 package application;
+
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Font;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
+
+import model.FoodType;
+import model.Pet;
+import model.Player;
+import model.Species;
+import model.ToyType;
 
 /**
  * Allows the user to set up a player, giving it a name and pets. Can generate a player. GameSetup should use multiple PlayerSetups.

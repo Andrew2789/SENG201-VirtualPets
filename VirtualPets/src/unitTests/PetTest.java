@@ -1,17 +1,16 @@
 package unitTests;
 
 import static org.junit.Assert.*;
-
-import javax.swing.ImageIcon;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import application.FoodType;
-import application.Pet;
-import application.Species;
-import application.Toy;
-import application.ToyType;
+import javax.swing.ImageIcon;
+
+import model.FoodType;
+import model.Pet;
+import model.Species;
+import model.Toy;
+import model.ToyType;
 
 /**
  * Tests the non-getter/setter methods of pet: eat, play, toilet, sleep, cure, discipline, revive, and end turn.

@@ -3,12 +3,12 @@ package unitTests;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import application.FoodType;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.TreeSet;
 import javax.swing.ImageIcon;
+
+import model.FoodType;
 
 public class FoodTypeTest {
 	

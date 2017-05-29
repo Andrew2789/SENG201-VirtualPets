@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import model.Pet;
+
 /**
  * Displays pet statistics and allows the player to interact with the pet.
  * @author Andrew Davidson (ada130)

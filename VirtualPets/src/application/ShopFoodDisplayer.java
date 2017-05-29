@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+import model.FoodType;
+
 /**
  * A panel for displaying a single food item in the shop.
  * @author Alex Tompkins (ato47)

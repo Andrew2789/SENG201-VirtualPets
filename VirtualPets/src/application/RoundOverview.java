@@ -5,8 +5,10 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
+
+import model.Player;
 
 /**
  * Displays statistics about the player's scores at the end of each round.

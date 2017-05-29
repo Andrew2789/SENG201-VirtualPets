@@ -1,12 +1,11 @@
 package unitTests;
 
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 import javax.swing.ImageIcon;
 
-import org.junit.Test;
-
-import application.Species;
+import model.Species;
 
 /**
  * Tests the only non-getter/setter method of Species: genToyDamage.

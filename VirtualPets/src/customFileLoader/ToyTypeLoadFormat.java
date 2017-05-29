@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
-import application.ToyType;
+import model.ToyType;
 
 public class ToyTypeLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"name", "icon", "price", "happinessGain"};

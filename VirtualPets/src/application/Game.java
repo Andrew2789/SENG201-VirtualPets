@@ -19,6 +19,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import model.FoodType;
+import model.Pet;
+import model.Player;
+import model.Toy;
+import model.ToyType;
+
 /**
  * The main game panel. Displays pet and player info, and allows the player to interact with pets and visit the store.
  * @author Andrew Davidson (ada130)

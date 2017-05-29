@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.TreeSet;
 import javax.swing.JPanel;
 
+import model.FoodType;
+
 /**
  * A panel of food icons to display food that is in the player's inventory.
  * @author Alex Tompkins (ato47)

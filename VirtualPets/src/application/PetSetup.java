@@ -1,15 +1,21 @@
 package application;
+
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Font;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.util.concurrent.ThreadLocalRandom;
-import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.DefaultComboBoxModel;
+import java.util.concurrent.ThreadLocalRandom;
+
+import model.FoodType;
+import model.Pet;
+import model.Species;
+import model.ToyType;
 
 /**
  * Allows the user to set the name and species of a single pet, and generate the pet. PlayerSetup should create multiple PetSetups.

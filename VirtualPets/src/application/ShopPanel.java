@@ -9,6 +9,9 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
 
+import model.FoodType;
+import model.ToyType;
+
 /**
  * A panel that displays the shop. Includes two scroll panes for buying toys and food,
  * and displays your money at the top.

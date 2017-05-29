@@ -1,21 +1,27 @@
 package application;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.util.ArrayList;
+
+import model.FoodType;
+import model.Pet;
+import model.Player;
+import model.Species;
+import model.ToyType;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;

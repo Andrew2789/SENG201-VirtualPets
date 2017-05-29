@@ -1,9 +1,10 @@
 package application;
+
+import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.Font;
 import javax.swing.SwingConstants;
 
 /**

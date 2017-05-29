@@ -1,9 +1,12 @@
 package application;
 
+import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import java.awt.Font;
+
+import model.Toy;
+import model.ToyType;
 
 /**
  * An icon to represent a toy in the player's inventory. Shows the durability on the icon as a label.

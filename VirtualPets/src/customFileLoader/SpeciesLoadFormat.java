@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
-import application.Species;
+import model.Species;
 
 public class SpeciesLoadFormat implements LoadFormat {
 	private static String[] validAttributes = {"name", "icon", "optimumWeight", "hungerGain", 

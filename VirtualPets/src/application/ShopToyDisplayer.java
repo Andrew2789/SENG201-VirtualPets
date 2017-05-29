@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import model.ToyType;
+
 /**
  * A panel for displaying a single toy in the shop.
  * @author Alex Tompkins (ato47)

@@ -22,6 +22,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
+import model.FoodType;
+import model.Species;
+import model.ToyType;
+
 /**
  * Allows the user to create and save custom species, toyTypes, and foodTypes.
  * @author Andrew Davidson (ada130)

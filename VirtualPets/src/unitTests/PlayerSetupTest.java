@@ -1,9 +1,18 @@
-package application;
+package unitTests;
 
 import static org.junit.Assert.*;
+import org.junit.Test;
+
 import java.awt.Font;
 import javax.swing.ImageIcon;
-import org.junit.Test;
+
+import application.GuiRunner;
+import application.PlayerSetup;
+
+import model.FoodType;
+import model.Player;
+import model.Species;
+import model.ToyType;
 
 /**
  * Tests that the PlayerSetup GUI component can correctly generate a new player based on its fields and inputs.
