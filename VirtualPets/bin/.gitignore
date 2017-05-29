@@ -1,9 +1,9 @@
 /application/
+/assetshandler/
 /default_foodtypes.txt
 /default_species.txt
 /default_toytypes.txt
 /fonts/
 /images/
 /model/
-/assetshandler/
 /unittests/
