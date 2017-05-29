@@ -156,6 +156,15 @@ public class AssetCreator extends JPanel {
 		speciesPanel.add(minToyDamageLabel);
 		
 		JSpinner minToyDamageChooser = new JSpinner();
+		JSpinner maxToyDamageChooser = new JSpinner();
+		
+		
+		minToyDamageChooser.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if ((int)maxToyDamageChooser.getValue() < (int)minToyDamageChooser.getValue())
+					minToyDamageChooser.setValue(maxToyDamageChooser.getValue());
+			}
+		});
 		minToyDamageChooser.setModel(new SpinnerNumberModel(30, 0, 100, 5));
 		minToyDamageChooser.setBounds(221, 37, 39, 20);
 		speciesPanel.add(minToyDamageChooser);
@@ -165,7 +174,6 @@ public class AssetCreator extends JPanel {
 		maxToyDamageLabel.setBounds(221, 71, 135, 25);
 		speciesPanel.add(maxToyDamageLabel);
 		
-		JSpinner maxToyDamageChooser = new JSpinner();
 		maxToyDamageChooser.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if ((int)maxToyDamageChooser.getValue() < (int)minToyDamageChooser.getValue())
