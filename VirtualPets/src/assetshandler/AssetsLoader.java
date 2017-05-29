@@ -3,6 +3,8 @@ package assetshandler;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -116,8 +118,10 @@ public class AssetsLoader
 	// End Generic Static Methods
 	
 	// Loading Custom Methods
-	public static Object[][] loadCustomAssetsFile(InputStream inputStream) {
-		final String[] lines = readAllLines(inputStream);
+	public static Object[][] loadCustomAssetsFile(File customAssetFolder) throws FileNotFoundException {
+		InputStream configStream = new FileInputStream(new File(customAssetFolder.getPath() + "/config.txt"));
+		
+		final String[] lines = readAllLines(configStream);
 		String[] selectedBlocks = null;
 		Object[] customObjects = null;
 		Species[] customSpecies = {};
@@ -143,7 +147,7 @@ public class AssetsLoader
 			 markers.get("Species")[0] != -1 &&
 			 markers.get("Species")[1] != -1) {
 			selectedBlocks = Arrays.copyOfRange(lines, markers.get("Species")[0], markers.get("Species")[1]);
-			customObjects = parseCustomBlocks(selectedBlocks, new SpeciesLoadFormat());
+			customObjects = parseCustomBlocks(selectedBlocks, new SpeciesLoadFormat(customAssetFolder.getPath()));
 			customSpecies = Arrays.copyOf(
 					customObjects, 
 					customObjects.length, 
@@ -153,7 +157,7 @@ public class AssetsLoader
 			 markers.get("FoodTypes")[0] != -1 &&
 			 markers.get("FoodTypes")[1] != -1) {
 			selectedBlocks = Arrays.copyOfRange(lines, markers.get("FoodTypes")[0], markers.get("FoodTypes")[1]);
-			customObjects = parseCustomBlocks(selectedBlocks, new FoodTypeLoadFormat());
+			customObjects = parseCustomBlocks(selectedBlocks, new FoodTypeLoadFormat(customAssetFolder.getPath()));
 			customFoodTypes = Arrays.copyOf(
 					customObjects, 
 					customObjects.length, 
@@ -163,7 +167,7 @@ public class AssetsLoader
 			 markers.get("ToyTypes")[0] != -1 &&
 			 markers.get("ToyTypes")[1] != -1) {
 			selectedBlocks = Arrays.copyOfRange(lines, markers.get("ToyTypes")[0], markers.get("ToyTypes")[1]);
-			customObjects = parseCustomBlocks(selectedBlocks, new ToyTypeLoadFormat());
+			customObjects = parseCustomBlocks(selectedBlocks, new ToyTypeLoadFormat(customAssetFolder.getPath()));
 			customToyTypes = Arrays.copyOf(
 					customObjects, 
 					customObjects.length, 
@@ -176,7 +180,7 @@ public class AssetsLoader
 	
 	public static Species[] loadCustomSpeciesFile(InputStream inputStream) {
 		final String[] lines = readAllLines(inputStream);
-		Object[] customObjects = parseCustomBlocks(lines, new SpeciesLoadFormat());
+		Object[] customObjects = parseCustomBlocks(lines, new SpeciesLoadFormat(null));
 		return Arrays.copyOf(
 				customObjects, 
 				customObjects.length, 
@@ -185,7 +189,7 @@ public class AssetsLoader
 	
 	public static ToyType[] loadCustomToyTypesFile(InputStream inputStream) {
 		final String[] lines = readAllLines(inputStream);
-		Object[] customObjects = parseCustomBlocks(lines, new ToyTypeLoadFormat());
+		Object[] customObjects = parseCustomBlocks(lines, new ToyTypeLoadFormat(null));
 		return Arrays.copyOf(
 				customObjects, 
 				customObjects.length, 
@@ -194,7 +198,7 @@ public class AssetsLoader
 	
 	public static FoodType[] loadCustomFoodTypesFile(InputStream inputStream) {
 		final String[] lines = readAllLines(inputStream);
-		Object[] customObjects = parseCustomBlocks(lines, new FoodTypeLoadFormat());
+		Object[] customObjects = parseCustomBlocks(lines, new FoodTypeLoadFormat(null));
 		return Arrays.copyOf(
 				customObjects, 
 				customObjects.length, 
