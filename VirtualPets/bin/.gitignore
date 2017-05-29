@@ -1,4 +1,3 @@
-/application/
 /assetshandler/
 /default_foodtypes.txt
 /default_species.txt
@@ -7,3 +6,4 @@
 /images/
 /model/
 /unittests/
+/gui/

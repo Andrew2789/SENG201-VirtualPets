@@ -1,4 +1,4 @@
-package application;
+package gui;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;

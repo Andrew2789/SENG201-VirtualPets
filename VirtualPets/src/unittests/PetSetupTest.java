@@ -3,11 +3,11 @@ package unittests;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import gui.GuiRunner;
+import gui.PetSetup;
+
 import java.awt.Font;
 import javax.swing.ImageIcon;
-
-import application.GuiRunner;
-import application.PetSetup;
 
 import model.FoodType;
 import model.Pet;
