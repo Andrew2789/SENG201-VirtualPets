@@ -13,9 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
-
-import saveFileHandling.GameSaver;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -107,7 +104,7 @@ public class Game extends JPanel implements Serializable {
 				JFileChooser saveFileDialog = new JFileChooser();
 				if (saveFileDialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					try {
-						GameSaver.writeGameToFile(getGame(), saveFileDialog.getSelectedFile());
+						SaveGameHandler.writeGameToFile(getGame(), saveFileDialog.getSelectedFile());
 					}
 					catch (NullPointerException exc) {
 						System.err.println("Saving game file failed due to an invalid/missing file being provided.");

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import customFileLoader.SettingsLoader;
-import saveFileHandling.GameLoader;
 
 /**
  * A controller and viewer for the application. Loads and shows the various game panels.
@@ -135,7 +134,7 @@ public class GuiRunner {
 					try {
 						File saveFile = openFileDialog.getSelectedFile();
 						loadGame();
-						Game savedGame = GameLoader.readGameFromFile(saveFile);
+						Game savedGame = SaveGameHandler.readGameFromFile(saveFile);
 						game.setVisible(true);
 						mainMenu.setVisible(false);
 						game.resume(savedGame);
