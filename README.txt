@@ -1,3 +1,5 @@
+Requires Java 1.8
+
 To run the jar file:
 java -jar VirtualPets.jar
 
